@@ -119,6 +119,8 @@
                         }
                         .btn_left{float: left; padding: 25px 20px;}
                             .btn_left button + button{margin-left: 8px;}
+                        .btn_right{float: right; padding: 25px 20px;}
+                            .btn_right button + button{margin-left: 8px;}
 
 
                 /** 컨텐츠 검색 영역 **/
@@ -435,6 +437,7 @@
                         }
                     
                         .btn_left{float: left; padding: 15px 0;}
+                        .btn_right{float: right; padding: 15px 0;}
                     .nv_m_btn_area{overflow: hidden; margin-top:10px;}
                         .nv_m_btn_area .left{float: left;}
                         .nv_m_btn_area .right{float: right;}
@@ -589,6 +592,11 @@
                         width:30%;
                         padding:15px 0 0 0;
                     }
+                    .btn_right{
+                        overflow: hidden;
+                        width:30%;
+                        padding:15px 0 0 0;
+                    }
                         .m_tit{
                             display:none;
                             float: left;
@@ -598,6 +606,7 @@
                             margin:5px 0;
                         }
                         .btn_left button{margin:5px 0;}
+                        .btn_right button{margin:5px 0;}
                     .nv_contents .nv_contents_search_type2{
                         width:100%; height: auto;
                         padding:0;

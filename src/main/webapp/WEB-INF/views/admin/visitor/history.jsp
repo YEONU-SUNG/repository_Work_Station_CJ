@@ -47,7 +47,7 @@
                                     '<td>' + oData.visitorHistory.visitDate.toString().substring(0, 10) + '</td>' + 
                                     '<td>' + oData.visitorHistory.visitorID + '</td>' + 
                                     '<td>' + oData.visitorHistory.visitPurpose + '</td>' + 
-                                    '<td>' + oData.visitorHistory.visitorPosition1 + ' ' + oData.visitorHistory.visitorPosition2 + ' ' + oData.visitorHistory.visitorPosition3 + '</td>' + 
+                                    '<td>' + oData.visitorHistory.visitorPosition1 + ', ' + oData.visitorHistory.visitorPosition2 + ', ' + oData.visitorHistory.visitorPosition3 + '</td>' + 
                                     '<td>' + oData.visitorHistory.planFromDateTime + '~' + oData.visitorHistory.planToDateTime + '</td>' + 
                                     '<td>' + oData.visitFromDateTime.toString().substring(10) + '</td>' + 
                                     '<td>' + oData.visitToDateTime.toString().substring(10) + '</td>' + 

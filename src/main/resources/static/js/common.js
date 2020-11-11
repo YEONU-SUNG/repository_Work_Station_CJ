@@ -35,6 +35,9 @@ $(document).on('click', '.nv_modal2_open', function() {
 $(document).on('click', '.nv_modal4_open', function() {
     $(".nv_modal4").addClass("on");
 });
+$(document).on('click', '.nv_modal5_open', function() {
+    $(".nv_modal5").addClass("on");
+});
 $(document).on('click', '.nv_modal_close', function() {
     $(this).parents(".nv_modal").removeClass("on");
 });

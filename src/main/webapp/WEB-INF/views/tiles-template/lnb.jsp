@@ -23,8 +23,8 @@
             <c:if test="${sessionScope.login.host.auth eq '1'}">
                 <li data-lnb="visitor-blacklist" data-url="/admin/visitor/blacklist" data-name="방문 제한자 관리"><a id="visitor-blacklist" href="/admin/visitor/blacklist">방문 제한자 관리</a></li>
                 <li data-lnb="authoritymanage" data-url="/admin/authoritymanage" data-name="관리자 권한관리"><a id="authoritymanage" href="/admin/authoritymanage">관리자 권한관리</a></li>
-                <!-- <li data-lnb="contentsmanage" data-url="/admin/contentsmanage" data-name="교육컨텐츠관리"><a id="contentsmanage" href="/admin/contentsmanage">교육컨텐츠관리</a></li> -->
-                <!-- <li data-lnb="edumanagelist" data-url="/admin/edumanagelist" data-name="교육관리"><a id="edumanagelist" href="/admin/edumanagelist">교육관리</a></li> -->
+                <li data-lnb="contentsmanage" data-url="/admin/contentsmanage" data-name="교육컨텐츠관리"><a id="contentsmanage" href="/admin/contentsmanage">교육컨텐츠관리</a></li>
+                <li data-lnb="edumanagelist" data-url="/admin/edumanagelist" data-name="교육관리"><a id="edumanagelist" href="/admin/edumanagelist">교육관리</a></li>
                 <li data-lnb="notice" data-url="/admin/notice" data-name="공지사항"><a id="notice" href="/admin/notice">공지사항</a></li>
                 <li data-lnb="faq" data-url="/admin/faq" data-name="FAQ"><a id="faq" href="/admin/faq">FAQ</a></li>
                 <!-- <li data-lnb="personalinfo" data-url="/admin/personalinfo" data-name="개인정보처리방침"><a id="personalinfo" href="/admin/personalinfo">개인정보처리방침</a></li> -->
