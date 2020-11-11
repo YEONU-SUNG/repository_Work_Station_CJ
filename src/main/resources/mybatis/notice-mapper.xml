@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.notice.repository.NoticeRepository">
+    <sql id="NoticeInfo">
+        SELECT
+            N.NoticeID
+		    ,N.Title
+		    ,N.Contents
+            ,N.AdminID
+            ,H.HostName
+		    ,N.VisibleStartDate
+		    ,N.VisibleEndDate
+		    ,N.ActiveFlag
+            ,N.RegDate
+            ,N.DeleteFlag
+        FROM
+            notice AS N
+        JOIN host AS H ON N.AdminID = H.AdminID
+		WHERE 1=1
+    </sql>
+
+    <select id="countByDeleteFlag" parameterType="com.neo.visitor.domain.Pagenation" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM 
+            notice AS N
+        WHERE 1=1
+        <choose>
+            <when test="conditionKey!='' and conditionKey=='ActiveFlag'">
+                AND N.ActiveFlag = #{conditionValue}    
+            </when>
+            <when test="conditionKey!='' and conditionKey=='Title'">
+                <!-- AND N.Title LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND N.Title LIKE('%' + #{conditionValue} + '%')
+            </when>
+            <when test="conditionKey!='' and conditionKey=='AdminID'">
+                <!-- AND N.AdminID = (SELECT AdminID FROM host AS h WHERE h.HostName LIKE CONCAT('%', #{conditionValue}, '%')) -->
+                AND N.AdminID = (SELECT AdminID FROM host AS h WHERE h.HostName LIKE ('%' + #{conditionValue} + '%')) 
+            </when>
+        </choose>
+        AND N.DeleteFlag = 'N'
+    </select>
+    
+    <!-- 공지사항 리스트 조회 -->
+    <select id="findAll" parameterType="com.neo.visitor.domain.Pagenation" resultType="com.neo.visitor.domain.notice.entity.Notice">
+        <include refid="NoticeInfo"></include>
+        AND N.DeleteFlag = 'N' 
+        <choose>
+            <when test="conditionKey!='' and conditionKey=='ActiveFlag'">
+                AND N.ActiveFlag = #{conditionValue}    
+            </when>
+            <when test="conditionKey!='' and conditionKey=='Title'">
+                <!-- AND N.Title LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND N.Title LIKE ('%' + #{conditionValue} + '%')
+            </when>
+            <when test="conditionKey!='' and conditionKey=='AdminID'">
+                <!-- AND N.AdminID = (SELECT AdminID FROM host AS h WHERE h.HostName LIKE CONCAT('%', #{conditionValue}, '%')) -->
+                AND N.AdminID = (SELECT AdminID FROM host AS h WHERE h.HostName LIKE ('%' + #{conditionValue} + '%'))
+            </when>
+        </choose>
+        ORDER BY
+            N.RegDate DESC
+        <!-- LIMIT
+            #{startPage}, #{size} -->
+            offset #{startPage} rows fetch next #{size} rows only
+    </select>
+
+    <!-- 공지사항 상세보기 조회 -->
+    <select id="findById" parameterType="com.neo.visitor.domain.notice.entity.Notice" resultType="com.neo.visitor.domain.notice.entity.Notice">
+        <include refid="NoticeInfo"></include>
+        AND N.NoticeID = #{NoticeID}
+    </select>
+
+    <!-- 공지사항 삭제 -->
+    <update id="updateDeleteFlag" parameterType="java.util.List">
+        UPDATE
+            notice
+        SET
+            DeleteFlag = 'Y'
+        WHERE
+            NoticeID IN
+        <foreach collection="list" item="item"  open="(" close=")" separator=",">
+            #{item.NoticeID}
+        </foreach>
+    </update>
+
+    <!-- 공지사항 등록 -->
+    <insert id="save" parameterType="com.neo.visitor.domain.notice.entity.Notice" useGeneratedKeys="true" keyProperty="NoticeID">
+    <!-- <insert id="save" parameterType="com.neo.visitor.domain.notice.entity.Notice"> -->
+        INSERT INTO
+            notice ( Title, Contents, AdminID, VisibleStartDate, VisibleEndDate, ActiveFlag, RegDate, DeleteFlag )
+        VALUES ( #{Title}, #{Contents}, #{AdminID}, GETDATE(), GETDATE(), #{ActiveFlag}, #{RegDate}, #{DeleteFlag} ) 
+    </insert>
+
+    <!-- 공지사항 수정 -->
+    <update id="updateNotice" parameterType="com.neo.visitor.domain.notice.entity.Notice">
+        UPDATE
+            notice 
+        SET
+            Title = #{Title}, Contents = #{Contents}, AdminID = #{AdminID}
+        WHERE 
+            NoticeID = #{NoticeID}
+    </update>
+
+    <!-- 공지사항 엑티브 변경 -->
+    <update id="updateActiveFlag" parameterType="java.util.List">
+        UPDATE
+            notice
+        SET
+            ActiveFlag = #{ActiveFlag}
+        WHERE
+            NoticeID = #{NoticeID}
+    </update>
+</mapper>

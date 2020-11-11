@@ -1,0 +1,96 @@
+package com.neo.visitor.domain.visitor.application;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.neo.visitor.domain.Pagenation;
+import com.neo.visitor.domain.PagenationResponse;
+import com.neo.visitor.domain.PagenationType;
+import com.neo.visitor.domain.user.service.LoginService;
+import com.neo.visitor.domain.visitor.entity.VisitorHistory;
+import com.neo.visitor.domain.visitor.entity.VisitorInoutTime;
+import com.neo.visitor.domain.visitor.service.VisitorInoutTimeService;
+import com.neo.visitor.domain.visitor.service.VisitorService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class VisitorApplication {
+
+    @Autowired LoginService loginService;
+    @Autowired VisitorService visitorService;
+    @Autowired VisitorInoutTimeService visitorInoutTimeService;
+
+    public PagenationResponse<VisitorInoutTime> history(HttpServletRequest request,Pagenation pagenation, String visitorFromDateTime, String visitorToDateTime) {
+        PagenationResponse<VisitorInoutTime> pagenationResponse = new PagenationResponse<>();
+        pagenation.PagenationExpansionDate(visitorFromDateTime.equals("") ? LocalDate.now().toString() : visitorFromDateTime
+                                            , visitorToDateTime.equals("") ? LocalDate.now().toString() : visitorToDateTime);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("pagenation", pagenation);
+        map.put("host", loginService.getUserSessionInfo(request));
+        //pagenationResponse.setResponse(visitorInoutTimeService.findAllHistory(pagenation));
+        pagenationResponse.setResponse(visitorInoutTimeService.findAllHistory(map));
+        //pagenationResponse.setPagenation(pagenation.makePagenation(visitorInoutTimeService.findAllHistoryCount(pagenation), PagenationType.VISITOR_HISTORY));
+        pagenationResponse.setPagenation(pagenation.makePagenation(visitorInoutTimeService.findAllHistoryCount(map), PagenationType.VISITOR_HISTORY));
+        return pagenationResponse;
+    }
+
+    public PagenationResponse<VisitorHistory> dashboard(HttpServletRequest request, Pagenation pagenation, LocalDateTime localDateTime) {
+        PagenationResponse<VisitorHistory> pagenationResponse = new PagenationResponse<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put("pagenation", pagenation);
+        map.put("date", localDateTime.toString());
+        map.put("host", loginService.getUserSessionInfo(request));
+
+        // pagenationResponse.setResponse(visitorService.findByPlanDateTime(map));
+        // pagenationResponse.setPagenation(pagenation.makePagenation(visitorService.countByDeleteFlag(map), PagenationType.VISITOR_APPROVE));
+        pagenationResponse.setResponse(visitorService.findByPlanDateTime(map));
+        pagenationResponse.setPagenation(pagenation.makePagenation(visitorService.countByDeleteFlag(map), PagenationType.VISITOR_APPROVE));
+        return pagenationResponse;
+    }
+
+    public String[][] historyExcel(String[] header, HttpServletRequest request, Pagenation pagenation, String visitorFromDateTime, String visitorToDateTime) {
+        pagenation.PagenationExpansionDate(visitorFromDateTime, visitorToDateTime);
+        Map<String, Object> map = new HashMap<>();
+        map.put("pagenation", pagenation);
+        map.put("host", loginService.getUserSessionInfo(request));
+        //List<VisitorInoutTime> visitorHistorys = visitorInoutTimeService.findAllHistoryNotLimit(pagenation);
+        List<VisitorInoutTime> visitorHistorys = visitorInoutTimeService.findAllHistoryNotLimit(map);
+        String[][] excelData = new String[visitorHistorys.size() + 1][header.length];
+        excelData[0] = header;
+        for(int i=1; i <= visitorHistorys.size(); i++) {
+            VisitorInoutTime visitorHistory = visitorHistorys.get(i-1);
+            excelData[i] = new String[] { 
+                //visitorHistory.getVisitorHistory().getVisitorReservationNumber()+"",
+                //visitorHistory.getVisitorHistory().getVisitorHistorySeq()+"", //�׽�Ʈ
+                visitorHistory.getVisitorHistory().getVisitorCompany(),
+                visitorHistory.getVisitorHistory().getVisitorName(),
+                visitorHistory.getVisitorHistory().getVisitorMobile(),
+                visitorHistory.getVisitFromDateTime(),
+                visitorHistory.getVisitToDateTime(),
+                //visitorHistory.getVisitorHistory().getVisitDate().toString(),
+                //visitorHistory.getVisitorHistory().getVisitDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                //visitorHistory.getVisitorHistory().getVisitorPosition1() + "_" + visitorHistory.getVisitorHistory().getVisitorPosition2(),
+                visitorHistory.getVisitorHistory().getVisitPurpose() + "_" + visitorHistory.getVisitorHistory().getVisitorPosition1() + "_" + visitorHistory.getVisitorHistory().getVisitorPosition2(),
+                visitorHistory.getVisitorHistory().getCarNo(),
+                visitorHistory.getVisitorHistory().getCarryStuff(),
+                visitorHistory.getVisitorHistory().getCarryStuffSerialNo(),
+                visitorHistory.getVisitorHistory().getCarryStuffPurpose(),
+                visitorHistory.getVisitorHistory().getCarryStuffUsed(),
+                visitorHistory.getVisitorHistory().getHostName(),
+                visitorHistory.getVisitorHistory().getCardID(),
+                visitorHistory.getVisitorHistory().getPlanFromDateTime()+"~"+visitorHistory.getVisitorHistory().getPlanToDateTime(),
+                visitorHistory.getVisitorHistory().getVisitDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            };
+        }
+        return excelData;
+    }
+}

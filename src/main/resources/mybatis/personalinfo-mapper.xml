@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.personalinfo.repository.PersonalinfoRepository">
+    <sql id="PersonalinfoInfo">
+        SELECT
+            P.PersonalinfoID
+		    ,P.Title
+		    ,P.Contents
+            ,P.AdminID
+            ,H.HostName
+		    ,P.VisibleStartDate
+		    ,P.VisibleEndDate
+		    ,P.ActiveFlag
+            ,P.RegDate
+            ,P.DeleteFlag
+        FROM
+        personalinfo AS P
+        JOIN host AS H ON P.AdminID = H.AdminID
+		WHERE 1=1
+    </sql>
+
+    <select id="countByDeleteFlag" parameterType="com.neo.visitor.domain.Pagenation" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM 
+        personalinfo AS P
+        WHERE 1=1
+        <choose>
+            <when test="conditionKey!='' and conditionKey=='ActiveFlag'">
+                AND P.ActiveFlag = #{conditionValue}    
+            </when>
+            <when test="conditionKey!='' and conditionKey=='Title'">
+                <!-- AND N.Title LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND P.Title LIKE ('%' + #{conditionValue} + '%')
+            </when>
+            <when test="conditionKey!='' and conditionKey=='AdminID'">
+                <!-- AND N.AdminID = (SELECT AdminID FROM host AS h WHERE h.HostName LIKE CONCAT('%', #{conditionValue}, '%')) -->
+                AND P.AdminID = (SELECT AdminID FROM host AS h WHERE h.HostName LIKE ('%' + #{conditionValue} + '%'))
+            </when>
+        </choose>
+        AND P.DeleteFlag = 'N'
+    </select>
+    
+    <!-- 개인정보처리방침 리스트 조회 -->
+    <select id="findAll" parameterType="com.neo.visitor.domain.Pagenation" resultType="com.neo.visitor.domain.personalinfo.entity.Personalinfo">
+        <include refid="PersonalinfoInfo"></include>
+        AND P.DeleteFlag = 'N' 
+        <choose>
+            <when test="conditionKey!='' and conditionKey=='ActiveFlag'">
+                AND P.ActiveFlag = #{conditionValue}    
+            </when>
+            <when test="conditionKey!='' and conditionKey=='Title'">
+                <!-- AND N.Title LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND P.Title LIKE ('%' + #{conditionValue} + '%')
+            </when>
+            <when test="conditionKey!='' and conditionKey=='AdminID'">
+                <!-- AND N.AdminID = (SELECT AdminID FROM host AS h WHERE h.HostName LIKE CONCAT('%', #{conditionValue}, '%')) -->
+                AND P.AdminID = (SELECT AdminID FROM host AS h WHERE h.HostName LIKE ('%' + #{conditionValue} + '%'))
+            </when>
+        </choose>
+        ORDER BY
+            P.RegDate DESC
+        <!-- LIMIT
+            #{startPage}, #{size} -->
+        offset #{startPage} rows fetch next #{size} rows only
+    </select>
+
+    <!-- 개인정보처리방침 상세보기 조회 -->
+    <select id="findById" parameterType="com.neo.visitor.domain.personalinfo.entity.Personalinfo" resultType="com.neo.visitor.domain.personalinfo.entity.Personalinfo">
+        <include refid="PersonalinfoInfo"></include>
+        AND P.PersonalinfoID = #{PersonalinfoID}
+    </select>
+
+    <!-- 개인정보처리방침 삭제 -->
+    <update id="updateDeleteFlag" parameterType="java.util.List">
+        UPDATE
+        personalinfo
+        SET
+            DeleteFlag = 'Y'
+        WHERE
+        PersonalinfoID IN
+        <foreach collection="list" item="item"  open="(" close=")" separator=",">
+            #{item.PersonalinfoID}
+        </foreach>
+    </update>
+
+    <!-- 개인정보처리방침 등록 -->
+    <insert id="save" parameterType="com.neo.visitor.domain.personalinfo.entity.Personalinfo" useGeneratedKeys="true" keyProperty="PersonalinfoID">
+        INSERT INTO
+            personalinfo ( Title, Contents, AdminID, visibleStartDate, visibleEndDate, ActiveFlag, RegDate, DeleteFlag )
+            VALUES ( #{Title}, #{Contents}, #{AdminID}, GETDATE(), GETDATE(), #{ActiveFlag}, #{RegDate}, #{DeleteFlag} ) 
+    </insert>
+
+    <!-- 개인정보처리방침 수정 -->
+    <update id="updatePersonalinfo" parameterType="com.neo.visitor.domain.personalinfo.entity.Personalinfo">
+        UPDATE
+        personalinfo 
+        SET
+            Title = #{Title}, Contents = #{Contents}, AdminID = #{AdminID}
+        WHERE 
+        PersonalinfoID = #{PersonalinfoID}
+    </update>
+
+    <!-- 개인정보처리방침 엑티브 변경 -->
+    <update id="updateActiveFlag" parameterType="java.util.List">
+        UPDATE
+        personalinfo
+        SET
+            ActiveFlag = #{ActiveFlag}
+        WHERE
+        PersonalinfoID = #{PersonalinfoID}
+    </update>
+</mapper>

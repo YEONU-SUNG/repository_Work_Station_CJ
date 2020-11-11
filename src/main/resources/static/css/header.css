@@ -1,0 +1,222 @@
+.nv_wrap{
+}
+.nv_lnb{
+    position: fixed;
+    left:0;
+    overflow: auto;
+    width:320px; height: 100vh;
+    background: #2d3138;
+    z-index: 500;
+}
+    /*** 로고 ***/
+    .nv_lnb .nv_logo{
+        width:100%; height: 80px;
+        text-indent: -6000px;
+        background: url(../imgaes/logo_pc.png) 33px center no-repeat;
+        background-position-x: center;
+    }
+
+    /*** LNB - level1 ***/
+    .nv_lnb nav{}
+        .nv_lnb nav ul.nv_lnv_level1{}
+            .nv_lnb nav ul.nv_lnv_level1 > li > a{
+                display: block;
+                width:100%; height: 70px;
+                padding-left: 65px;
+                line-height: 70px;
+                font-size: 16px;
+                color: #ccc;
+                box-sizing: border-box;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li > a.on{
+                font-weight: bold;
+                color: #fff;
+                background: #1a1b1f;
+            }
+
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(1) > a{
+                background: url(../imgaes/lnb_icon1_off.png) 29px center no-repeat, #2d3138;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(2) > a{
+                background: url(../imgaes/lnb_icon2_off.png) 29px center no-repeat, #2d3138;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(3) > a{
+                background: url(../imgaes/lnb_icon3_off.png) 29px center no-repeat, #2d3138;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(4) > a{
+                background: url(../imgaes/lnb_icon4_off.png) 29px center no-repeat, #2d3138;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(5) > a{
+                background: url(../imgaes/lnb_icon5_off.png) 29px center no-repeat, #2d3138;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(6) > a{
+                background: url(../imgaes/lnb_icon6_off.png) 29px center no-repeat, #2d3138;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(7) > a{
+                background: url(../imgaes/lnb_icon7_off.png) 29px center no-repeat, #2d3138;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(8) > a{
+                background: url(../imgaes/lnb_icon8_off.png) 29px center no-repeat, #2d3138;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(9) > a{
+                background: url(../imgaes/lnb_icon9_off.png) 29px center no-repeat, #2d3138;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(10) > a{
+                background: url(../imgaes/lnb_icon10_off.png) 29px center no-repeat, #2d3138;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(11) > a{
+                background: url(../imgaes/lnb_icon10_off.png) 29px center no-repeat, #2d3138;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(1) > a.on{
+                background: url(../imgaes/lnb_icon1_on.png) 29px center no-repeat, #1a1b1f;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(2) > a.on{
+                background: url(../imgaes/lnb_icon2_on.png) 29px center no-repeat, #1a1b1f;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(3) > a.on{
+                background: url(../imgaes/lnb_icon3_on.png) 29px center no-repeat, #1a1b1f;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(4) > a.on{
+                background: url(../imgaes/lnb_icon4_on.png) 29px center no-repeat, #1a1b1f;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(5) > a.on{
+                background: url(../imgaes/lnb_icon5_on.png) 29px center no-repeat, #1a1b1f;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(6) > a.on{
+                background: url(../imgaes/lnb_icon6_on.png) 29px center no-repeat, #1a1b1f;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(7) > a.on{
+                background: url(../imgaes/lnb_icon7_on.png) 29px center no-repeat, #1a1b1f;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(8) > a.on{
+                background: url(../imgaes/lnb_icon8_on.png) 29px center no-repeat, #1a1b1f;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(9) > a.on{
+                background: url(../imgaes/lnb_icon9_on.png) 29px center no-repeat, #1a1b1f;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(10) > a.on{
+                background: url(../imgaes/lnb_icon10_on.png) 29px center no-repeat, #1a1b1f;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li:nth-of-type(11) > a.on{
+                background: url(../imgaes/lnb_icon10_on.png) 29px center no-repeat, #1a1b1f;
+            }
+
+            .nv_lnb nav ul.nv_lnv_level2{
+                max-height: 0;
+                overflow: hidden;
+                transition-duration: 0.3s;
+            }
+            .nv_lnb nav ul.nv_lnv_level1 > li > a.on + ul.nv_lnv_level2{
+            }
+                .nv_lnb nav ul.nv_lnv_level2 > li{
+                    background:#1a1b1f;
+                }
+                    .nv_lnb nav ul.nv_lnv_level2 > li > a{
+                        display: block;
+                        width:100%; height: 55px;
+                        padding-left: 80px;
+                        line-height: 55px;
+                        font-size: 16px;
+                        color: #aaa;
+                        box-sizing: border-box;
+                    }
+                    .nv_lnb nav ul.nv_lnv_level2 > li > a.on{
+                        font-weight: bold;
+                        color: #fff;
+                        background: #1a1b1f;
+                    }
+@media screen and (max-width:1400px){
+    .lnb_close{
+        position: fixed;
+        width:100%;
+        left:-100%; top:0; bottom:0;
+        text-indent: -6000px;
+    }
+    .lnb_close.on{left:0;}
+    .nv_lnb{
+        width:90%;
+        max-width:280px;
+        left:-280px;
+        transition-duration: 0.3s;
+    }
+    .nv_lnb.on{left:0;}
+        .nv_lnb .nv_logo{
+            height: 50px;
+            background: url(../imgaes/logo_M.png) 33px center no-repeat;
+        }
+            .nv_lnb nav ul.nv_lnv_level1{}
+                .nv_lnb nav ul.nv_lnv_level1 > li > a{height: 50px;
+                    padding-left: 65px;
+                    line-height: 50px;
+                    font-size: 11px;
+                }
+                    .nv_lnb nav ul.nv_lnv_level2 > li > a{
+                        height: 45px;
+                        padding-left: 80px;
+                        line-height: 45px;
+                        font-size: 11px;
+                        box-sizing: border-box;
+                    }
+    
+    /**** 모바일 프로필 영역 ****/
+    .nv_m_profile{
+        overflow: hidden;
+        height: 80px;
+        padding:0 18px;
+        box-sizing: border-box;
+    }
+        /** 프로필 이미지 **/
+        .nv_m_profile .img_box{
+            float: left;
+            overflow: hidden;
+            width:40px; height: 40px;
+            margin-top:20px;
+            border-radius: 5px;
+        }
+        /** 사용자 이름 **/
+        .nv_m_profile .name_box{
+            float: left;
+            margin-top:20px;
+            margin-left: 14px;
+            color: #fff;
+        }
+            .nv_m_profile .name_box .username{
+                margin-top: 5px;
+                font-size: 12px;
+                font-weight: bold;
+            }
+            .nv_m_profile .name_box .userid{
+                margin-top: 2px;
+                font-size: 10px;
+            }
+        /** 모바일 로그아웃 버튼 **/
+        .nv_m_profile .nv_logout{
+            float: right;
+            display: block;
+            width:16px; height: 20px;
+            margin-top:30px;
+            border:none;
+            background: url(../imgaes/logout_m.png) center center no-repeat;
+        }
+    
+    .nv_m_header{
+        position: relative;
+        display: block;
+        height: 50px;
+        box-shadow: 0 0 5px 5px #eaecf0;
+    }
+        .nv_m_header .nv_toggle{
+            position: absolute;
+            width:26px; height: 50px;
+            left:25px;
+            text-indent: -6000px;
+            background: url(../imgaes/toggle.png) center center no-repeat;
+          }
+        .nv_logo_m{
+            width:60px; height: 50px;
+            margin:0 auto;
+            text-indent: -6000px;
+            background: url(../imgaes/logo_M.png) center center no-repeat;
+            background-size: contain;
+        }
+}

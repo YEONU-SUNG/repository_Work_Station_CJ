@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0 " />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!---<script src="js/jquery.mCustomScrollbar.js"></script>--->
+    <script src="js/common.js"></script>
+    <script src="js/select.js"></script>
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css" />
+    <title>SFA - FAQ</title>
+</head>
+<body>
+    <div class="nv_wrap">
+          <p class="lnb_close pc_skip">LNB 닫기</p>
+          <div class="nv_lnb">
+               <h1 class="nv_logo tpc_skip m_skip">SFA 에스에프에이</h1>
+               <div class="nv_m_profile pc_skip">
+                   <div class="img_box">
+                       <img src="imgaes/profileimg.png" alt="프로필이미지">
+                   </div>
+                   <div class="name_box">
+                       <p class="username">이송이</p>
+                       <p class="userid">leesongyi</p>
+                   </div>
+                   <button type="button" class="nv_logout"></button>
+               </div>
+               <nav>
+                    <ul class="nv_lnv_level1">
+                        <li><a href="#a">금일방문객</a></li>
+                        <li><a href="#a">방문등록</a></li>
+                        <li><a href="#a">방문승인</a></li>
+                        <li><a href="#a">방문이력</a></li>
+                        <li><a href="#a">방문객관리</a></li>
+                        <li><a href="#a">관리자권한관리</a></li>
+                        <li><a href="#a">교육컨텐츠관리</a></li>
+                        <li><a href="#a">교육관리</a></li>
+                        <li><a href="#a">공지사항</a></li>
+                        <li><a href="#a" class="on">FAQ</a></li>
+                        <li><a href="#a">1dapth</a>
+                            <ul class="nv_lnv_level2">
+                                <li><a href="#a">2depth</a></li>
+                                <li><a href="#a">2depth</a></li>
+                                <li><a href="#a" class="on">2depth</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+          </div>
+          <div class="nv_container">
+              <div class="nv_top tpc_skip m_skip">
+                  <ul class="nv_reborn">
+                      <li><a href="#a" class="nv_blue nv_bold">HOME</a></li>
+                      <li><a href="#a">FAQ</a></li>
+                  </ul>
+                  <div class="nv_login_info_pc">
+                      <p class="nv_bold"><span class="nv_blue">이송이</span> 님, 반갑습니다. 좋은 하루 되세요.</p>
+                      <button type="button" class="nv_blue_button" style="line-height: 0px;">로그아웃</button>
+                  </div>
+              </div>
+              <div class="nv_m_header pc_skip">
+                  <p class="nv_toggle">모바일 메뉴 열기</p>
+                  <h1 class="nv_logo_m">SFA</h1>
+              </div>
+              <div class="nv_contents_wrap">
+                  <div class="nv_contents">
+                      <div class="nv_contents_main_header">
+                          <h4>FAQ</h4>
+                      </div>
+                      <div class="notice_left m_skip">
+                          <p>※ 활성 상태의 게시글만 사용자에게 표시됩니다.</p>
+                      </div>
+                      <div class="nv_contents_search">
+                          <div class="nv_select_box">
+                              <p>작성자</p>
+                              <ul>
+                                  <li>작성자</li>
+                                  <li>제목</li>
+                                  <li>상태</li>
+                              </ul>
+                          </div>
+                          <div class="nv_search_box">
+                              <input type="text" class="nv_input">
+                              <input type="submit" class="nv_search_icon">
+                          </div>
+                      </div>
+                      <div class="nv_table_box">
+                          <table class="nv_table textcenter nv_board_table" cellspacing="0" cellpadding="0">
+                              <colgroup>
+                                  <col width="50">
+                                  <col width="90">
+                                  <col>
+                                  <col width="15%">
+                              </colgroup>
+                              <thead>
+                                  <tr>
+                                      <th class="nv_gray_check">
+                                          <input type="checkbox" id="allcheck">
+                                          <label for="allcheck">전체 선택</label>
+                                      </th>
+                                      <th>상태</th>
+                                      <th>제목</th>
+                                      <th>작성자</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td class="nv_gray_check">
+                                          <input type="checkbox" id="n1">
+                                          <label for="n1">선택</label>
+                                      </td>
+                                      <td>
+                                          <button type="button" class="nv_blue_button">활성</button>
+                                      </td>
+                                      <td class="tit">자주 묻는 질문</td>
+                                      <td class="name">관리자</td>
+                                  </tr>
+                                  <tr>
+                                      <td class="nv_gray_check">
+                                          <input type="checkbox" id="n2">
+                                          <label for="n2">선택</label>
+                                      </td>
+                                      <td>
+                                          <button type="button" class="nv_red_button">비활성</button>
+                                      </td>
+                                      <td class="tit">자주 묻는 질문</td>
+                                      <td class="name">관리자</td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <div class="nv_m_btn_area nv_bord_btn_area">
+                              <button type="button" class="nv_red_button delete_icon_btn left">선택 항목 삭제</button>
+                              <button type="button" class="nv_blue_button add_icon_btn right">방문객 등록</button>
+                          </div>
+                          <div class="nv_table_pagenum">
+                              <ul>
+                                  <li class="first">처음으로</li>
+                                  <li class="prev">이전으로</li>
+                                  <li class="on">1</li>
+                                  <li class="next">다음으로</li>
+                                  <li class="last">마지막으로</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <footer class="pc_skip nv_footer">
+              <address>COPYRIGHT ⓒ Neovision CO. ALL RIGHTS RESERVED.</address>
+          </footer>
+    </div>
+</body>
+</html>

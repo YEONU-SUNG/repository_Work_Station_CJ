@@ -1,0 +1,748 @@
+@import url(reset.css);
+@import url(header.css);
+@import url(contents.css);
+
+.nv_container{
+    float: left;
+    width:100%;
+    padding-left: 320px;
+    box-sizing: border-box;
+    min-height: 100vh;
+}
+@media screen and (max-width:1400px){.nv_container{padding-left: 0; min-height: inherit;}}
+
+    /***** 탑 *****/
+    .nv_container .nv_top{
+        overflow: hidden;
+        height: 80px;
+        border-bottom: 2px solid #b7b7b7;
+    }
+    /*** 리본바 ***/
+    .nv_container .nv_top .nv_reborn{float: left; padding-left: 39px;}
+        .nv_container .nv_top .nv_reborn li{float: left; line-height: 80px;}
+        .nv_container .nv_top .nv_reborn li a{
+            padding:0 22px 0 17px;
+            background: url(../imgaes/reborn_arrow.png) right center no-repeat;
+        }
+        .nv_container .nv_top .nv_reborn li:first-of-type a{padding-left: 0;}
+        .nv_container .nv_top .nv_reborn li:last-of-type a{padding-right: 0; background:none;}
+
+    @media screen and (max-width:1400px){.nv_container .nv_top{display: none;}}
+
+    /*** 로그인 문구 ***/
+    .nv_container .nv_top .nv_login_info_pc{float: right; line-height: 80px;}
+        .nv_container .nv_top .nv_login_info_pc p{float: left;}
+        .nv_container .nv_top .nv_login_info_pc .nv_blue_button{
+            float: left;
+            width:90px;
+            margin:22.5px 20px 22.5px 22px;
+        }
+
+        .nv_contents_wrap{
+            min-height: calc(100vh - 82px);
+            background:#e1e1e1;
+            padding:10px;
+            box-sizing: border-box;
+        }
+
+    @media screen and (max-width:1400px){.nv_contents_wrap{ min-height: calc(100vh - 100px);}}
+        @media screen and (max-width:1280px){.nv_contents_wrap{background: #fff;}}
+
+            /**** 컨텐츠영역 ****/
+            .nv_contents{background:#fff; overflow: hidden;}
+            @media screen and (min-width:1281px){
+                .nv_contents{border-bottom: 2px solid #b7b7b7; min-height: calc(100vh - 105px);}
+            }
+            @media screen and (max-width:1400px){.nv_contents{min-height: calc(100vh - 125px);}}
+
+                /** 컨텐츠 타이틀 **/
+                .nv_contents .nv_contents_header{
+                    float: left;
+                    width:100%;
+                    height: 70px;
+                    border-bottom: 1px solid #e1e1e1;
+                    box-sizing: border-box;
+                }
+                    .nv_contents .nv_contents_header h4{
+                        padding-left: 23px;
+                        line-height: 70px;
+                        font-size: 20px;
+                        font-weight: 800;
+                    }
+                .nv_contents .nv_contents_main_header{
+                    height: 80px;
+                    border-bottom: 1px solid #e1e1e1;
+                    box-sizing: border-box;
+                    text-align: center;
+                }
+                    .nv_contents .nv_contents_main_header h4{
+                        font-size: 24px;
+                        line-height: 80px;
+                        font-weight: 800;
+                    }
+                .nv_table_tit{
+                    float: left;
+                    width:100%; height: 60px;
+                    padding:0 20px; margin-top:25px;
+                    box-sizing: border-box;
+                }
+                    .nv_table_tit h4{
+                        float: left;
+                        padding-left: 20px;
+                        font-size: 16px;
+                        background: url(../imgaes/table_tit_icon.png) left center no-repeat;
+                        line-height: 60px;
+                    }
+                    .nv_table_tit .btn_area{float: right;}
+                        .nv_table_tit .btn_area button{
+                            margin-top:12.5px;
+                        }
+                        .up_icon_btn{
+                            padding-left: 30px;
+                            background: url(../imgaes/icon_upload.png) 10px center no-repeat, #00a99d;
+                        }
+                        .add_icon_btn{
+                            padding-left: 30px;
+                            background: url(../imgaes/icon_add.png) 10px center no-repeat, #3280ff;
+                        }
+                        .down_icon_btn{
+                            padding-left: 30px;
+                            background: url(../imgaes/icon_down.png) 10px center no-repeat, #00a99d;
+                        }
+                        .delete_icon_btn{
+                            padding-left: 30px;
+                            background: url(../imgaes/icon_delete.png) 10px center no-repeat, #e52250;
+                        }
+                        .reset_icon_btn{
+                            padding-left: 30px;
+                            background: url(../imgaes/icon_reset.png) 10px center no-repeat, #00a99d;
+                        }
+                        .btn_left{float: left; padding: 25px 20px;}
+                            .btn_left button + button{margin-left: 8px;}
+
+
+                /** 컨텐츠 검색 영역 **/
+                .nv_contents .nv_contents_search{
+                    float: right;
+                    height: 85px;
+                    padding:25px 20px;
+                    box-sizing: border-box;
+                }
+                    /** 셀렉트 박스 **/
+                    .nv_contents_search .nv_select_box{position: relative; float: left;}
+                        .nv_select_box p{
+                            width:200px; height: 35px;
+                            padding-left: 12px;
+                            font-size: 13px;
+                            line-height: 35px;
+                            border:1px solid #e1e1e1;
+                            border-radius: 5px;
+                            box-sizing: border-box;
+                            background:url(../imgaes/select_arrow.png) right center no-repeat;
+                            cursor: pointer;
+                        }
+                        .nv_select_box ul{
+                            position: absolute;
+                            top:35px; left:0;
+                            width:100%; max-height: 0;
+                            border-radius: 5px;
+                            overflow: hidden;
+                            cursor: pointer;
+                            transition-duration: 0.3s;
+                        }
+                        .nv_select_box ul.on{max-height: 100px; overflow: auto;}
+
+                            .nv_select_box ul li{
+                                line-height: 35px;
+                                background: #e1e1e1;
+                                width:100%;
+                                font-size: 13px;
+                                padding:0 10px;
+                                box-sizing: border-box;
+                            }
+
+                    /** 검색 **/
+                    .nv_contents_search .nv_search_box{
+                        float: left;
+                        overflow: hidden;
+                        margin-left: 10px;
+                        width:200px; height: 35px;
+                        font-size: 13px;
+                        border:1px solid #e1e1e1;
+                        border-radius: 5px;
+                        box-sizing: border-box;
+                    }
+                        .nv_search_box .nv_input{
+                            float: left;
+                            width:163px; height: 33px;
+                            padding-left: 10px;
+                            box-sizing: border-box;
+                            border: none;
+                        }
+
+                        .nv_search_box .nv_search_icon{
+                            float: left;
+                            width:35px; height: 33px;
+                            border:none;
+                            text-indent: -6000px;
+                            cursor: pointer;
+                            background:url(../imgaes/search_icon.png) right center no-repeat;
+                        }
+
+                        /** 기간 선택 **/
+                        .nv_contents_search .nv_date_box{float: left; width:470px;}
+                            .nv_contents_search .nv_date_box span{
+                                float: left;
+                                display: inline-block;
+                                padding:0 10px;
+                                line-height: 35px;
+                                box-sizing: border-box;
+                            }
+                            .nv_contents_search .nv_date_box span.icon_date{
+                                width:32px;
+                                text-indent: -6000px;
+                                background:url(../imgaes/icon_date.png) left center no-repeat;
+                            }
+                            .nv_contents_search .nv_date_box .nv_input{float: left; max-width: 200px;}
+
+                /** 테이블 영역 **/
+                @media screen and (min-width:1281px){
+                    .nv_table_box{
+                        float: left;
+                        width:100%;
+                        padding:0 20px;
+                        box-sizing: border-box;
+                    }
+                }
+                    .nv_table{
+                        width:100%;
+                        line-height: 1.8;
+                        border-top:2px solid #3280ff;
+                    }
+                        .nv_table thead th{padding:10px 0; background:#eee; word-break: keep-all;}
+                        .nv_table tbody td{
+                            padding:10px;
+                            border-bottom: 1px solid #eee;
+                            box-sizing: border-box;
+                            word-break: keep-all;
+                        }
+
+                    dl.nv_dl_table{
+                        float: left;
+                        width:100%;
+                        line-height: 1.8;
+                        border-top:2px solid #3280ff;
+                    }
+                        .nv_dl_table dt{
+                            float: left;
+                            width:16.6%; height: 56px;
+                            font-weight: bold;
+                            text-align: center;
+                            line-height: 56px;
+                            border-bottom: 1px solid #eee;
+                            box-sizing: border-box;
+                        }
+                        .nv_dl_table dd{
+                            float: left;
+                            width:33.2%; height: 56px;
+                            padding:10px 0;
+                            border-bottom: 1px solid #eee;
+                            box-sizing: border-box;
+                        }
+                        .nv_dl_table dd.nv_dd_full{width:83.3%;}
+                        .nv_table_box .nv_select_box,
+                        .nv_dl_table dd .nv_select_box{
+                            position: relative;
+                            display: inline-block;
+                        }
+                        .nv_dl_table dd .nv_select_box p,
+                        .nv_dl_table dd .nv_select_box li,
+                        .nv_table_box .nv_select_box p,
+                        .nv_table_box .nv_select_box li{text-align: left;}
+
+                        /** 연락처 **/
+                        .nv_phone_area{}
+                            .nv_phone_area .nv_select_box{
+                                position: relative;
+                                display: inline-block;
+                                width:80px;
+                            }
+                            .nv_phone_area .nv_select_box p{width:100%; text-align: left;}
+                            .nv_phone_area .nv_select_box li{text-align: left;}
+                            .nv_phone_area span{display: inline-block; width:18px; text-align: center;}
+                            .nv_phone_area .nv_input{width:80px; display: inline-block;}
+
+                        /** 기간 **/
+                        .nv_date span{display: inline-block; width:18px; text-align: center;}
+                        
+                        /** 교육컨텐츠 셀렉 박스 영역 **/
+                        .nv_contents_select_box{padding:25px 20px;}
+                            .nv_contents_select_box .nv_select_box{
+                                display: inline-block;
+                                margin-right: 8px;
+                                position: relative;
+                            }
+                            .nv_contents_select_box .delete_icon_btn{float: right;}
+
+                        /** 체크박스 영역 **/
+                        .nv_dl_table .nv_check_area{padding:0;}
+                            .nv_check_area input[type=checkbox]{display: none;}
+                            .nv_check_area input[type=checkbox] + label{
+                                display: inline-block;
+                                margin-right: 40px;
+                                padding-left: 25px;
+                                line-height: 56px;
+                                background: url(../imgaes/check_off.png) left center no-repeat;
+                                cursor: pointer;
+                            }
+                            .nv_check_area input[type=checkbox] + label:last-of-type{margin-right: 0;}
+                            .nv_check_area input[type=checkbox]:checked + label{
+                                background: url(../imgaes/check_on.png) left center no-repeat;
+                            }
+                            .nv_gray_check input[type=checkbox]{display: none;}
+                            .nv_gray_check input[type=checkbox] + label{
+                                display: inline-block;
+                                margin-right: 40px;
+                                padding-left: 25px;
+                                line-height: 15px;
+                                text-indent: -6000px;
+                                background: url(../imgaes/check_gray_off.png) left center no-repeat;
+                                cursor: pointer;
+                            }
+                            .nv_gray_check input[type=checkbox] + label:last-of-type{margin-right: 0;}
+                            .nv_gray_check input[type=checkbox]:checked + label{
+                                background: url(../imgaes/check_gray_on.png) left center no-repeat;
+                            }
+                            .dev_custom_car_no input[type=checkbox]{display: none;}
+                            .dev_custom_car_no input[type=checkbox] + label{
+                                margin-right: 20px;
+                                padding-left: 25px;
+                                line-height: 15px;
+                                text-indent: -6000px;
+                                background: url(../imgaes/check_gray_off.png) left center no-repeat;
+                                cursor: pointer;
+                            }
+                            .dev_custom_car_no input[type=checkbox] + label:last-of-type{margin-right: 0;}
+                            .dev_custom_car_no input[type=checkbox]:checked + label{
+                                background: url(../imgaes/check_gray_on.png) left center no-repeat;
+                            }
+
+                    /** 페이지넘버 **/
+                    .nv_table_pagenum{}
+                        .nv_table_pagenum ul{
+                            text-align: center;
+                            margin-top:30px;
+                            margin-bottom: 50px;
+                        }
+                            .nv_table_pagenum ul li{
+                                display: inline-block;
+                                width:30px; height: 30px;
+                                font-size: 13px;
+                                line-height: 30px;
+                                border:1px solid #eee;
+                                border-radius: 5px;
+                                box-sizing: border-box;
+                                cursor: pointer;
+                            }
+                            .nv_table_pagenum ul li.on{
+                                color: #fff;
+                                border:none;
+                                background:#3280ff;
+                            }
+
+                            .nv_table_pagenum ul li.first{
+                                text-indent: -6000px;
+                                background: url(../imgaes/page_first.png) center center no-repeat;
+                            }
+
+                            .nv_table_pagenum ul li.prev{
+                                text-indent: -6000px;
+                                background: url(../imgaes/page_prev.png) center center no-repeat;
+                            }
+
+                            .nv_table_pagenum ul li.next{
+                                text-indent: -6000px;
+                                background: url(../imgaes/page_next.png) center center no-repeat;
+                            }
+
+                            .nv_table_pagenum ul li.last{
+                                text-indent: -6000px;
+                                background: url(../imgaes/page_last.png) center center no-repeat;
+                            }
+
+                /******************************
+
+                            Mobile
+
+                ******************************/
+                @media screen and (max-width:1280px){
+                    /** 컨텐츠 타이틀 **/
+                    .nv_contents .nv_contents_header{height: 45px;}
+                        .nv_contents .nv_contents_header h4{
+                            padding-left: 10px;
+                            line-height: 45px;
+                            font-size: 13px;
+                        }
+                    .nv_contents .nv_contents_main_header{height: 55px;}
+                        .nv_contents .nv_contents_main_header h4{font-size: 15px; line-height: 55px;}
+                    
+                    .nv_table_tit{
+                        float: left;
+                        width:100%; height: 40px;
+                        padding:0; margin-top:15px;
+                    }
+                        .nv_table_tit h4{
+                            padding-left: 15px;
+                            font-size: 13px;
+                            line-height: 40px;
+                            background: url(../imgaes/table_tit_icon.png) 2px center no-repeat;
+                            background-size: 7px;
+                        }
+                        .nv_table_tit .btn_area button{
+                            height: 30px;
+                            margin-top:5px;
+                            margin-right: 5px;
+                        }
+                        .up_icon_btn{
+                            padding-left: 22px;
+                            padding-right: 7px;
+                            background: url(../imgaes/icon_upload.png) 8px center no-repeat, #00a99d;
+                            background-size: 10px;
+                        }
+                        .down_icon_btn{
+                            padding-left: 22px;
+                            padding-right: 7px;
+                            background: url(../imgaes/icon_down.png) 8px center no-repeat, #00a99d;
+                            background-size: 10px;
+                        }
+                        .add_icon_btn{
+                            padding-left: 22px;
+                            padding-right: 7px;
+                            background: url(../imgaes/icon_add.png) 8px center no-repeat, #3280ff;
+                            background-size: 10px;
+                        }
+                        .delete_icon_btn{
+                            padding-left: 22px;
+                            padding-right: 7px;
+                            background: url(../imgaes/icon_delete.png) 8px center no-repeat, #e52250;
+                            background-size: 10px;
+                        }
+                        .reset_icon_btn{
+                            padding-left: 22px;
+                            padding-right: 7px;
+                            background: url(../imgaes/icon_reset.png) 8px center no-repeat, #00a99d;
+                            background-size: 10px;
+                        }
+                    
+                        .btn_left{float: left; padding: 15px 0;}
+                    .nv_m_btn_area{overflow: hidden; margin-top:10px;}
+                        .nv_m_btn_area .left{float: left;}
+                        .nv_m_btn_area .right{float: right;}
+                    
+                    /** 컨텐츠 검색 영역 **/
+                    .nv_contents .nv_contents_search{
+                        float: right;
+                        width: 100%;
+                        height: 60px;
+                        padding:15px 0;
+                        box-sizing: border-box;
+                    }
+                        /** 셀렉트 박스 **/
+                        .nv_select_box {
+                            width: 35%;
+                        }
+                        .nv_select_box p{
+                            width:100%; height: 30px;
+                            line-height: 30px;
+                            font-size: 10px;
+                        }
+                            .nv_select_box ul{top:30px;}
+                                .nv_select_box ul li{line-height: 30px; font-size: 10px;}
+
+                        /** 검색 **/
+                        .nv_contents_search{
+                            width: 40%;
+                        }
+                        .nv_contents_search .nv_search_box{width:40%; height: 30px;}
+                            .nv_search_box .nv_input{height: 28px; width: 100%; font-size: 10px;}
+                            .nv_search_box .nv_search_icon{
+                                height: 28px;
+                                width:30px; 
+                                background:url(../imgaes/search_icon.png) 8px center no-repeat;
+                                background-size: 80%;
+                            }
+
+                        /** 기간 선택 **/
+                        .nv_contents_search .nv_date_box{float: left;width:310px;}
+                            .nv_contents_search .nv_date_box span{
+                                float: left;
+                                display: inline-block;
+                                padding:0 10px;
+                                line-height: 30px;
+                                box-sizing: border-box;
+                            }
+                            .nv_contents_search .nv_date_box span.icon_date{
+                                width:32px;
+                                text-indent: -6000px;
+                                background:url(../imgaes/icon_date.png) left center no-repeat;
+                            }
+                            .nv_contents_search .nv_date_box .nv_input{float: left; max-width: 120px;}
+                    
+                        /******* 테이블 영역 *******/
+                        .nv_table thead th, 
+                        .nv_table tbody td{font-size: 10px;}
+                        .nv_table tbody td{padding:5px 10px;}
+                            .nv_table .width_50{width:50px; padding:0;}
+
+                        .nv_dl_table dt{
+                            width:25%; height: 51px;
+                            line-height: 51px;
+                            font-size: 10px;
+                        }
+                        .nv_dl_table dd{width:75%; height: 51px;}
+                        .nv_dl_table dd.nv_dd_full{width:75%;}
+                            .nv_dl_table dd .nv_input{padding:0 5px;}
+                            .nv_dl_table dd .max_200{max-width: 120px;}
+                            .nv_dl_table dd .nv_input + button{height: 30px;}
+                            .nv_dl_table dd .nv_select_box{max-width: 120px;}
+                    
+                        /** 연락처 **/
+                        .nv_phone_area{}
+                            .nv_phone_area .nv_select_box{width:60px;}
+                            .nv_phone_area span{width:10px;}
+                            .nv_phone_area .nv_input{width:50px;}
+
+                        /** 기간 **/
+                        .nv_date span{width:10px;}
+                            .nv_date .nv_input{width:90px;}
+
+                        /** 체크박스 영역 **/
+                            .nv_check_area input[type=checkbox] + label{
+                                margin-right: 10px;
+                                padding-left: 13px;
+                                font-size: 10px;
+                                line-height: 51px;
+                                background-size: 10px;
+                            }
+                            .nv_check_area input[type=checkbox]:checked + label{background-size: 10px;}
+                    
+                        /** 이중 테이블 영역 **/
+                        .nv_table tbody td.nv_hidden_table_area{
+                            display: none;
+                            padding:0;
+                            border-bottom: none;
+                        }
+                        .nv_table tbody td.nv_hidden_table_area.on{display: table-cell;}
+                            .nv_hidden_table_area .nv_hidden_table{
+                                width:100%;
+                                text-align: left;
+                                background: #f7f7f7;
+                            }
+                                .nv_hidden_table_area .nv_hidden_table td{
+                                    padding:7px 0 7px 10px;
+                                    line-height: 1.5;
+                                }
+                                .nv_hidden_table_area .nv_hidden_table td.nv_bold{font-weight: 800;}
+                                  .nv_hidden_table_area .nv_select_box{background: #fff;}
+                    
+                        /** 이중 테이블 영역2 **/
+                        .nv_hidden_table_type2{}
+                        .nv_hidden_table_type2 thead th{height: 30px; padding:0 10px;}
+                        .nv_hidden_table_type2 thead .table_delete_btn{
+                            display: inline-block;
+                            width:11px; height: 11px;
+                            text-indent: -6000px;
+                            color: transparent;
+                            background:url(../imgaes/table_delete_btn.png) center center no-repeat;
+                        }
+                        .nv_hidden_table_type2 tbody td{padding:5px 0;}
+                    
+                        /** 페이지넘버 **/
+                        .nv_table_pagenum ul{
+                            margin-top:20px;
+                            margin-bottom: 30px;
+                        }
+                            .nv_table_pagenum ul li{
+                                width:25px; height: 25px;
+                                font-size: 10px;
+                                line-height: 25px;
+                            }
+
+                }
+                @media screen and (max-width:1400px){
+                    /** 푸터 **/
+                    .nv_footer{
+                        display: block;
+                        float: left;
+                        width:100%; height: 50px;
+                        text-align: center;
+                        line-height: 50px;
+                        font-size: 10px;
+                        color: #aaa;
+                        background: #eee;
+                    }
+                    .nv_footer address{font-style: normal;}
+                }
+                @media screen and (max-width:767px){
+                    .btn_left{
+                        overflow: hidden;
+                        width:30%;
+                        padding:15px 0 0 0;
+                    }
+                        .m_tit{
+                            display:none;
+                            float: left;
+                            width: 25%;
+                            line-height: 30px;
+                            text-align: center;
+                            margin:5px 0;
+                        }
+                        .btn_left button{margin:5px 0;}
+                    .nv_contents .nv_contents_search_type2{
+                        width:100%; height: auto;
+                        padding:0;
+                    }
+                        .nv_contents_search_type2 .nv_date_box{width:100%; margin:5px 0;}
+                            .nv_contents_search_type2 .nv_date_box .icon_date{display: none;}
+                            .nv_contents_search_type2 .nv_date_box .nv_input{width:45%; max-width:90px;}
+                            .nv_contents_search_type2 .nv_date_box span{width:10%; padding:0; text-align: center; max-width:15px;}
+                        .nv_contents_search_type2 .nv_select_box{
+                            width:35%;
+                            max-width:90px;
+                            margin:5px 15px 15px 0;
+                         }
+                            .nv_contents_search_type2 .nv_select_box p{width:100%;}
+                        .nv_contents_search_type2 .nv_search_box{
+                            width:35%;
+                            max-width:90px;
+                            margin:5px 10px 15px 0;
+                         }
+                            .nv_dl_table .nv_double_select .nv_select_box{max-width:90px;}
+                            .nv_dl_table .nv_double_select .nv_select_box + .nv_select_box{margin-left: 3px;}
+                            .nv_dl_table .nv_double_select .nv_select_box p{max-width:90px;}
+                }
+
+/********** 모달창 **********/
+
+.nv_modal{
+    position: fixed;
+    display: none;
+    left:0; top:0; bottom:0; right: 0;
+    background:rgba(0,0,0,0.3);
+}
+.nv_modal.on{ display: block;}
+    .nv_modal_container{
+        position: relative;
+        top:50%;
+        overflow: hidden;
+        width:90%; max-width: 500px;
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.3);
+        margin:-290px auto 0;
+        border-radius: 5px;
+        background: #fff;
+    }
+    .nv_modal.nv_modal1 .nv_modal_container{margin-top:-152.5px;}
+    .nv_modal.nv_modal2 .nv_modal_container{margin-top:-245px;}
+    .nv_modal.nv_modal3 .nv_modal_container{margin-top:-82.5px;}
+    .nv_modal.nv_modal4 .nv_modal_container{margin-top:-245px;}
+        .nv_modal_container .nv_modal_header{
+            overflow: hidden;
+            height: 50px;
+            line-height: 50px;
+            background: #2d3138;
+        }
+
+            .nv_modal_container .nv_modal_header h2{
+                float: left;
+                padding-left: 18px;
+                font-size: 16px;
+                color: #fff;
+            }
+
+            .nv_modal_container .nv_modal_header .nv_modal_close{
+                float: right;
+                width: 20px; height: 50px;
+                margin-right: 20px;
+                text-indent: -6000px;
+                background:url(../imgaes/modal_close.png) center center no-repeat;
+                cursor: pointer;
+            }
+        .nv_modal_contents{padding:5px 20px 15px;}
+            .nv_modal_contents > div{margin-bottom: 15px;}
+                .nv_modal_contents .textarea_name{
+                    padding-left: 27px;
+                    font-size: 15px;
+                    line-height: 45px;
+                    background: url(../imgaes/modal_check_icon.png) left center no-repeat;
+                }
+                .nv_textarea{
+                    width:100%; height: 125px;
+                    border:1px solid #ddd;
+                    border-radius: 5px;
+                    padding:13px;
+                    color: #333;
+                    box-sizing: border-box;
+                    resize: none;
+                }
+                .nv_bord_textarea{height: 280px;}
+                .nv_input{
+                    height: 35px; width:100%;
+                    padding:0 12px;
+                    letter-spacing: -1px;
+                    box-sizing: border-box;
+                    border:1px solid #ddd;
+                    border-radius: 5px;
+                }
+                    .nv_input.max_200{max-width: 200px;}
+                    .nv_modal_contents .nv_select_box{position: relative; width:200px; margin-bottom: 15px;}
+            .btn_area{text-align: center;}
+            .btn_area.nv_page_bottomarea{float: left; width:100%; margin:25px 0 45px;}
+            .btn_area.nv_page_bottomarea_type2{float: left; width:100%; margin:25px 0 45px;}
+                .btn_area button{display: inline-block; margin-right: 10px;}
+                .btn_area button.m_w_100{min-width: 100px;}
+                .btn_area button:last-of-type{margin-right: 0;}
+
+/******************************
+
+            Mobile
+
+******************************/
+@media screen and (max-width:1280px){
+    .nv_modal.nv_modal1 .nv_modal_container{margin-top:-111.5px;}
+    .nv_modal.nv_modal2 .nv_modal_container{margin-top:-175px;}
+    .nv_modal.nv_modal3 .nv_modal_container{margin-top:-62.5px;}
+    .nv_modal.nv_modal4 .nv_modal_container{margin-top:-175px;}
+    .nv_modal_container .nv_modal_header{height: 40px; line-height: 40px;}
+    .nv_modal_container .nv_modal_header h2{font-size: 13px;}
+            .nv_modal_container .nv_modal_header .nv_modal_close{
+                width: 16px; height: 40px;
+                margin-right: 13px;
+                background-size: 16px;
+            }
+    .nv_modal_contents{padding:7px 10px}
+            .nv_modal_contents > div{margin-bottom: 8px;}
+                .nv_modal_contents .textarea_name{
+                    padding-left: 25px;
+                    font-size: 13px;
+                    line-height: 33px;
+                    background: url(../imgaes/modal_check_icon.png) 2px center no-repeat;
+                    background-size: 15px;
+                }
+                .nv_textarea{
+                    height: 90px;
+                    padding:9px;
+                    font-size: 10px;
+                }
+                .nv_bord_textarea{height: 120px;}
+                .nv_input{
+                    height: 30px;
+                    padding:0 9px;
+                    font-size: 10px;
+                }
+                    .nv_modal_contents .nv_select_box{position: relative; width:120px;}
+            .btn_area.nv_page_bottomarea{margin:20px 0 25px;}
+            .btn_area.nv_page_bottomarea .m_full_btn{width:100%; height: 35px;}
+                .btn_area button.m_w_100{min-width: 80px;}
+            .btn_area.nv_page_bottomarea_type2{margin:15px 0 25px;}
+
+}

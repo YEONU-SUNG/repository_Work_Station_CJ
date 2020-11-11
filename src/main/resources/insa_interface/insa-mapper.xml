@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="insa">
+    <select id="getInsa" resultType="java.util.Map">
+        SELECT 
+        P.*, C.COM_NM,
+        RIGHT(SUBSTRING(DEPT_NM_PATH, 0, LEN(DEPT_NM_PATH)-CHARINDEX('\', REVERSE(DEPT_NM_PATH))+1),CHARINDEX('\', REVERSE(SUBSTRING(DEPT_NM_PATH, 0, LEN(DEPT_NM_PATH)-CHARINDEX('\', REVERSE(DEPT_NM_PATH))+1)))-1) AS DEPT_NM_PATH         
+        FROM GWUserInfo_ALL AS P 
+        LEFT OUTER JOIN GWDeptInfo O
+        ON P.DEPT_CD = O.DEPT_CD 
+        LEFT OUTER JOIN TB_BASE_COMPANY C 
+        ON P.COM_CD = C.COM_CD
+        WHERE (
+            P.COM_CD='KO031' 
+            OR P.COM_CD='KO439'
+            OR P.COM_CD='KO437'
+            OR P.COM_CD='KO514'
+        )
+        AND P.USE_FG='Y'
+    </select>
+
+    <select id="getAll" resultType="java.util.Map">
+        SELECT * FROM GWUserInfo_ALL
+    </select>
+    
+</mapper>

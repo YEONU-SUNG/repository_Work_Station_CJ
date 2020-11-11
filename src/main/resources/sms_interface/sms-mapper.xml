@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sms">
+    <insert id="sendSMS" parameterType="com.neo.visitor.sms.entity.SMSMsgQue">
+        INSERT INTO MSG_QUEUE (
+            msg_type, send_type, dstaddr, callback, stat, subject, text_type, text, expiretime, filecnt, insert_time,request_time, opt_id) 
+        VALUES (3, 1, #{dstaddr}, #{callback},'0', '-', '0', #{text}, 86400, 0, GETDATE() , GETDATE(), 'SFA1' )
+        <!-- SELECT   -->
+    </insert>
+</mapper>

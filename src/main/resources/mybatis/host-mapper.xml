@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.user.repository.HostRepository">
+    <resultMap id="Host" type="com.neo.visitor.domain.user.entity.Host">
+        <id column="HostID" property="hostID" />
+        <result column="HostName" property="hostName" />
+        <result column="Mobile" property="mobile" />
+        <result column="Tel" property="tel" />
+        <result column="Company" property="company" />
+        <result column="GradeName" property="gradeName" />
+        <result column="PositionName" property="positionName" />
+        <result column="InsertDate" property="insertDate" />
+        <result column="DeleteFlag" property="deleteFlag" />
+        <result column="AdminID" property="adminID" />
+        <result column="Email" property="email" />
+        <result column="DeptCD" property="deptCD" />
+        <result column="Auth" property="auth" />
+        <result column="UpperDeptCD" property="upperDeptCD" />
+        <result column="ActiveFlag" property="activeFlag" />
+    </resultMap>
+
+    <select id="findByHostID" parameterType="java.lang.String" resultType="com.neo.visitor.domain.user.entity.Host">
+        SELECT 
+            *
+        FROM
+            Host H
+        WHERE
+            HostID = #{hostId}
+    </select>
+    
+    <select id="findByHostName" parameterType="java.lang.String" resultType="com.neo.visitor.domain.user.entity.Host">
+        SELECT 
+            *
+        FROM
+            Host H
+        WHERE
+            HostName = #{hostName}
+            AND ActiveFlag = 'Y'
+            <![CDATA[ AND (DeptCD <>'대표이사' AND DeptCD <>'부회장')]]>
+            <!-- ORDER BY FIELD(Company, '에스에프에이서비스(주)','(주)에이디엠','(주)둔포기계','(주)SFA-아산', '(주)SFA-화성', '(주)에스에프에이') DESC, HostID ASC -->
+            ORDER BY (CASE company when '에스에프에이서비스(주)' then 0
+                when '(주)에이디엠' then 1
+                when '(주)둔포기계' then 2
+                when '(주)SFA-아산' then 3
+                when '(주)SFA-화성' then 4
+                when '(주)에스에프에이' then 5 else 6 end) DESC, HostID ASC
+    </select>
+     
+    <update id="updateHostAuth" parameterType="com.neo.visitor.domain.user.entity.Host">
+        UPDATE
+            Host
+        SET 
+            Auth = #{auth}
+        WHERE
+            HostID = #{hostID}
+    </update>
+
+    <update id="updateActiveFlag" parameterType="com.neo.visitor.domain.user.entity.Host">
+        UPDATE
+            Host
+        SET 
+            ActiveFlag = #{activeFlag}
+        WHERE
+            HostID = #{hostID}
+    </update>
+
+    <select id="findByHostDeptAndHostName" parameterType="com.neo.visitor.domain.user.entity.Host" resultType="com.neo.visitor.domain.user.entity.Host">
+        SELECT 
+            *
+        FROM 
+            Host H
+        WHERE 
+            H.DeptCD = #{deptCD} AND H.HostName = #{hostName}
+            AND DeleteFlag = 'N'
+    </select>
+
+    <select id="findByHostDeptHead" parameterType="com.neo.visitor.domain.user.entity.Host" resultType="com.neo.visitor.domain.user.entity.Host">
+        SELECT 
+            *
+        FROM 
+            Host
+        WHERE
+        <!-- <![CDATA[
+            DeptCD = if((SELECT HostID FROM visit.host where (DeptCD = #{deptCD}) AND positionName <> '-' limit 1) is null, #{upperDeptCD}, #{deptCD})
+            AND positionName <> '-' AND (positionName ='팀장' OR positionName ='그룹장');
+        ]]> -->
+        <![CDATA[
+            DeptCD = (CASE WHEN ((SELECT TOP 1 H.HostID FROM host AS H where (DeptCD = '관리자') AND positionName <> '-') is null) THEN #{upperDeptCD} ELSE #{deptCD} END)
+            AND positionName <> '-' AND (positionName ='팀장' OR positionName ='그룹장');
+        ]]>
+    </select>
+
+    <insert id="insaSave" parameterType="com.neo.visitor.domain.user.entity.Host">
+        INSERT INTO Host (
+            HostID, HostName, Mobile, Tel, Company, GradeName, PositionName, InsertDate, DeleteFlag, AdminID, Email, DeptCD, Auth, UpperDeptCD
+            ) 
+            VALUES (
+            #{hostID}
+            , #{hostName}
+            , #{mobile}
+            , #{tel}
+            , #{company}
+            , #{gradeName}
+            , #{positionName}
+            , #{insertDate}
+            , #{deleteFlag}
+            , #{adminID}
+            , #{email}
+            , #{deptCD}
+            , "3"
+            , #{upperDeptCD}
+            )
+            ON
+                DUPLICATE KEY
+            UPDATE
+                HostID = #{hostID},
+                HostName = #{hostName},
+                Mobile = #{mobile},
+                Tel = #{tel},
+                Company = #{company},
+                GradeName = #{gradeName},
+                PositionName = #{positionName},
+                InsertDate = #{insertDate},
+                DeleteFlag = #{deleteFlag},
+                AdminID = #{adminID},
+                Email = #{email},
+                DeptCD = #{deptCD},
+                UpperDeptCD = #{upperDeptCD}
+
+    </insert>
+</mapper>

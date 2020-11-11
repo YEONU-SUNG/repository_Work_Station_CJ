@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.visitor.repository.MailScheduleRepository">
+    <resultMap id="MailSchedule" type="com.neo.visitor.domain.visitor.entity.MailSchedule">
+        <id column="Seq" property="Seq" />
+        <result column="TargetEmail" property="TargetEmail" />
+        <result column="SendText" property="SendText" />
+        <result column="VisitApprovalDateTime" property="VisitApprovalDateTime" />
+    </resultMap>
+    
+    <insert id="save" parameterType="com.neo.visitor.domain.visitor.entity.MailSchedule" useGeneratedKeys="true" keyProperty="Seq">
+        INSERT INTO mailschedule (TargetEmail, SendText, VisitApprovalDateTime) VALUES (#{targetEmail}, #{sendText}, #{visitApprovalDateTime})
+    </insert>
+
+    <select id="getTargetEmail" resultType="com.neo.visitor.domain.visitor.entity.MailSchedule">
+        SELECT
+        distinct targetEmail 
+        FROM mailschedule 
+        WHERE STR_TO_DATE( VisitApprovalDateTime, '%Y-%m-%d' ) = date_add(curdate(), interval -1 day)
+    </select>
+
+    <select id="getSendEmail" resultType="com.neo.visitor.domain.visitor.entity.MailSchedule">
+        SELECT
+        *
+        FROM mailschedule 
+        WHERE STR_TO_DATE( VisitApprovalDateTime, '%Y-%m-%d' ) = date_add(curdate(), interval -1 day)
+        AND targetEmail = #{targetEmail}
+    </select>
+</mapper>

@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.visitor.repository.VisitorInoutTimeRepository">
+    <resultMap id="VisitorInoutTime" type="com.neo.visitor.domain.visitor.entity.VisitorInoutTime">
+        <id column="vSeq" property="vSeq" />
+        <result column="VisitorHistorySeq" property="visitorHistorySeq" />
+        <result column="VisitFromDateTime" property="visitFromDateTime" />
+        <result column="VisitToDateTime" property="visitToDateTime" />
+    </resultMap>
+
+    <resultMap id="VisitorInoutTime2" type="com.neo.visitor.domain.visitor.entity.VisitorInoutTime">
+        <id column="vSeq" property="vSeq" />
+        <result column="VisitFromDateTime" property="visitFromDateTime" />
+        <result column="VisitToDateTime" property="visitToDateTime" />
+
+        <association property="visitorHistory" column="VisitorHistorySeq" javaType="com.neo.visitor.domain.visitor.entity.VisitorHistory">
+            <result column="VisitorReservationNumber" property="visitorReservationNumber" />
+            <result column="VisitorHistorySeq" property="visitorHistorySeq" />
+            <result column="VisitorID" property="visitorID" />
+            <result column="VisitorName" property="visitorName" />
+            <result column="VisitorBirth" property="visitorBirth" />
+            <result column="VisitorMobile" property="visitorMobile" />
+            <result column="VisitorCompany" property="visitorCompany" />
+            <result column="VisitorPosition1" property="visitorPosition1" />
+            <result column="VisitorPosition2" property="visitorPosition2" />
+            <result column="VisitorPosition3" property="visitorPosition3" />
+            <result column="VisitApprovalYN" property="visitApprovalYN" />
+            <result column="VisitApprovalComment" property="visitApprovalComment" />
+            <result column="VisitDate" property="visitDate" javaType="java.time.LocalDateTime" />
+            <result column="AgreeFirst" property="agreeFirst" />
+            <result column="AgreeSecond" property="agreeSecond" />
+            <result column="CardID" property="cardID" />
+            <result column="CarNo" property="carNo" />
+            <result column="HostID" property="hostID" />
+            <result column="HostName" property="hostName" />
+            <result column="HostMobile" property="hostMobile" />
+            <result column="HostDept" property="hostDept" />
+            <result column="HostCompany" property="hostCompany" />
+            <result column="HostGradeName" property="hostGradeName" />
+            <result column="HostPositionName" property="hostPositionName" />
+            <result column="PlanFromDateTime" property="planFromDateTime" />
+            <result column="PlanToDateTime" property="planToDateTime" />
+            <result column="Approval" property="approval" />
+            <result column="VisitApprovalDateTime" property="visitApprovalDateTime" />
+            <result column="EduCompleteDateTime" property="eduCompleteDateTime" />
+            <result column="CarryStuff" property="carryStuff" />
+            <result column="CarryStuffSerialNo" property="carryStuffSerialNo" />
+            <result column="CarryStuffUsed" property="carryStuffUsed" />
+            <result column="CarryStuffPurpose" property="carryStuffPurpose" />
+            <result column="DeleteFlag" property="deleteFlag" />
+            <result column="VisitPurpose" property="visitPurpose" />
+        </association>
+    </resultMap>
+    
+    <insert id="save" parameterType="com.neo.visitor.domain.visitor.entity.VisitorInoutTime" useGeneratedKeys="true" keyProperty="vSeq">
+        <!-- INSERT INTO visitinouttime (VisitorHistorySeq, VisitFromDateTime, VisitToDateTime, CardID) VALUES (#{visitorHistorySeq}, NOW(), '', #{cardID}) -->
+        INSERT INTO visitinouttime (VisitorHistorySeq, VisitFromDateTime, VisitToDateTime, CardID)
+            VALUES (#{visitorHistorySeq}, CONVERT(varchar(20), GETDATE(), 120), '', #{cardID})
+    </insert>
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.neo.visitor.domain.visitor.entity.VisitorInoutTime">
+        SELECT * FROM
+            visitinouttime
+        WHERE
+            vSeq = #{vSeq}
+    </select>
+    <select id="findByVisitorHistorySeqAndVisitorFromDateTime" parameterType="java.lang.Integer" resultType="com.neo.visitor.domain.visitor.entity.VisitorInoutTime">
+        SELECT * FROM
+            visitinouttime
+        WHERE
+            VisitorHistorySeq = #{visitorHistorySeq}
+        AND
+            <!-- CONVERT(VisitFromDateTime, DATE) = CONVERT(NOW(), DATE) -->
+            VisitToDateTime = '' OR VisitToDateTime IS NULL
+    </select>
+    <!-- <update id="updateVisitorToDateTime" parameterType="java.lang.Integer">
+        UPDATE
+            visitinouttime
+        SET
+            VisitToDateTime = NOW() , CardID = #{cardID}
+        WHERE
+            vSeq = #{vSeq}
+    </update> -->
+
+    <update id="updateVisitorToDateTime" parameterType="com.neo.visitor.domain.visitor.entity.VisitorInoutTime">
+        UPDATE
+            visitinouttime
+        SET
+            <!-- VisitToDateTime = NOW() , CardID = #{cardID} -->
+            VisitToDateTime = CONVERT(varchar(20), GETDATE() ,120), CardID = #{cardID}
+        WHERE
+            vSeq = #{vSeq}
+    </update>
+
+    <update id="updateVisitorCardID" parameterType="com.neo.visitor.domain.visitor.entity.VisitorInoutTime">
+        UPDATE
+            visitinouttime
+        SET
+            CardID = #{cardID}
+        WHERE
+            vSeq = #{vSeq}
+    </update>
+
+    <select id="findAllHistoryCount" parameterType="com.neo.visitor.domain.Pagenation" resultType="java.lang.Integer">
+        SELECT
+         COUNT(*)
+         FROM visitinouttime vit
+            JOIN visitorhistory V ON vit.VisitorHistorySeq = V.VisitorHistorySeq
+        WHERE 1=1
+        
+        <!-- <![CDATA[
+            AND CONVERT(vit.VisitFromDateTime, DATE) >= CONVERT(#{visitFromDateTime}, DATE)
+            AND CONVERT(vit.VisitToDateTime, DATE) <= CONVERT(#{visitToDateTime}, DATE)
+        ]]> -->
+        <![CDATA[
+            AND CONVERT(varchar(50), vit.VisitFromDateTime, 23) >= CONVERT(varchar(50), #{visitFromDateTime}, 23)
+            AND CONVERT(varchar(50), vit.VisitToDateTime, 23) <= CONVERT(varchar(50), #{visitToDateTime}, 23)
+        ]]>
+
+        AND V.DeleteFlag = 'N'
+        <choose>
+            <when test='conditionKey!="" and conditionKey=="VisitorHistorySeq"'>
+                AND V.VisitorHistorySeq = #{conditionValue}
+            </when>
+            <when test='conditionKey!="" and conditionKey=="VisitorReservationNumber"'>
+                <!-- AND V.VisitorReservationNumber LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND V.VisitorReservationNumber LIKE ('%' + #{conditionValue} + '%')
+            </when>
+            <when test='conditionKey!="" and conditionKey=="VisitorName"'>
+                <!-- AND V.VisitorName LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND V.VisitorName LIKE ('%' + #{conditionValue} + '%')
+            </when>
+            <when test='conditionKey!="" and conditionKey=="CardID"'>
+                <!-- AND V.CardID LIKE CONCAT('%', #{conditionValue}, '%') -->
+                <!-- AND vit.CardID LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND vit.CardID LIKE ('%' + #{conditionValue} + '%')
+            </when>
+        </choose>
+    </select>
+
+    <select id="findAllHistoryCountType" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        SELECT
+         COUNT(*)
+         FROM visitinouttime vit
+            JOIN visitorhistory V ON vit.VisitorHistorySeq = V.VisitorHistorySeq
+        WHERE 1=1
+        
+        <!-- <![CDATA[
+            AND CONVERT(vit.VisitFromDateTime, DATE) >= CONVERT(#{pagenation.visitFromDateTime}, DATE)
+            AND CONVERT(vit.VisitToDateTime, DATE) <= CONVERT(#{pagenation.visitToDateTime}, DATE)
+        ]]> -->
+        <![CDATA[
+            AND CONVERT(varchar(50), vit.VisitFromDateTime, 23) >= CONVERT(varchar(50), #{pagenation.visitFromDateTime}, 23)
+            AND CONVERT(varchar(50), vit.VisitToDateTime, 23) <= CONVERT(varchar(50), #{pagenation.visitToDateTime}, 23)
+        ]]>
+
+        AND V.DeleteFlag = 'N'
+        <if test='host.host.auth == "2"'>
+            AND V.VisitorPosition1 = #{host.siteCode}
+        </if>
+        <if test='host.host.auth == "3"'>
+            AND V.HostID = #{host.host.hostID}
+        </if>
+        <choose>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorHistorySeq"'>
+                AND V.VisitorHistorySeq = #{pagenation.conditionValue}
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorReservationNumber"'>
+                <!-- AND V.VisitorReservationNumber LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND V.VisitorReservationNumber LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorName"'>
+                <!-- AND V.VisitorName LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND V.VisitorName LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="CardID"'>
+                <!-- AND V.CardID LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                <!-- AND vit.CardID LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND vit.CardID LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorCompany"'>
+                <!-- AND V.VisitorCompany LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND V.VisitorCompany LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitPurpose"'>
+                <!-- AND V.VisitPurpose LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND V.VisitPurpose LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+        </choose>
+    </select>
+
+    <select id="findAllHistory" parameterType="com.neo.visitor.domain.Pagenation" resultMap="VisitorInoutTime2">
+        SELECT
+         * 
+        FROM visitinouttime vit
+            JOIN visitorhistory V ON vit.VisitorHistorySeq = V.VisitorHistorySeq
+        WHERE 1=1
+
+        <!-- <![CDATA[
+            AND CONVERT(vit.VisitFromDateTime, DATE) >= CONVERT(#{visitFromDateTime}, DATE)
+            AND CONVERT(vit.VisitToDateTime, DATE) <= CONVERT(#{visitToDateTime}, DATE)
+        ]]> -->
+        <![CDATA[
+            AND CONVERT(varchar(50), vit.VisitFromDateTime, 23) >= CONVERT(varchar(50), #{visitFromDateTime}, 23)
+            AND CONVERT(varchar(50), vit.VisitToDateTime, 23) <= CONVERT(varchar(50), #{visitToDateTime}, 23)
+        ]]>
+
+        AND V.DeleteFlag = 'N'
+        <choose> 
+            <when test='conditionKey!="" and conditionKey=="VisitorHistorySeq"'>
+                AND V.VisitorHistorySeq = #{conditionValue}
+            </when>
+            <when test='conditionKey!="" and conditionKey=="VisitorReservationNumber"'>
+                <!-- AND V.VisitorReservationNumber LIKE CONCAT('%', #{conditionValue}, '%') -->
+            </when>
+            <when test='conditionKey!="" and conditionKey=="VisitorName"'>
+                <!-- AND V.VisitorName LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND V.VisitorName LIKE ('%' + #{conditionValue} + '%')
+            </when>
+            <when test='conditionKey!="" and conditionKey=="CardID"'>
+                <!-- AND V.CardID LIKE CONCAT('%', #{conditionValue}, '%') -->
+                <!-- AND vit.CardID LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND vit.CardID LIKE ('%' + #{conditionValue} + '%')
+            </when>
+        </choose>
+        ORDER BY
+            V.VisitorHistorySeq DESC
+        <!-- LIMIT
+            #{startPage}, #{size} -->
+        offset #{startPage} rows fetch next #{size} rows only
+    </select>
+
+    <select id="findAllHistoryType" parameterType="java.util.HashMap" resultMap="VisitorInoutTime2">
+        SELECT
+        vseq, V.visitorhistoryseq, visitfromdatetime, visittodatetime, visitorreservationnumber, visitorid, visitorname, visitorbirth, visitormobile, visitorcompany, visitorposition1, visitorposition2, visitorposition3, visitapprovalyn, visitapprovalcomment
+        <!-- , CONVERT(visitdate,char(10)) AS visitdate, agreefirst, agreesecond, vit.cardid, carno, hostid, hostname, hostmobile, hosttel, hostdept, hostcompany, hostgradename, hostpositionname
+        , CONVERT(planfromdatetime,char(10)) AS planfromdatetime, CONVERT(plantodatetime,char(10)) AS plantodatetime, approval, visitapprovaldatetime, educompletedatetime, carrystuff, carrystuffserialno, carrystuffused, carrystuffpurpose, deleteflag, visitpurpose -->
+        , CONVERT(varchar(20), visitdate, 120) AS visitdate, agreefirst, agreesecond, vit.cardid, carno, hostid, hostname, hostmobile, hosttel, hostdept, hostcompany, hostgradename, hostpositionname
+        , CONVERT(varchar(20), planfromdatetime, 120) AS planfromdatetime, CONVERT(varchar(20), plantodatetime, 120) AS plantodatetime, approval, visitapprovaldatetime, educompletedatetime, carrystuff, carrystuffserialno, carrystuffused, carrystuffpurpose, deleteflag, visitpurpose
+        <!-- FROM visitinouttime vit
+            JOIN visitorhistory V ON vit.VisitorHistorySeq = V.VisitorHistorySeq -->
+        FROM visitinouttime AS vit
+            JOIN visitorhistory AS V ON vit.VisitorHistorySeq = V.VisitorHistorySeq
+        WHERE 1=1
+
+        <!-- <![CDATA[
+            AND CONVERT(vit.VisitFromDateTime, DATE) >= CONVERT(#{pagenation.visitFromDateTime}, DATE)
+            AND CONVERT(vit.VisitToDateTime, DATE) <= CONVERT(#{pagenation.visitToDateTime}, DATE)
+        ]]> -->
+        <![CDATA[
+            AND CONVERT(varchar(50), vit.VisitFromDateTime, 23) >= CONVERT(varchar(50), #{pagenation.visitFromDateTime}, 23)
+            AND CONVERT(varchar(50), vit.VisitToDateTime, 23) <= CONVERT(varchar(50), DATEADD(DAY,1,#{pagenation.visitToDateTime}), 23)
+        ]]>
+
+        AND V.DeleteFlag = 'N'
+        <if test='host.host.auth == "2"'>
+            AND V.VisitorPosition1 = #{host.siteCode}
+        </if>
+        <if test='host.host.auth == "3"'>
+            AND V.HostID = #{host.host.hostID}
+        </if>
+        <choose>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorHistorySeq"'>
+                AND V.VisitorHistorySeq = #{pagenation.conditionValue}
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorReservationNumber"'>
+                <!-- AND V.VisitorReservationNumber LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND V.VisitorReservationNumber LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorName"'>
+                <!-- AND V.VisitorName LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND V.VisitorName LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="CardID"'>
+                <!-- AND V.CardID LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                <!-- AND vit.CardID LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND vit.CardID LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorCompany"'>
+                <!-- AND V.VisitorCompany LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND V.VisitorCompany LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitPurpose"'>
+                <!-- AND V.VisitPurpose LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND V.VisitPurpose LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+        </choose>
+        ORDER BY
+            V.VisitorHistorySeq DESC
+        <!-- LIMIT
+            #{pagenation.startPage}, #{pagenation.size} -->
+        offset #{pagenation.startPage} rows fetch next #{pagenation.size} rows only
+    </select>
+
+    <select id="findAllHistoryNotLimit" parameterType="com.neo.visitor.domain.Pagenation" resultMap="VisitorInoutTime2">
+        SELECT
+         * 
+         FROM visitinouttime vit
+            JOIN visitorhistory V ON vit.VisitorHistorySeq = V.VisitorHistorySeq
+        WHERE 1=1
+
+        <!-- <![CDATA[
+            AND CONVERT(vit.VisitFromDateTime, DATE) >= CONVERT(#{visitFromDateTime}, DATE)
+            AND CONVERT(vit.VisitToDateTime, DATE) <= CONVERT(#{visitToDateTime}, DATE)
+        ]]> -->
+        <![CDATA[
+            AND CONVERT(varchar(50), vit.VisitFromDateTime, 23) >= CONVERT(varchar(50), #{visitFromDateTime}, 23)
+            AND CONVERT(varchar(50), vit.VisitToDateTime, 23) <= CONVERT(varchar(50), #{visitToDateTime}, 23)
+        ]]>
+
+        AND V.DeleteFlag = 'N'
+        <choose>
+            <when test='conditionKey!="" and conditionKey=="VisitorHistorySeq"'>
+                AND V.VisitorHistorySeq = #{conditionValue}
+            </when>
+            <when test='conditionKey!="" and conditionKey=="VisitorReservationNumber"'>
+                <!-- AND V.VisitorReservationNumber LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND V.VisitorReservationNumber LIKE ('%' + #{conditionValue} + '%')
+            </when>
+            <when test='conditionKey!="" and conditionKey=="VisitorName"'>
+                <!-- AND V.VisitorName LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND V.VisitorName LIKE ('%' + #{conditionValue} + '%')
+            </when>
+            <when test='conditionKey!="" and conditionKey=="CardID"'>
+                <!-- AND V.CardID LIKE CONCAT('%', #{conditionValue}, '%') -->
+                <!-- AND vit.CardID LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND vit.CardID LIKE ('%' + #{conditionValue} + '%')
+            </when>
+        </choose>
+        ORDER BY
+            V.VisitorHistorySeq DESC
+    </select>
+
+    <select id="findAllHistoryNotLimitType" parameterType="java.util.HashMap" resultMap="VisitorInoutTime2">
+        SELECT
+         * 
+         FROM visitinouttime vit
+            JOIN visitorhistory V ON vit.VisitorHistorySeq = V.VisitorHistorySeq
+        WHERE 1=1
+        
+        <!-- <![CDATA[
+            AND CONVERT(vit.VisitFromDateTime, DATE) >= CONVERT(#{pagenation.visitFromDateTime}, DATE)
+            AND CONVERT(vit.VisitToDateTime, DATE) <= CONVERT(#{pagenation.visitToDateTime}, DATE)
+        ]]> --> 
+        <![CDATA[
+            AND CONVERT(varchar(50), vit.VisitFromDateTime, 23) >= CONVERT(varchar(50), #{pagenation.visitFromDateTime}, 23)
+            AND CONVERT(varchar(50), vit.VisitToDateTime, 23) <= CONVERT(varchar(50), #{pagenation.visitToDateTime}, 23)
+        ]]>
+
+        AND V.DeleteFlag = 'N'
+        <if test='host.host.auth == "2"'>
+            AND V.VisitorPosition1 = #{host.siteCode}
+        </if>
+        <if test='host.host.auth == "3"'>
+            AND V.HostID = #{host.host.hostID}
+        </if>
+        <choose>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorHistorySeq"'>
+                AND V.VisitorHistorySeq = #{pagenation.conditionValue}
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorReservationNumber"'>
+                <!-- AND V.VisitorReservationNumber LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND V.VisitorReservationNumber LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorName"'>
+                <!-- AND V.VisitorName LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND V.VisitorName LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="CardID"'>
+                <!-- AND V.CardID LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                <!-- AND vit.CardID LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND vit.CardID LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorCompany"'>
+                <!-- AND V.VISITORCOMPANY LIKE CONCAT('%', #{PAGENATION.CONDITIONVALUE}, '%') -->
+                AND V.VisitorCompany LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitPurpose"'>
+                <!-- AND V.VisitPurpose LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND V.VisitPurpose LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+        </choose>
+        ORDER BY
+            V.VisitorHistorySeq DESC
+    </select>
+
+</mapper>

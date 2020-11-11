@@ -1,0 +1,201 @@
+
+
+html, body{overflow: hidden;}
+.nv_wrap{height: 100vh; overflow: auto;}
+
+/**** RESET ****/
+
+*{margin:0; padding:0;}
+body, textarea{font-family: 'Nanum Gothic', sans-serif; color: #333; letter-spacing: -0.7px; font-size:14px;}
+em{font-style: normal;}
+a{text-decoration: none; color: #333;}
+a:hover{color: #333;}
+ul, li{list-style: none;}
+.skip, .blind{display: none;}
+.nv_blue{color: #3280ff;}
+.nv_red{color: #d24621;}
+.nv_bold{font-weight: 700;}
+.textcenter{text-align: center;}
+.textleft{text-align: left;}
+.textright{text-align: right;}
+.nv_imgbox{width:100%;}
+.nv_imgbox img{display: block; width:100%;}
+.nv_link{display: block;}
+.nv_link:hover{color: #333;}
+.max_120{max-width: 120px;}
+.max_100{max-width: 120px;}
+.max_80{max-width: 80px;}
+.toggle_btn button{display: none;}
+.toggle_btn .on{display: block; margin:0;}
+
+
+@media screen and (min-width:1281px){
+    .pc_skip{display: none;}
+}
+@media screen and (max-width:1280px){
+    body{font-size: 14px;}
+}
+@media screen and (max-width:1280px) and (min-width:768px){
+    .tpc_skip{display: none;}
+}
+@media screen and (max-width:767px){
+    body{font-size: 10px;}
+    .m_skip{display: none;}
+}
+
+
+
+/*********** button ************/
+
+.nv_blue_button,
+.nv_red_button,
+.nv_green_button{
+    height: 35px;
+    padding:0 15px;
+    font-size: 13px;
+    color: #fff;
+    border:none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.nv_blue_button{background: #3280ff;}
+.nv_red_button{background: #e52250;}
+.nv_green_button{background: #00a99d;}
+
+@media screen and (max-width:1280px){
+    .nv_blue_button,
+    .nv_red_button,
+    .nv_green_button{
+        height: 30px;
+        padding:0 15px;
+        font-size: 10px;
+    }
+}
+
+
+/*********** Datepicker ************/
+
+#datepicker1{height: 30px; border:1px solid #efefef; padding:0 7px;}
+.ui-widget.ui-widget-content{
+        border: 1px solid #5553;
+        background: #2d3138;
+}
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus,
+.ui-button:hover,
+.ui-button:focus {
+	background: #777;
+}
+.ui-datepicker th{color: #fff;}
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-button, html .ui-button.ui-state-disabled:hover,
+html .ui-button.ui-state-disabled:active{border:none; background: none; color: #fff;}
+.ui-datepicker select.ui-datepicker-month,
+.ui-datepicker select.ui-datepicker-year{width:35%; margin:0 5%;}
+.ui-widget-header{border:none; background:none; color: #fff;}
+.ui-datepicker td span, .ui-datepicker td a{text-align: center; padding:5px; color: #fff;}
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-button.ui-state-active:hover{
+    background: #3877bc;
+    font-weight: normal;
+    color: #ffffff;
+}
+.ui-widget-header .ui-icon.ui-icon-circle-triangle-w{background:url(../imgaes/table_pager_prev.png) center center no-repeat;}
+.ui-widget-header .ui-icon.ui-icon-circle-triangle-e{background:url(../imgaes/table_pager_next.png) center center no-repeat;}
+
+
+/*********** BX sllider ************/
+.bx-wrapper{border:none; box-shadow: none; margin:0; background: transparent; height: calc(100vh - 100px);}
+.middle{
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.bx-wrapper div{
+    height: calc(100vh - 100px);
+    margin:0; 
+    border:none;
+    text-align: center;
+    box-shadow: none;
+    background: transparent;
+}
+.slider img{
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+.nv_slider_wrap{
+    position: relative;
+    height: 100vh;
+    padding-bottom: 100px;
+    box-sizing: border-box;
+    background: #2d3138;
+}
+    .nv_slider_name{
+        position: absolute;
+        bottom: 0;
+        width: 100%; height: 100px;
+        padding:20px 0;
+        text-align: center;
+        color: #fff;
+        background: #2d3238;
+        box-sizing: border-box;
+    }
+    .nv_slider_name h4{font-size: 24px;}
+    .nv_slider_name p{font-size: 20px; margin-top:10px;}
+.bx-wrapper .bx-controls-direction a{
+    width:70px; height: 120px;
+    margin-top:-60px;
+}
+.bx-wrapper .bx-next{right: 0;}
+.bx-wrapper .bx-next, .bx-wrapper .bx-next:hover, .bx-wrapper .bx-next:focus{
+    width:70px; height: 120px;
+    margin-top:-60px;
+    background:url(../imgaes/slider_next.png) center center no-repeat, rgba(0,0,0,0.3);
+}
+.bx-wrapper .bx-prev{left: 0px;}
+.bx-wrapper .bx-prev, .bx-wrapper .bx-prev:hover, .bx-wrapper .bx-prev:focus{
+    width:70px; height: 120px;
+    margin-top:-60px;
+    background:url(../imgaes/slider_prev.png) center center no-repeat, rgba(0,0,0,0.3);
+}
+
+@media screen and (max-width:767px){
+.nv_slider_wrap{
+    padding-bottom: 60px;
+}
+    .nv_slider_name{
+        height: 60px;
+        padding:10px 0;
+    }
+    .nv_slider_name h4{font-size: 14px;}
+    .nv_slider_name p{font-size: 10px; margin-top:10px;}
+.bx-wrapper .bx-controls-direction a{
+    width:30px; height: 60px;
+    margin-top:-30px;
+}
+.bx-wrapper .bx-next, .bx-wrapper .bx-next:hover, .bx-wrapper .bx-next:focus{
+    width:30px; height: 60px;
+    margin-top:-30px;
+    background:url(../imgaes/slider_next.png) center center no-repeat, rgba(0,0,0,0.3);
+    background-size: 10px;
+}
+.bx-wrapper .bx-prev, .bx-wrapper .bx-prev:hover, .bx-wrapper .bx-prev:focus{
+    width:30px; height: 60px;
+    margin-top:-30px;
+    background:url(../imgaes/slider_prev.png) center center no-repeat, rgba(0,0,0,0.3);
+    background-size: 10px;
+}
+}

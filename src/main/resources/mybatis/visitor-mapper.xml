@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.visitor.repository.VisitorRepository">
+    <resultMap id="Visitor" type="com.neo.visitor.domain.visitor.entity.Visitor">
+        <id column="VisitorID" property="visitorID" />
+        <result column="VisitorName" property="visitorName" />
+        <result column="VisitorBirth" property="visitorBirth" />
+        <result column="Mobile" property="mobile" />
+        <result column="Company" property="company" />
+        <result column="LastVisitDate" property="lastVisitDate" javaType="java.time.LocalDateTime" />
+        <result column="DeleteFlag" property="deleteFlag" />
+    </resultMap>
+
+    <insert id="save" parameterType="com.neo.visitor.domain.visitor.entity.Visitor" useGeneratedKeys="true" keyProperty="visitorID">
+    <!-- <insert id="save" parameterType="com.neo.visitor.domain.visitor.entity.Visitor"> -->
+        INSERT INTO visitor (VisitorName, VisitorBirth, Mobile, Company)
+        VALUES (#{visitorName}, #{visitorBirth}, #{mobile}, #{company} )
+    </insert>
+
+    <select id="findByVisitorNameAndVisitorBirthAndVisitorMobile" parameterType="com.neo.visitor.domain.visitor.entity.Visitor" resultType="com.neo.visitor.domain.visitor.entity.Visitor">
+        SELECT * FROM visitor
+        WHERE VisitorName = #{visitorName}
+            AND VisitorBirth = #{visitorBirth}
+            AND Mobile = #{mobile}
+    </select>
+</mapper>

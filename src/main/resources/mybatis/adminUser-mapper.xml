@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.user.repository.AdminUserRepository">
+    <resultMap id="AdminUser" type="com.neo.visitor.domain.user.entity.AdminUser">
+        <id column="AdminID" property="adminID" />
+        <result column="AdminPW" property="adminPW" />
+        <result column="InsertDate" property="insertDate" />
+        <result column="LastLoginDate" property="lastLoginDate" />
+        <result column="LastChangePWDate" property="lastChangePWDate" />
+        <result column="SiteCode" property="siteCode" />
+        <result column="DeleteFlag" property="deleteFlag" />
+        <association property="host" column="HostID" javaType="com.neo.visitor.domain.user.entity.Host">
+            <result column="HostID" property="hostID" />
+            <result column="HostName" property="hostName" />
+            <result column="Mobile" property="mobile" />
+            <result column="Tel" property="tel" />
+            <result column="Company" property="company" />
+            <result column="GradeName" property="gradeName" />
+            <result column="InsertDate" property="insertDate" />
+            <result column="DeleteFlag" property="deleteFlag" />
+            <result column="Email" property="email" />
+            <result column="DeptCD" property="deptCD" />
+            <result column="Auth" property="auth" />
+            <result column="ActiveFlag" property="activeFlag" />
+        </association>
+    </resultMap>    
+
+	<select id="getLoginUserInfo" parameterType="com.neo.visitor.domain.user.entity.AdminUser" resultMap="AdminUser" >
+    SELECT
+        *
+    FROM
+        AdminUser AS A
+    LEFT JOIN
+        Host AS H on A.AdminID = H.AdminID
+    WHERE
+        A.DeleteFlag = 'N'
+    AND
+        A.AdminID = #{adminID}
+    AND
+        A.AdminPW = #{adminPW}
+    </select>
+
+    <select id="getLoginUserInfosso" parameterType="com.neo.visitor.domain.user.entity.AdminUser" resultMap="AdminUser" >
+        SELECT
+            *
+        FROM
+            AdminUser AS A
+        LEFT JOIN
+            Host AS H on A.AdminID = H.AdminID
+        WHERE
+            A.DeleteFlag = 'N'
+        AND
+            A.AdminID = #{adminID}
+    </select>
+
+    <select id="count" parameterType="java.util.HashMap" resultType="java.lang.Integer" >
+        SELECT
+            count(*)
+        FROM
+            AdminUser AS A
+        LEFT JOIN
+            Host AS H on A.AdminID = H.AdminID
+        WHERE
+            A.DeleteFlag = 'N'
+            AND
+            A.AdminID != #{admin.adminID}
+            <choose>
+                <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="HostName"'>
+                    <!-- AND H.HostName LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                    AND A.AdminID LIKE ('%' + #{pagenation.conditionValue} + '%')
+                </when>
+                <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="AdminID"'>
+                    <!-- AND A.AdminID LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                    AND A.AdminID LIKE ('%' + #{pagenation.conditionValue} + '%')
+                </when>
+                <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="DeptCD"'>
+                    <!-- AND H.DeptCD LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                    AND H.DeptCD LIKE ('%' + #{pagenation.conditionValue} + '%')
+                </when>
+            </choose>
+    </select>
+    <select id="findByNotAdminID" parameterType="java.util.HashMap" resultMap="AdminUser" >
+        SELECT
+            A.AdminID
+            , A.LastLoginDate
+            , A.LastChangePWDate
+            , H.HostID
+            , H.HostName
+            , H.DeptCD
+            , CASE
+                WHEN H.Auth='1' THEN '관리자'
+                WHEN H.Auth='2' THEN '보안실'
+                WHEN H.Auth='3' THEN '임직원'
+            END AS auth
+            , ActiveFlag
+        FROM
+            AdminUser AS A
+        LEFT JOIN
+            Host AS H on A.AdminID = H.AdminID
+        WHERE
+            A.DeleteFlag = 'N'
+            AND H.ActiveFlag = 'Y'
+            AND A.AdminID != #{admin.adminID}
+            <choose>
+                <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="HostName"'>
+                    <!-- AND H.HostName LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                    AND H.HostName LIKE ('%' + #{pagenation.conditionValue} + '%')
+                </when>
+                <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="AdminID"'>
+                    <!-- AND A.AdminID LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                    AND A.AdminID LIKE ('%' + #{pagenation.conditionValue} + '%')
+                </when>
+                <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="DeptCD"'>
+                    <!-- AND H.DeptCD LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                    AND H.DeptCD LIKE ('%' + #{pagenation.conditionValue} + '%')
+                </when>
+            </choose>
+            <!-- LIMIT
+                #{pagenation.startPage}, #{pagenation.size} -->
+        order by A.insertDate DESC
+            offset #{pagenation.startPage} rows fetch next #{pagenation.size} rows only
+    </select>
+
+    <insert id="insaAdminSave" parameterType="com.neo.visitor.domain.user.entity.AdminUser">
+        INSERT INTO AdminUser (
+            AdminID, AdminPW, InsertDate, DeleteFlag
+            ) 
+            VALUES (
+            #{adminID}
+            , #{adminPW}
+            , #{insertDate}
+            , #{deleteFlag}
+            )
+            ON
+                DUPLICATE KEY
+            UPDATE
+                AdminID = #{adminID},
+                AdminPW = #{adminPW},
+                DeleteFlag = #{deleteFlag}
+    </insert>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.file.repository.FileRepository">
+    <resultMap id="FileInfo" type="com.neo.visitor.domain.file.entity.FileInfo">
+        <id column="fileId" property="fileId" />
+        <result column="targetId" property="targetId" />
+        <result column="targetType" property="targetType" />
+        <result column="saveFileName" property="saveFileName" />
+        <result column="saveFilePath" property="saveFilePath" />
+        <result column="fileName" property="fileName" />
+        <result column="deleteFlag" property="deleteFlag" />
+        <result column="modifyDate" property="modifyDate" />
+        <result column="createDate" property="createDate" />
+    </resultMap>
+
+    <sql id="FileInfo">
+        SELECT
+            F.fileId
+		    ,F.targetId
+		    ,F.targetType
+            ,F.saveFileName
+            ,F.saveFilePath
+		    ,F.fileName
+		    ,F.deleteFlag
+		    ,F.modifyDate
+            ,F.createDate
+        FROM
+            <!-- file AS F -->
+            [file] AS F
+		WHERE 1=1
+    </sql>
+
+    <select id="findByNoticeID" parameterType="com.neo.visitor.domain.file.entity.FileInfo" resultType="com.neo.visitor.domain.file.entity.FileInfo">
+        <include refid="FileInfo"></include>
+        AND targetType = #{targetType}
+        AND targetId = #{targetId}
+        <!-- AND deleteFlag = false; -->
+        AND deleteFlag = '0'
+    </select>
+
+    <select id="findByPersonalinfoID" parameterType="com.neo.visitor.domain.file.entity.FileInfo" resultType="com.neo.visitor.domain.file.entity.FileInfo">
+        <include refid="FileInfo"></include>
+        AND targetType = #{targetType}
+        AND targetId = #{targetId}
+        <!-- AND deleteFlag = false; -->
+        AND deleteFlag = '0'
+    </select>
+
+    <select id="findByContentsID" parameterType="com.neo.visitor.domain.Pagenation" resultType="com.neo.visitor.domain.file.entity.FileInfo">
+        SELECT
+            F.fileId
+            , F.fileName
+            , F.saveFileName
+        FROM
+            <!-- file AS F -->
+            [file] AS F
+        WHERE 1=1
+        <!-- AND targetType = "contents" -->
+        AND targetType = 'contents'
+        AND targetId = 0
+        <!-- AND deleteFlag = false -->
+        AND deleteFlag = '0'
+        <choose>
+            <when test='conditionKey!="" and conditionKey=="fileName"'>
+                ORDER BY F.fileName DESC
+            </when>
+            <when test='conditionKey!="" and conditionKey=="createDate"'>
+                ORDER BY F.createDate DESC
+            </when>
+        </choose>
+    </select>
+
+    <!-- 파일 등록 -->
+    <insert id="save" parameterType="com.neo.visitor.domain.file.entity.FileInfo" useGeneratedKeys="true" keyProperty="fileID">
+        INSERT INTO
+            <!-- file ( targetId, targetType, saveFileName, saveFilePath, fileName, deleteFlag, modifyDate, createDate ) -->
+            <!-- VALUES ( #{targetId}, #{targetType}, #{saveFileName}, #{saveFilePath}, #{fileName}, #{deleteFlag}, NOW(), NOW() )  -->
+            [file] ( targetId, targetType, saveFileName, saveFilePath, fileName, deleteFlag, modifyDate, createDate )
+        VALUES ( #{targetId}, #{targetType}, #{saveFileName}, #{saveFilePath}, #{fileName}, #{deleteFlag}, GETDATE(), GETDATE() ) 
+    </insert>
+
+    <update id="updateDeleteFalg" parameterType="java.lang.Integer">
+        UPDATE
+            <!-- file -->
+            [file]
+        SET
+            <!-- deleteFlag = true -->
+            deleteFlag = '1'
+        WHERE
+            fileId = #{fileId}
+    </update>
+</mapper>

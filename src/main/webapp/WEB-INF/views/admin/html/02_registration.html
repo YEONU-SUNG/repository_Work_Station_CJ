@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0 " />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!---<script src="js/jquery.mCustomScrollbar.js"></script>--->
+    <script src="js/common.js"></script>
+    <script src="js/select.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css" />
+    <title>SFA - 방문등록</title>
+</head>
+<body>
+    <script>
+        $(function() {
+            $.datepicker.setDefaults({
+                dateFormat: 'yy-mm-dd'
+                ,showOtherMonths: true
+                ,showMonthAfterYear:true
+                ,buttonImageOnly: true
+                ,buttonText: "선택"       
+                ,yearSuffix: "년"
+                ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12']
+                ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+                ,dayNamesMin: ['일','월','화','수','목','금','토']
+                ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
+            });
+            
+            $("#datepicker").datepicker();                    
+            $("#datepicker2").datepicker();                  
+            $("#datepicker3").datepicker();                 
+            $("#datepicker4").datepicker();
+            
+            $('#datepicker').datepicker('setDate', 'today');
+            $('#datepicker2').datepicker('setDate', 'today');
+            $('#datepicker3').datepicker('setDate', '+1D');
+            $('#datepicker4').datepicker('setDate', 'today');
+        });
+    </script>
+    <div class="nv_wrap">
+          <p class="lnb_close pc_skip">LNB 닫기</p>
+          <div class="nv_lnb">
+               <h1 class="nv_logo tpc_skip m_skip">SFA 에스에프에이</h1>
+               <div class="nv_m_profile pc_skip">
+                   <div class="img_box">
+                       <img src="imgaes/profileimg.png" alt="프로필이미지">
+                   </div>
+                   <div class="name_box">
+                       <p class="username">이송이</p>
+                       <p class="userid">leesongyi</p>
+                   </div>
+                   <button type="button" class="nv_logout"></button>
+               </div>
+               <nav>
+                    <ul class="nv_lnv_level1">
+                        <li><a href="#a">금일방문객</a></li>
+                        <li><a href="#a" class="on">방문등록</a></li>
+                        <li><a href="#a">방문승인</a></li>
+                        <li><a href="#a">방문이력</a></li>
+                        <li><a href="#a">방문객관리</a></li>
+                        <li><a href="#a">관리자권한관리</a></li>
+                        <li><a href="#a">교육컨텐츠관리</a></li>
+                        <li><a href="#a">교육관리</a></li>
+                        <li><a href="#a">공지사항</a></li>
+                        <li><a href="#a">FAQ</a></li>
+                        <li><a href="#a">1dapth</a>
+                            <ul class="nv_lnv_level2">
+                                <li><a href="#a">2depth</a></li>
+                                <li><a href="#a">2depth</a></li>
+                                <li><a href="#a" class="on">2depth</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+          </div>
+          <div class="nv_container">
+              <div class="nv_top tpc_skip m_skip">
+                  <ul class="nv_reborn">
+                      <li><a href="#a" class="nv_blue nv_bold">HOME</a></li>
+                      <li><a href="#a">방문등록</a></li>
+                  </ul>
+                  <div class="nv_login_info_pc">
+                      <p class="nv_bold"><span class="nv_blue">이송이</span> 님, 반갑습니다. 좋은 하루 되세요.</p>
+                      <button type="button" class="nv_blue_button">로그아웃</button>
+                  </div>
+              </div>
+              <div class="nv_m_header pc_skip">
+                  <p class="nv_toggle">모바일 메뉴 열기</p>
+                  <h1 class="nv_logo_m">SFA</h1>
+              </div>
+              <div class="nv_contents_wrap">
+                  <div class="nv_contents">
+                      <div class="nv_contents_main_header">
+                          <h4>방문등록</h4>
+                      </div>
+                      <div class="nv_table_tit">
+                          <h4>방문 신청 정보</h4>
+                      </div>
+                      <div class="nv_table_box">
+                          <dl class="nv_dl_table">
+                              <dt>방문부서</dt>
+                              <dd><input type="text" class="nv_input" placeholder="부서명을 입력해주세요."></dd>
+                              <dt>피방문자</dt>
+                              <dd>
+                                  <input type="text" class="nv_input max_200">
+                                  <button type="button" class="nv_blue_button">확인</button>
+                              </dd>
+                              <dt>이름</dt>
+                              <dd><input type="text" class="nv_input" placeholder="이름을 입력해주세요."></dd>
+                              <dt>생년월일</dt>
+                              <dd><input type="text" class="nv_input" id="datepicker"></dd>
+                              <dt>소속회사</dt>
+                              <dd><input type="text" class="nv_input" placeholder="회사명을 입력해주세요."></dd>
+                              <dt>연락처</dt>
+                              <dd class="nv_phone_area">
+                                  <div class="nv_select_box">
+                                      <p>010</p>
+                                      <ul>
+                                          <li>010</li>
+                                          <li>011</li>
+                                          <li>070</li>
+                                      </ul>
+                                  </div>
+                                  <span>-</span>
+                                  <input type="text" class="nv_input">
+                                  <span>-</span>
+                                  <input type="text" class="nv_input">
+                              </dd>
+                              <dt>방문기간</dt>
+                              <dd class="nv_dd_full nv_date">
+                                  <input type="text" class="nv_input max_200"  id="datepicker2">
+                                  <span>~</span>
+                                  <input type="text" class="nv_input max_200"  id="datepicker3">
+                              </dd>
+                              <dt>방문목적</dt>
+                              <dd>
+                                  <div class="nv_select_box">
+                                      <p>내방</p>
+                                      <ul>
+                                          <li>내방</li>
+                                          <li>납품</li>
+                                      </ul>
+                                  </div>
+                              </dd>
+                              <dt>방문차량번호</dt>
+                              <dd>
+                                  <input type="text" class="nv_input" placeholder="차량번호를 입력해주세요.">
+                              </dd>
+                          </dl>
+                      </div>
+                      <div class="nv_table_tit">
+                          <h4>PC 반입 정보</h4>
+                      </div>
+                      <div class="nv_table_box">
+                          <dl class="nv_dl_table">
+                              <dt>시리얼번호</dt>
+                              <dd><input type="text" class="nv_input" placeholder="시리얼번호를 입력해주세요."></dd>
+                              <dt>사용목적</dt>
+                              <dd>
+                                  <div class="nv_select_box">
+                                      <p>시스템 A/S</p>
+                                      <ul>
+                                          <li>시스템 A/S</li>
+                                          <li>시스템 A/S</li>
+                                      </ul>
+                                  </div>
+                              </dd>
+                              <dt>사용유무</dt>
+                              <dd class="nv_dd_full nv_check_area">
+                                  <input type="checkbox" id="n1" class="nv_checkbox">
+                                  <label for="n1">LAN 사용</label>
+                                  <input type="checkbox" id="n2" class="nv_checkbox">
+                                  <label for="n2">USB 사용</label>
+                                  <input type="checkbox" id="n3" class="nv_checkbox">
+                                  <label for="n3">USB 사용 (마우스)</label>
+                              </dd>
+                          </dl>
+                      </div>
+                      <div class="nv_table_tit nv_btn_area_tit">
+                          <h4>방문객 정보</h4>
+                          <div class="btn_area">
+                              <button type="button" class="nv_green_button up_icon_btn">엑셀 일괄 등록</button>
+                              <button type="button" class="nv_blue_button add_icon_btn">방문객 추가</button>
+                          </div>
+                      </div>
+                      <div class="nv_table_box">
+                          <table class="nv_table textcenter tpc_skip m_skip" cellspacing="0" cellpadding="0">
+                              <thead>
+                                  <tr>
+                                      <th>내/외국인</th>
+                                      <th>방문자명</th>
+                                      <th>생년월일</th>
+                                      <th>연락처</th>
+                                      <th>반입물품</th>
+                                      <th>차량정보</th>
+                                      <th>관리</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                 <tr>
+                                     <td>
+                                          <div class="nv_select_box">
+                                              <p>내국인</p>
+                                              <ul>
+                                                  <li>내국인</li>
+                                                  <li>외국인</li>
+                                              </ul>
+                                          </div>
+                                    </td>
+                                     <td>
+                                         <input type="text" class="nv_input" placeholder="이름을 입력해주세요.">
+                                     </td>
+                                     <td>
+                                         <input type="text" class="nv_input" id="datepicker4">
+                                     </td>
+                                     <td class="nv_phone_area">
+                                          <div class="nv_select_box">
+                                              <p>010</p>
+                                              <ul>
+                                                  <li>010</li>
+                                                  <li>011</li>
+                                                  <li>070</li>
+                                              </ul>
+                                          </div>
+                                          <span>-</span>
+                                          <input type="text" class="nv_input">
+                                          <span>-</span>
+                                          <input type="text" class="nv_input">
+                                     </td>
+                                     <td>
+                                         <button type="button" class="nv_blue_button">등록</button>
+                                     </td>
+                                     <td>
+                                         <button type="button" class="nv_blue_button">등록</button>
+                                     </td>
+                                     <td>
+                                         <button type="button" class="nv_red_button">삭제</button>
+                                     </td>
+                                 </tr>
+                              </tbody>
+                          </table>
+                           <table class="nv_table nv_hidden_table_type2 nv_m_table pc_skip" cellspacing="0" cellpadding="0">
+                              <colgorup>
+                                  <col width="25%">
+                                  <col width="25%">
+                                  <col width="25%">
+                                  <col width="25%">
+                              </colgorup>
+                               <thead>
+                                   <tr>
+                                       <th class="textleft">1</th>
+                                       <th class="textright" colspan="3">
+                                           <p class="table_delete_btn">삭제</p>
+                                       </th>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                   <tr>
+                                       <td class="nv_bold textcenter">내/외국인</td>
+                                       <td colspan="3">
+                                          <div class="nv_select_box">
+                                              <p>내국인</p>
+                                              <ul>
+                                                  <li>내국인</li>
+                                                  <li>외국인</li>
+                                              </ul>
+                                          </div>
+                                      </td>
+                                   </tr>
+                                   <tr>
+                                       <td class="nv_bold textcenter">방문자명</td>
+                                       <td colspan="3">
+                                         <input type="text" class="nv_input" placeholder="이름을 입력해주세요.">
+                                     </td>
+                                   </tr>
+                                   <tr>
+                                       <td class="nv_bold textcenter">생년월일</td>
+                                       <td colspan="3">
+                                         <input type="text" class="nv_input">
+                                       </td>
+                                   </tr>
+                                   <tr>
+                                       <td class="nv_bold textcenter">연락처</td>
+                                         <td class="nv_phone_area" colspan="3">
+                                              <div class="nv_select_box">
+                                                  <p>010</p>
+                                                  <ul>
+                                                      <li>010</li>
+                                                      <li>011</li>
+                                                      <li>070</li>
+                                                  </ul>
+                                              </div>
+                                              <span>-</span>
+                                              <input type="text" class="nv_input">
+                                              <span>-</span>
+                                              <input type="text" class="nv_input">
+                                         </td>
+                                   </tr>
+                                   <tr>
+                                       <td class="nv_bold textcenter">반입물품</td>
+                                       <td>
+                                         <button type="button" class="nv_blue_button">등록</button>
+                                       </td>
+                                       <td class="nv_bold textcenter">차량정보</td>
+                                       <td>
+                                         <button type="button" class="nv_blue_button">등록</button>
+                                       </td>
+                                   </tr>
+                               </tbody>
+                           </table>
+                            <div class="btn_area nv_page_bottomarea">
+                                <button type="button" class="nv_blue_button m_full_btn">입력 완료</button>
+                            </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <footer class="pc_skip nv_footer">
+              <address>COPYRIGHT ⓒ Neovision CO. ALL RIGHTS RESERVED.</address>
+          </footer>
+    </div>
+</body>
+</html>

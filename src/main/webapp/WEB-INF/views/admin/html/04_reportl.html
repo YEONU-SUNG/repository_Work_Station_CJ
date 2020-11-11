@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0 " />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!---<script src="js/jquery.mCustomScrollbar.js"></script>--->
+    <script src="js/common.js"></script>
+    <script src="js/select.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css" />
+    <title>SFA - 방문이력</title>
+</head>
+<body>
+    <script>
+        $(function() {
+            $.datepicker.setDefaults({
+                dateFormat: 'yy-mm-dd'
+                ,showOtherMonths: true
+                ,showMonthAfterYear:true
+                ,buttonImageOnly: true
+                ,buttonText: "선택"       
+                ,yearSuffix: "년"
+                ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12']
+                ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+                ,dayNamesMin: ['일','월','화','수','목','금','토']
+                ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
+            });
+            
+            $("#datepicker").datepicker();                    
+            $("#datepicker2").datepicker();
+            
+            $('#datepicker').datepicker('setDate', 'today');
+            $('#datepicker2').datepicker('setDate', '+1D');
+        });
+    </script>
+    <div class="nv_wrap">
+          <p class="lnb_close pc_skip">LNB 닫기</p>
+          <div class="nv_lnb">
+               <h1 class="nv_logo tpc_skip m_skip">SFA 에스에프에이</h1>
+               <div class="nv_m_profile pc_skip">
+                   <div class="img_box">
+                       <img src="imgaes/profileimg.png" alt="프로필이미지">
+                   </div>
+                   <div class="name_box">
+                       <p class="username">이송이</p>
+                       <p class="userid">leesongyi</p>
+                   </div>
+                   <button type="button" class="nv_logout"></button>
+               </div>
+               <nav>
+                    <ul class="nv_lnv_level1">
+                        <li><a href="#a">금일방문객</a></li>
+                        <li><a href="#a">방문등록</a></li>
+                        <li><a href="#a">방문승인</a></li>
+                        <li><a href="#a" class="on">방문이력</a></li>
+                        <li><a href="#a">방문객관리</a></li>
+                        <li><a href="#a">관리자권한관리</a></li>
+                        <li><a href="#a">교육컨텐츠관리</a></li>
+                        <li><a href="#a">교육관리</a></li>
+                        <li><a href="#a">공지사항</a></li>
+                        <li><a href="#a">FAQ</a></li>
+                        <li><a href="#a">1dapth</a>
+                            <ul class="nv_lnv_level2">
+                                <li><a href="#a">2depth</a></li>
+                                <li><a href="#a">2depth</a></li>
+                                <li><a href="#a" class="on">2depth</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+          </div>
+          <div class="nv_container">
+              <div class="nv_top tpc_skip m_skip">
+                  <ul class="nv_reborn">
+                      <li><a href="#a" class="nv_blue nv_bold">HOME</a></li>
+                      <li><a href="#a">방문이력</a></li>
+                  </ul>
+                  <div class="nv_login_info_pc">
+                      <p class="nv_bold"><span class="nv_blue">이송이</span> 님, 반갑습니다. 좋은 하루 되세요.</p>
+                      <button type="button" class="nv_blue_button">로그아웃</button>
+                  </div>
+              </div>
+              <div class="nv_m_header pc_skip">
+                  <p class="nv_toggle">모바일 메뉴 열기</p>
+                  <h1 class="nv_logo_m">SFA</h1>
+              </div>
+              <div class="nv_contents_wrap">
+                  <div class="nv_contents">
+                      <div class="nv_contents_main_header">
+                          <h4>방문이력</h4>
+                      </div>
+                      <div class="btn_left">
+                          <p class="m_tit nv_bold pc_skip tpc_skip">엑셀 다운로드</p>
+                          <button type="button" class="nv_green_button down_icon_btn">엑셀 다운로드</button>
+                      </div>
+                      <div class="nv_contents_search nv_contents_search_type2">
+                          <p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
+                          <div class="nv_date_box">
+                              <span class="icon_date">달력 아이콘</span>
+                              <input type="text" class="nv_input" id="datepicker">
+                              <span>~</span>
+                              <input type="text" class="nv_input" id="datepicker2">
+                          </div>
+                          <p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
+                          <div class="nv_select_box">
+                              <p>예약번호</p>
+                              <ul>
+                                  <li>예약번호</li>
+                                  <li>예약번호</li>
+                                  <li>예약번호</li>
+                              </ul>
+                          </div>
+                          <div class="nv_search_box">
+                              <input type="text" class="nv_input">
+                              <input type="submit" class="nv_search_icon">
+                          </div>
+                      </div>
+                      <div class="nv_table_box">
+                          <table class="nv_table textcenter" cellspacing="0" cellpadding="0">
+                              <thead>
+                                  <tr>
+                                      <th>예약번호</th>
+                                      <th class="tpc_skip m_skip">신청일</th>
+                                      <th>성명</th>
+                                      <th class="tpc_skip m_skip">생년월일</th>
+                                      <th class="tpc_skip m_skip">연락처</th>
+                                      <th>회사</th>
+                                      <th>방문증번호</th>
+                                      <th class="tpc_skip m_skip">방문기간</th>
+                                      <th class="tpc_skip m_skip">방문일시</th>
+                                      <th class="tpc_skip m_skip">완료일시</th>
+                                      <th class="tpc_skip m_skip">임직원</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr class="nv_view_nexttable">
+                                      <td>2004161</td>
+                                      <td class="tpc_skip m_skip">2020-04-01</td>
+                                      <td>방문자1</td>
+                                      <td class="tpc_skip m_skip">1991-01-01</td>
+                                      <td class="tpc_skip m_skip">010-1111-2222</td>
+                                      <td>에스원</td>
+                                      <td>No.1</td>
+                                      <td class="tpc_skip m_skip">2020-04-01 ~ 2020-04-30</td>
+                                      <td class="tpc_skip m_skip">2020-04-01 14:00</td>
+                                      <td class="tpc_skip m_skip">2020-04-01 18:00</td>
+                                      <td class="tpc_skip m_skip">임직원명</td>
+                                  </tr>
+                                  <tr class="pc_skip">
+                                      <td colspan="4" class="nv_hidden_table_area">
+                                          <table class="nv_hidden_table">
+                                             <colgroup>
+                                                 <col width="20%">
+                                                 <col width="30%">
+                                                 <col width="20%">
+                                                 <col width="30%">
+                                             </colgroup>
+                                              <tbody>
+                                                 <tr>
+                                                     <td class="nv_bold">신청일</td>
+                                                     <td>2020-04-01</td>
+                                                     <td class="nv_bold">방문기간</td>
+                                                     <td>2020-04-01 ~ 2020-04-30</td>
+                                                 </tr>
+                                                  <tr>
+                                                      <td class="nv_bold">생년월일</td>
+                                                      <td>1991-01-01</td>
+                                                      <td class="nv_bold">연락처</td>
+                                                      <td>010-1111-2222</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td class="nv_bold">임직원</td>
+                                                      <td>임직원명</td>
+                                                      <td class="nv_bold">임직원부서</td>
+                                                      <td>임직원부서명</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td class="nv_bold">방문일시</td>
+                                                      <td>2020-04-01 14:00</td>
+                                                      <td class="nv_bold">완료일시</td>
+                                                      <td>2020-04-01 18:00</td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+                                      </td>
+                                  </tr>
+                                  
+                                  <tr class="nv_view_nexttable">
+                                      <td>2004161</td>
+                                      <td class="tpc_skip m_skip">2020-04-01</td>
+                                      <td>방문자2</td>
+                                      <td class="tpc_skip m_skip">1991-01-01</td>
+                                      <td class="tpc_skip m_skip">010-1111-2222</td>
+                                      <td>에스원</td>
+                                      <td>No.2</td>
+                                      <td class="tpc_skip m_skip">2020-04-01 ~ 2020-04-30</td>
+                                      <td class="tpc_skip m_skip">2020-04-01 14:00</td>
+                                      <td class="tpc_skip m_skip">2020-04-01 18:00</td>
+                                      <td class="tpc_skip m_skip">임직원명</td>
+                                  </tr>
+                                  <tr class="pc_skip">
+                                      <td colspan="4" class="nv_hidden_table_area">
+                                          <table class="nv_hidden_table">
+                                             <colgroup>
+                                                 <col width="20%">
+                                                 <col width="30%">
+                                                 <col width="20%">
+                                                 <col width="30%">
+                                             </colgroup>
+                                              <tbody>
+                                                 <tr>
+                                                     <td class="nv_bold">신청일</td>
+                                                     <td>2020-04-01</td>
+                                                     <td class="nv_bold">방문기간</td>
+                                                     <td>2020-04-01 ~ 2020-04-30</td>
+                                                 </tr>
+                                                  <tr>
+                                                      <td class="nv_bold">생년월일</td>
+                                                      <td>1991-01-01</td>
+                                                      <td class="nv_bold">연락처</td>
+                                                      <td>010-1111-2222</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td class="nv_bold">임직원</td>
+                                                      <td>임직원명</td>
+                                                      <td class="nv_bold">임직원부서</td>
+                                                      <td>임직원부서명</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td class="nv_bold">방문일시</td>
+                                                      <td>2020-04-01 14:00</td>
+                                                      <td class="nv_bold">완료일시</td>
+                                                      <td>2020-04-01 18:00</td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <div class="nv_table_pagenum">
+                              <ul>
+                                  <li class="first">처음으로</li>
+                                  <li class="prev">이전으로</li>
+                                  <li class="on">1</li>
+                                  <li class="next">다음으로</li>
+                                  <li class="last">마지막으로</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <footer class="pc_skip nv_footer">
+              <address>COPYRIGHT ⓒ Neovision CO. ALL RIGHTS RESERVED.</address>
+          </footer>
+    </div>
+</body>
+</html>

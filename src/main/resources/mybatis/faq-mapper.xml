@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.faq.repository.FaqRepository">
+    <sql id="FaqInfo">
+        SELECT
+            F.FaqID
+		    ,F.Question
+		    ,F.Answer
+            ,F.AdminID
+            ,H.HostName
+		    ,F.ActiveFlag
+		    ,F.RegDate
+		    ,F.DeleteFlag
+        FROM
+            faq AS F
+        JOIN host AS H ON F.AdminID = H.AdminID
+		WHERE 1=1
+    </sql>
+
+    <select id="countByDeleteFlag" parameterType="com.neo.visitor.domain.Pagenation" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            faq AS F
+        WHERE 1=1 
+        <choose>
+            <when test="conditionKey!='' and conditionKey=='ActiveFlag'">
+                AND F.ActiveFlag = #{conditionValue}    
+            </when>
+            <when test="conditionKey!='' and conditionKey=='Question'">
+                <!-- AND F.Question LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND F.Question LIKE ('%' + #{conditionValue} + '%')
+            </when>
+            <when test="conditionKey!='' and conditionKey=='AdminID'">
+                <!-- AND F.AdminID = (SELECT H1.AdminID FROM host AS H1 WHERE H1.HostName LIKE CONCAT('%', #{conditionValue}, '%')) -->
+                AND F.AdminID = (SELECT H1.AdminID FROM host AS H1 WHERE H1.HostName LIKE ('%' + #{conditionValue} + '%'))
+            </when>
+        </choose>
+        AND F.DeleteFlag = 'N' 
+    </select>
+    
+    <!-- FAQ 리스트 조회 -->
+    <select id="findAll" parameterType="com.neo.visitor.domain.Pagenation" resultType="com.neo.visitor.domain.faq.domain.Faq">
+        <include refid="FaqInfo"></include>
+        AND F.DeleteFlag = 'N' 
+        <choose>
+            <when test="conditionKey!='' and conditionKey=='ActiveFlag'">
+                AND F.ActiveFlag = #{conditionValue}    
+            </when>
+            <when test="conditionKey!='' and conditionKey=='Question'">
+                <!-- AND F.Question LIKE CONCAT('%', #{conditionValue}, '%') -->
+                AND F.Question LIKE ('%' + #{conditionValue} + '%')
+            </when>
+            <when test="conditionKey!='' and conditionKey=='AdminID'">
+                AND F.AdminID = (SELECT H1.AdminID FROM host AS H1 WHERE H1.HostName LIKE ('%' + #{conditionValue} + '%'))
+            </when>
+        </choose>
+        ORDER BY
+            F.RegDate DESC
+        <!-- LIMIT
+            #{startPage}, #{size} -->
+        offset #{startPage} rows fetch next #{size} rows only
+    </select>
+
+    <!-- FAQ 상세보기 조회 -->
+    <select id="findById" parameterType="com.neo.visitor.domain.faq.domain.Faq" resultType="com.neo.visitor.domain.faq.domain.Faq">
+        <include refid="FaqInfo"></include>
+        AND F.FaqID = #{FaqID}
+    </select>
+
+    <!-- FAQ 삭제 -->
+    <update id="updateDeleteFlag" parameterType="java.util.List">
+        UPDATE
+            faq
+        SET
+            DeleteFlag = 'Y'
+        WHERE
+            FaqID IN
+        <foreach collection="list" item="item"  open="(" close=")" separator=",">
+            #{item.FaqID}
+        </foreach>
+    </update>
+
+    <!-- FAQ 등록 -->
+    <insert id="save" parameterType="com.neo.visitor.domain.faq.domain.Faq" useGeneratedKeys="true" keyProperty="FaqID">
+        INSERT INTO
+            faq ( Question, Answer, AdminID, ActiveFlag, RegDate, DeleteFlag )
+        VALUES ( #{Question}, #{Answer}, #{AdminID}, #{ActiveFlag}, #{RegDate}, #{DeleteFlag} ) 
+    </insert>
+
+    <!-- FAQ 수정 -->
+    <update id="updateFaq" parameterType="com.neo.visitor.domain.faq.domain.Faq">
+        UPDATE
+            faq 
+        SET
+            Question = #{Question}, Answer = #{Answer}, AdminID = #{AdminID}
+        WHERE 
+            FaqID = #{FaqID}
+    </update>
+
+    <!-- FAQ 엑티브 변경 -->
+    <update id="updateActiveFlag" parameterType="java.util.List">
+        UPDATE
+            faq
+        SET
+            ActiveFlag = #{ActiveFlag}
+        WHERE
+            FaqID = #{FaqID}
+    </update>
+</mapper>

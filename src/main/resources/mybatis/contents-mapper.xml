@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.education.repository.ContentsRepository">
+
+    <resultMap id="Contents" type="com.neo.visitor.domain.education.entity.Contents">
+        <id column="id" property="id" />
+        <result column="type" property="type" />
+        <result column="sort" property="sort" />
+        <association property="fileInfo" column="fileId" javaType="com.neo.visitor.domain.file.entity.FileInfo">
+            <result column="fileName" property="fileName" />
+        </association>
+    </resultMap>
+    
+    <select id="findAll" resultMap="Contents">
+        SELECT 
+            *
+        FROM
+            contents AS C
+            JOIN
+                <!-- file AS F ON c.fileId = F.fileId -->
+                [file] AS F ON C.fileId = F.fileId
+        ORDER BY C.sort ASC
+    </select> 
+    <select id="findByType" parameterType="com.neo.visitor.domain.education.entity.Contents" resultMap="Contents">
+        SELECT 
+            id
+            , type
+            , sort
+            , F.fileId
+            , F.fileName
+        FROM
+            contents AS C
+            JOIN
+                <!-- file AS F ON C.fileId = F.fileId -->
+                [file] AS F ON C.fileId = F.fileId
+        WHERE
+            C.type = #{type}
+        ORDER BY
+            C.sort ASC
+    </select> 
+    <delete id="deleteContents" parameterType="java.lang.Integer">
+        DELETE FROM contents WHERE id = #{id}
+    </delete>
+    <insert id="save" parameterType="com.neo.visitor.domain.education.entity.Contents">
+        INSERT INTO
+            contents (type, fileId, sort)
+        VALUES
+            (#{type}, #{fileInfo.fileId}, (SELECT TOP 1
+                                                <!-- IFNULL(MAX(sort)+1, 0) -->
+                                                ISNULL(MAX(sort) +1, 1)
+                                            FROM
+                                                contents AS C
+                                                WHERE TYPE = #{type}
+                                                <!-- ORDER BY C.sort DESC -->
+                                                <!-- LIMIT 1 -->
+                                            )
+            )
+    </insert>
+    <update id="updateContentsSort" parameterType="com.neo.visitor.domain.education.entity.Contents">
+        UPDATE 
+            contents
+        SET
+            sort = #{sort}
+        WHERE
+            id = #{id}
+    </update>
+</mapper>

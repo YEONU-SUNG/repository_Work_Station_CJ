@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.visitor.repository.VisitorDashboardRepository">
+    <insert id="save" parameterType="com.neo.visitor.domain.visitor.entity.VisitorDashboard">
+        INSERT INTO 
+            visitDashboard (date, site_code, visit_application_count, approval_standby_count, visit_standby_count)
+        VALUES (#{date}, #{siteCode}, #{visitApplicationCount}, #{approvalStandbyCount}, #{visitStandbyCount})
+
+    </insert>
+    <select id="findAll" parameterType="java.lang.String" resultType="com.neo.visitor.domain.visitor.entity.VisitorDashboard">
+        SELECT 
+            seq
+            , date
+            , site_code AS siteCode
+            , visit_application_count AS visitApplicationCount
+            , approval_standby_count AS approvalStandbyCount
+            , visit_standby_count AS visitStandbyCount
+            , visit_count AS visitCount
+        FROM
+            visitDashboard
+        WHERE
+            date = #{date}
+    </select>
+
+    <update id="visitApplicationCount" parameterType="com.neo.visitor.domain.visitor.entity.VisitorDashboard">
+        UPDATE
+            visitDashboard
+        SET 
+            visit_application_count = visit_application_count+1
+        WHERE
+            date = #{date} AND site_code = #{siteCode}
+    </update>
+
+    <update id="visitApplicationCountOnce" parameterType="com.neo.visitor.domain.visitor.entity.VisitorDashboard">
+        UPDATE
+            visitDashboard
+        SET 
+            visit_application_count = visit_application_count + #{insertCnt}
+        WHERE
+            date = #{date} AND site_code = #{siteCode}
+    </update>
+
+    <!-- 신청 시  -->
+    <update id="approvalStandbyCount" parameterType="com.neo.visitor.domain.visitor.entity.VisitorDashboard">
+        UPDATE
+            visitDashboard
+        SET 
+            approval_standby_count = approval_standby_count+1
+        WHERE
+            date = #{date} AND site_code = #{siteCode}
+    </update>
+
+    <!-- 승인 시  -->
+    <update id="visitStandbyCount" parameterType="com.neo.visitor.domain.visitor.entity.VisitorDashboard">
+        UPDATE
+            visitDashboard
+        SET 
+            approval_standby_count = approval_standby_count-1,
+            visit_standby_count = visit_standby_count+1
+        WHERE
+            date = #{date} AND site_code = #{siteCode}
+    </update>
+
+    <!-- 방문 시  -->
+    <update id="updateVisitPlusCount" parameterType="com.neo.visitor.domain.visitor.entity.VisitorDashboard">
+        UPDATE
+            visitDashboard
+        SET 
+            visit_standby_count = visit_standby_count-1,
+            visit_count = visit_count+1
+        WHERE
+            date = #{date} AND site_code = #{siteCode}
+    </update>
+
+    <!-- 퇴실 시  -->
+    <update id="updateVisitMinusCount" parameterType="com.neo.visitor.domain.visitor.entity.VisitorDashboard">
+        UPDATE
+            visitDashboard
+        SET 
+            visit_count = visit_count-1
+        WHERE
+            date = #{date} AND site_code = #{siteCode}
+    </update>
+
+    <update id="updateAllCount" parameterType="com.neo.visitor.domain.visitor.entity.VisitorDashboard">
+        UPDATE
+            visitDashboard
+        SET
+            visit_application_count = #{visitApplicationCount},
+            approval_standby_count = #{approvalStandbyCount},
+            visit_standby_count = #{visitStandbyCount},
+            visit_count = #{visitCount}
+        WHERE date = #{date} AND site_code = #{siteCode}
+    </update>
+</mapper>
