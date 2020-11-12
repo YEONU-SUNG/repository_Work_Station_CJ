@@ -40,6 +40,9 @@
         <result column="VisitPurpose" property="visitPurpose" />
         <result column="VisitPurposeDetail" property="visitPurposeDetail" />
         <result column="ToDayYN" property="toDayYN" />
+        <result column="RejectFlag" property="rejectFlag" />
+        <result column="RejectType" property="rejectType" />
+        <result column="RejectComment" property="rejectComment" />
 
         <!--
         <association property="visitor" column="VisitorID" javaType="Visitor">
@@ -282,7 +285,7 @@
             LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(VisitFromDateTime, DATE) = curdate())) vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
             ]]> -->
             <![CDATA[
-            LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(varchar(10), VisitFromDateTime, 23) = GETDATE())) AS vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
+            LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(varchar(10), VisitFromDateTime, 23) = CONVERT(varchar(10), GETDATE(), 23))) AS vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
             ]]>
 
           <!--
@@ -571,3 +574,4 @@
             VisitorHistorySeq = #{visitorHistorySeq}
     </update>
 </mapper>
+
