@@ -430,9 +430,17 @@
             V
         SET
             <!-- V.VisitApprovalReject = 'Y' -->
-            <!-- ?? -->
-            V.VisitApprovalYN = 'Y'
-            , V.DeleteFlag = 'Y'
+            
+            <!-- 원본 -->
+            <!-- V.VisitApprovalYN = 'Y'
+            , V.DeleteFlag = 'Y' -->
+            <!-- 수정본 -->
+            V.RejectFlag = 'Y'
+            , V.RejectType = #{rejectType}
+            <if test='rejectComment!="" or rejectComment!=null'>
+                , V.RejectComment = #{rejectComment}
+            </if>
+            
         FROM
             VisitorHistory AS V
         WHERE

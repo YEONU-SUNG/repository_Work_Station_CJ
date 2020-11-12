@@ -94,7 +94,8 @@ public class VisitorApiController {
         //return visitorService.updateVisitorApprovalAll(request, visitorHistorySeq, visitApprovalComment, carryStuff);
     }
 
-    @PostMapping(path = "visitor-reject/{visitorHistorySeq}")
+    // 원본
+    /* @PostMapping(path = "visitor-reject/{visitorHistorySeq}")
     public VisitorHistory updateVisitApprovalReject(HttpServletRequest request,@PathVariable int visitorHistorySeq
         , @RequestParam(defaultValue = "") String visitApprovalComment
         , @RequestParam(defaultValue = "") String carryStuff) {
@@ -107,6 +108,22 @@ public class VisitorApiController {
         , @RequestParam(defaultValue = "") String carryStuff
         , @RequestParam(name = "visitorHistorySeq[]") int[] visitorHistorySeq) {
             visitorService.updateVisitorApprovalAllReject(request, visitorHistorySeq, visitApprovalComment, carryStuff);
+        //return visitorService.updateVisitorApprovalAll(request, visitorHistorySeq, visitApprovalComment, carryStuff);
+    } */
+    // 수정본
+    @PostMapping(path = "visitor-reject/{visitorHistorySeq}")
+    public VisitorHistory updateVisitApprovalReject(HttpServletRequest request,@PathVariable int visitorHistorySeq
+        , @RequestParam(defaultValue = "") String visitRejectComment
+        , @RequestParam(defaultValue = "") String visitRejectType) {
+        return visitorService.updateVisitorApprovalReject(request, visitorHistorySeq, visitRejectComment);
+    }
+
+    @PostMapping(path = "visitor-reject/all")
+    public void updateVisitApprovalallReject(HttpServletRequest request
+        , @RequestParam(defaultValue = "") String visitRejectComment
+        , @RequestParam(defaultValue = "") String visitRejectType
+        , @RequestParam(name = "visitorHistorySeq[]") int[] visitorHistorySeq) {
+            visitorService.updateVisitorApprovalAllReject(request, visitorHistorySeq, visitRejectComment, visitRejectType);
         //return visitorService.updateVisitorApprovalAll(request, visitorHistorySeq, visitApprovalComment, carryStuff);
     }
     

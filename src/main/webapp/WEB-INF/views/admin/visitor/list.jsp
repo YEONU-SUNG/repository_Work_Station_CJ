@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <script>
     $(function() {
@@ -33,8 +34,7 @@
 		</div>
 		<div class="btn_left">
 			<p class="m_tit nv_bold pc_skip tpc_skip">엑셀 다운로드</p>
-			<button type="button" class="nv_green_button down_icon_btn">엑셀
-				다운로드</button>
+			<button type="button" class="nv_green_button down_icon_btn">엑셀다운로드</button>
 		</div>
 		<div class="nv_contents_search nv_contents_search_type2">
 			<p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
@@ -87,9 +87,10 @@
 						<td class="tpc_skip m_skip">테스트</td>
                         <td class="tpc_skip m_skip">디지털이노베이션</td>
                         <td class="tpc_skip m_skip">인프라기획팀</td>
-						<td><button type="button"
-                                class="nv_blue_button nv_modal2_open">승인</button>
-                                <button type="button" class="nv_red_button width_50">반려</button></td>
+						<td>
+							<button type="button"class="nv_blue_button nv_modal2_open">승인</button>
+							<button type="button" class="nv_red_button width_50">반려</button>
+						</td>
 					</tr>
 					<tr class="pc_skip">
 						<td colspan="4" class="nv_hidden_table_area">

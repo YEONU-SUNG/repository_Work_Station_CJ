@@ -230,10 +230,10 @@ public class VisitorService {
         //return visitorHistory;
     }
 
-    public VisitorHistory updateVisitorApprovalReject(HttpServletRequest request, int visitorHistorySeq, String visitApprovalComment, String carryStuff) {
+    public VisitorHistory updateVisitorApprovalReject(HttpServletRequest request, int visitorHistorySeq, String rejectComment) {
         VisitorHistory visitorHistory = visitorHistoryService.findById(visitorHistorySeq);
-        // visitorHistory.updateApproval(visitApprovalComment, carryStuff);
-         visitorHistoryRepository.updateVisitorApprovalReject(visitorHistory);
+        visitorHistory.updateReject(rejectComment);
+        visitorHistoryRepository.updateVisitorApprovalReject(visitorHistory);
         // visitorDashboardService.updateVisitStandbyCount(visitorHistory);
 
         // String strVisitorSendText="SFA방문예약 - ";

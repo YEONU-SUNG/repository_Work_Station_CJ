@@ -53,3 +53,4 @@ $(document).on('click', '.nv_active_table tr', function() {
 $(document).on('click', '.nv_view_nexttable', function() {
     $(this).next("tr").children(".nv_hidden_table_area").toggleClass("on");
 });
+    
