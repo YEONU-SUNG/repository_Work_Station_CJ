@@ -509,11 +509,18 @@
         var target = $(this);
         var targetId = target.parent().parent().attr('id');
         if(target.val()==='approve') {
-            $('#visitApprovalForm').attr('action', '/visitor-approval/'+targetId);
-        } if(target.val()==='reject') {
-            $('#visitRejectForm').attr('action', '/visitor-reject/'+targetId);
+            //$('#visitApprovalForm').attr('action', '/visitor-approval/'+targetId);
+            callApi.setData('/visitor-approval/'+targetId, {}, function (result) {
+                target.parent().html(approveActionCommponet.visitorButton(result));
+                init(module.pagenation.params);     // 금일방문객 리랜더링
+                dashBoardInit();
+            })
         }
-         else {
+         else if(target.val()==='reject') {
+            $('#visitRejectForm').attr('action', '/visitor-reject/'+targetId);
+
+        } 
+        else {
             ////////////////////
             // var formData = new FormData();
             // formData.append('visitorHistorySeq[]', targetId);
@@ -529,7 +536,7 @@
 
             inoutMode = true;
             //callApi.setData("/visitor-inout/"+targetId+"/" +target.parent().parent().children('td:eq(4)').children().val(), {}, function (result) {
-            callApi.setData("/visitor-inout/"+targetId+"/" +target.parent().parent().children('[class^=card]').children().val(), {}, function (result) {
+            callApi.setData("/visitor-inout/"+targetId+"/" +target.parent().parent().find('.card').children().val(), {}, function (result) {
                 target.parent().html(approveActionCommponet.visitorButton(result));
                 init(module.pagenation.params);     // 금일방문객 리랜더링
                 dashBoardInit();
@@ -623,24 +630,25 @@
     /* $(document).on('click', '.nv_modal4 button.nv_green_button', function() { */
     // 수정본
     $(document).on('click', '.nv_modal5 button.nv_green_button', function() {
-        if(_varApprovalchecked.length > 0)
-        {
-            var form = $(this).parents().parents().parents().parents().parents();
+        // if(_varApprovalchecked.length > 0)
+        // {
+            var form = $('#visitRejectForm');
             var url =  form.attr('action');
-            url = url.replace(/approval/,"reject");
+            var targetId = url.replace('/visitor-reject/', '');
             var formData = new FormData();
-            formData.append('carryStuff', $('#carryStuff').val());
-            formData.append('visitApprovalComment', $('#visitApprovalComment').val());
-            _varApprovalchecked.forEach(function(currentValue, index, array){
-                formData.append('visitorHistorySeq[]', currentValue);
-            });
+            formData.append('visitRejectType', $('#nv5_rejectCmbBox').find('p').text().trim());
+            formData.append('visitRejectComment', $('#nv5_rejectComment').val());
+            formData.append('visitorHistorySeq', targetId);
+            // _varApprovalchecked.forEach(function(currentValue, index, array){
+            //     formData.append('visitorHistorySeq[]', currentValue);
+            // });
             callApi.setFormData(url, formData, function(result) {
                 alert('승인거부처리되었습니다.');
                 form.children().removeClass('on');
                 init(module.pagenation.params);     // 금일방문객 리랜더링
                 dashBoardInit();                    // 대시보드 리렌더링
             });
-        }
+        // }
     });
     
     $(document).on('click', '#selectorModify', function() {
@@ -906,7 +914,7 @@
             <div class="nv_modal_contents">
                 <div>
                     <h4 class="textarea_name">반려사유
-                        <div class="nv_select_box" id="rejectCmbBox" style="float:right; margin:10px 0;">
+                        <div class="nv_select_box" id="nv5_rejectCmbBox" style="float:right; margin:10px 0;">
                             <p>선택</p>
                             <ul> 
                                 <li>규칙위반</li>
@@ -915,7 +923,7 @@
                             </ul>
                         </div>
                     </h4>
-                    <textarea name="rejectComment" id="rejectComment" cols="30" rows="10" class="nv_textarea" placeholder="반려사유 입력"></textarea>
+                    <textarea name="rejectComment" id="nv5_rejectComment" cols="30" rows="10" class="nv_textarea" placeholder="반려사유 입력"></textarea>
                 </div>
                 <div class="btn_area">
                     <button type="button" class="nv_green_button">반려</button>

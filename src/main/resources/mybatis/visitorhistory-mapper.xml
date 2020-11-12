@@ -40,6 +40,9 @@
         <result column="VisitPurpose" property="visitPurpose" />
         <result column="VisitPurposeDetail" property="visitPurposeDetail" />
         <result column="ToDayYN" property="toDayYN" />
+        <result column="RejectFlag" property="rejectFlag" />
+        <result column="RejectComment" property="rejectComment" />
+        <result column="RejectType" property="rejectType" />
 
         <!--
         <association property="visitor" column="VisitorID" javaType="Visitor">
@@ -273,6 +276,7 @@
         vseq, V.visitorhistoryseq, visitfromdatetime, visittodatetime, visitorreservationnumber, visitorid, visitorname, visitorbirth, visitormobile, visitorcompany, visitorposition1, visitorposition2, visitorposition3, visitapprovalyn, visitapprovalcomment
         , visitdate, agreefirst, agreesecond, vit.cardid, carno, hostid, hostname, hostmobile, hosttel, hostdept, hostcompany, hostgradename, hostpositionname
         , CONVERT(varchar(10), planfromdatetime, 23) AS planfromdatetime, CONVERT(varchar(10), plantodatetime, 23) AS plantodatetime, approval, visitapprovaldatetime, educompletedatetime, carrystuff, carrystuffserialno, carrystuffused, carrystuffpurpose, deleteflag, visitpurpose
+        , rejectFlag, rejectComment, rejectType
         , <![CDATA[ (CASE WHEN (CONVERT(varchar(10), V.PlanFromDateTime, 23) <= CONVERT(varchar(10), GETDATE(), 23) AND CONVERT(varchar(10), V.PlanToDateTime, 23) >= CONVERT(varchar(10), GETDATE(), 23)) THEN 'Y' ELSE 'N' END) AS ToDayYN ]]>
         FROM visitorhistory AS V
             <!-- LEFT JOIN (SELECT * FROM visitinouttime where CONVERT(VisitFromDateTime, DATE) = curdate()) vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq -->
