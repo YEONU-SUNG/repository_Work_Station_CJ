@@ -61,6 +61,16 @@ public class VisitorService {
         
     }
 
+    public int countByConfirm(Map<String, Object> map){
+        return visitorHistoryRepository.countByConfirm(map);
+    }
+
+    public List<VisitorHistory> findByConfirm(Map<String, Object> map) {
+        //List<VisitorHistory> temp = visitorHistoryRepository.findByPlanDateTime(map);
+        return visitorHistoryRepository.findByConfirm(map);
+        
+    }
+
     public void updateCardNo(int[] visitorHistorySeq, String[] cardID) {
         try {
             for(int i = 0; i < visitorHistorySeq.length; i++)

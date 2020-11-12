@@ -57,6 +57,19 @@ public class VisitorApplication {
         return pagenationResponse;
     }
 
+    public PagenationResponse<VisitorHistory> confirm(HttpServletRequest request, Pagenation pagenation, String searchFromDateTime, String searchToDateTime) {
+        PagenationResponse<VisitorHistory> pagenationResponse = new PagenationResponse<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put("pagenation", pagenation);
+        map.put("searchFromDateTime", searchFromDateTime);
+        map.put("searchToDateTime", searchToDateTime);
+        map.put("host", loginService.getUserSessionInfo(request));
+
+        pagenationResponse.setResponse(visitorService.findByConfirm(map));
+        pagenationResponse.setPagenation(pagenation.makePagenation(visitorService.countByConfirm(map), PagenationType.VISITOR_CONFIRM));
+        return pagenationResponse;
+    }
+
     public String[][] historyExcel(String[] header, HttpServletRequest request, Pagenation pagenation, String visitorFromDateTime, String visitorToDateTime) {
         pagenation.PagenationExpansionDate(visitorFromDateTime, visitorToDateTime);
         Map<String, Object> map = new HashMap<>();
