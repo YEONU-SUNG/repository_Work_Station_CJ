@@ -121,7 +121,7 @@
             V.*, vit.vSeq, vit.VisitFromDateTime, vit.VisitToDateTime, vit.CardID
         FROM visitorhistory AS V
         <!-- LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(VisitFromDateTime, DATE) = curdate())) vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq -->
-        LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(varchar(50), VisitFromDateTime, 23) = GETDATE())) AS vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
+        LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(varchar(50), VisitFromDateTime, 23) = CONVERT(varchar(10), GETDATE(), 23))) AS vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
         WHERE 1=1
             <!-- <![CDATA[
             AND CONVERT(V.PlanFromDateTime, DATE) <= CONVERT(#{date}, DATE)
@@ -147,7 +147,7 @@
             LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(VisitFromDateTime, DATE) = curdate())) vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
             ]]> -->
             <![CDATA[
-            LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(varchar(50), VisitFromDateTime, 23) = getdate())) AS vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
+            LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(varchar(50), VisitFromDateTime, 23) = CONVERT(varchar(10), GETDATE(), 23))) AS vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
             ]]>
 
           <!--
@@ -245,7 +245,7 @@
                 LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(VisitFromDateTime, DATE) = curdate())) vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
             ]]> -->
             <![CDATA[
-                LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(varchar(50), VisitFromDateTime, 23) = getdate())) AS vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
+                LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(varchar(50), VisitFromDateTime, 23) = CONVERT(varchar(10), GETDATE(), 23))) AS vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
             ]]>
             
 

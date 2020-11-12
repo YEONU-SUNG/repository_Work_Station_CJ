@@ -116,7 +116,7 @@
                     else if(row.toDayYN==='N')
                         return '';
                 } else {
-                    return '<button type="button" class="nv_blue_button" value="approve">승인</button><button type="button" class="nv_red_button nv_modal5_open" value="reject">반려</button>';
+                    return '<button type="button" class="nv_blue_button" value="approve">승인</button><button type="button" class="nv_red_button nv_modal5_open" onclick="$(\'.nv_modal5\').addClass(\'on\');" value="reject">반려</button>';
                 }
             }
         };
@@ -506,7 +506,6 @@
     $(document).on('click', '#approveTable button', function() {
         var target = $(this);
         var targetId = target.parent().parent().attr('id');
-<<<<<<< HEAD
         if(target.val()==='approve') {
             //$('#visitApprovalForm').attr('action', '/visitor-approval/'+targetId);
             callApi.setData('/visitor-approval/'+targetId, {}, function (result) {
@@ -514,10 +513,6 @@
                 init(module.pagenation.params);     // 금일방문객 리랜더링
                 dashBoardInit();
             })
-=======
-        if(target.val()==='reject') {
-            $('#visitRejectForm').attr('action', '/visitor-reject/'+targetId);
->>>>>>> 1a15c55ecf746a8624c7162ea6164411c9825897
         }
          else if(target.val()==='reject') {
             $('#visitRejectForm').attr('action', '/visitor-reject/'+targetId);
@@ -623,27 +618,21 @@
 //        formData.append('carryStuff', $('#carryStuff').val());
         formData.append('rejectComment', $('#rejectComment').val());
         callApi.setFormData(url, formData, function(result) {
-            alert('승인거부처리되었습니다.');
+            alert('반려처리되었습니다.');
             form.children().removeClass('on');
             init(module.pagenation.params);     // 금일방문객 리랜더링
             dashBoardInit();                    // 대시보드 리렌더링
         });
     });
 
-<<<<<<< HEAD
     // 원본
     /* $(document).on('click', '.nv_modal4 button.nv_green_button', function() { */
     // 수정본
-    $(document).on('click', '.nv_modal5 button.nv_green_button', function() {
-        // if(_varApprovalchecked.length > 0)
-        // {
-            var form = $('#visitRejectForm');
-=======
+
     $(document).on('click', '.nv_modal4 button.nv_green_button', function() {
         if(_varApprovalchecked.length > 0)
         {
-            var form = $(this).parents().parents().parents().parents().parents();
->>>>>>> 1a15c55ecf746a8624c7162ea6164411c9825897
+            var form = $('#visitRejectForm');
             var url =  form.attr('action');
             var targetId = url.replace('/visitor-reject/', '');
             var formData = new FormData();
@@ -654,12 +643,12 @@
             //     formData.append('visitorHistorySeq[]', currentValue);
             // });
             callApi.setFormData(url, formData, function(result) {
-                alert('승인거부처리되었습니다.');
+                alert('반려처리되었습니다.');
                 form.children().removeClass('on');
                 init(module.pagenation.params);     // 금일방문객 리랜더링
                 dashBoardInit();                    // 대시보드 리렌더링
             });
-        // }
+        }
     });
     
     $(document).on('click', '#selectorModify', function() {
