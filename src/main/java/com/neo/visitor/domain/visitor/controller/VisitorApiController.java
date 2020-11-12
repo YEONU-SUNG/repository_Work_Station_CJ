@@ -57,6 +57,21 @@ public class VisitorApiController {
         return visitorApplication.dashboard(request, new Pagenation(page, size, conditionKey, conditionValue), LocalDateTime.now());
     }
 
+    @GetMapping(path = "visitor/confirm-list")
+	public PagenationResponse<VisitorHistory> getConfirmList(HttpServletRequest request
+    , @RequestParam int page, @RequestParam int size
+    , @RequestParam(defaultValue = "") String conditionKey
+    , @RequestParam(defaultValue = "") String conditionValue
+    , @RequestParam(defaultValue = "") String searchFromDateTime
+    , @RequestParam(defaultValue = "") String searchToDateTime ){
+        switch (conditionKey) {
+            case "방문자" : conditionKey = "VisitorName"; break;
+            case "연락처" : conditionKey = "VisitorMobile"; break;
+            case "업체명" : conditionKey = "VisitorCompany"; break;
+        }
+        return visitorApplication.confirm(request, new Pagenation(page, size, conditionKey, conditionValue), searchFromDateTime, searchToDateTime);
+    }
+
     @PostMapping(path = "visitor/card-no")
 	public void updateVisitorCardNo(@RequestParam(name = "visitorHistorySeq[]") int[] visitorHistorySeq
         , @RequestParam(name = "cardID[]") String[] cardID) {

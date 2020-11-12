@@ -267,6 +267,100 @@
         AND V.DeleteFlag = 'N'
     </select>
 
+    <select id="countByConfirm" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM VisitorHistory
+        WHERE visitApprovalYN = 'N'
+        AND REJECTFLAG IS NULL
+        <![CDATA[
+            and convert(varchar(50), PlanFromDateTime, 23) >= convert(varchar(50), convert(datetime, #{searchFromDateTime}), 23)
+            and convert(varchar(50), PlanToDateTime, 23) <= convert(varchar(50), convert(datetime, #{searchToDateTime}), 23)
+        ]]>
+        <choose>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorName"'>
+                <!-- AND V.VisitorName LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND VisitorName LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorMobile"'>
+                <!-- AND V.VisitorMobile LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND VisitorMobile LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorCompany"'>
+                <!-- AND V.VisitorCompany LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND VisitorCompany LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+        </choose>
+    </select>
+
+    <select id="findByConfirm" parameterType="java.util.HashMap" resultMap="VisitorHistory">
+        SELECT VisitorHistorySeq
+            ,VisitorReservationNumber
+            ,VisitorType
+            ,VisitorID
+            ,VisitorName
+            ,VisitorBirth
+            ,VisitorMobile
+            ,VisitorDept
+            ,VisitorCompany
+            ,VisitorPosition1
+            ,VisitorPosition2
+            ,VisitorPosition3
+            ,VisitApprovalYN
+            ,VisitApprovalComment
+            ,VisitDate
+            ,AgreeFirst
+            ,AgreeSecond
+            ,CardID
+            ,CarNo
+            ,HostID
+            ,HostName
+            ,HostMobile
+            ,HostTel
+            ,HostDept
+            ,HostCompany
+            ,HostGradeName
+            ,HostPositionName
+            ,PlanFromDateTime
+            ,PlanToDateTime
+            ,Approval
+            ,VisitApprovalDateTime
+            ,EduCompleteDateTime
+            ,CarryStuff
+            ,CarryStuffSerialNo
+            ,CarryStuffUsed
+            ,CarryStuffPurpose
+            ,DeleteFlag
+            ,VisitPurpose
+            ,VisitPurposeDetail
+            ,RejectFlag
+            ,RejectComment
+            ,RejectType
+        FROM VisitorHistory
+        WHERE visitApprovalYN = 'N'
+        AND REJECTFLAG IS NULL
+        <![CDATA[
+            and convert(varchar(50), PlanFromDateTime, 23) >= convert(varchar(50), convert(datetime, #{searchFromDateTime}), 23)
+            and convert(varchar(50), PlanToDateTime, 23) <= convert(varchar(50), convert(datetime, #{searchToDateTime}), 23)
+        ]]>
+        <choose>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorName"'>
+                <!-- AND V.VisitorName LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND VisitorName LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorMobile"'>
+                <!-- AND V.VisitorMobile LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND VisitorMobile LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorCompany"'>
+                <!-- AND V.VisitorCompany LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND VisitorCompany LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+        </choose>
+        ORDER BY
+            VisitApprovalYN DESC, EduCompleteDateTime DESC, VisitorHistorySeq DESC
+        offset #{pagenation.startPage} rows fetch next #{pagenation.size} rows only
+    </select>
+
     <select id="findByPlanDateTime" parameterType="java.util.HashMap" resultMap="VisitorHistory">
         SELECT
         <!-- vseq, V.visitorhistoryseq, visitfromdatetime, visittodatetime, visitorreservationnumber, visitorid, visitorname, visitorbirth, visitormobile, visitorcompany, visitorposition1, visitorposition2, visitorposition3, visitapprovalyn, visitapprovalcomment

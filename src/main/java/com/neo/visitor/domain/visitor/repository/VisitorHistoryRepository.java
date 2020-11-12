@@ -23,6 +23,12 @@ public interface VisitorHistoryRepository {
     // 금일방문객 조회
     List<VisitorHistory> findByPlanDateTime(Map<String, Object> params);
 
+    // 방문 승인 관리 조회 리스트 카운트
+    int countByConfirm(Map<String, Object> params);
+
+    // 방문 승인 관리 조회
+    List<VisitorHistory> findByConfirm(Map<String, Object> params);
+
     // 방문카드 업데이트
     void updateCardID(VisitorHistory visitorHistory);
 
