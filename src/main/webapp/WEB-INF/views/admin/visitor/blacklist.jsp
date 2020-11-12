@@ -72,7 +72,8 @@
         if(module.tableData.length==0) {
             if(!confirm('조회결과가 존재하지않습니다. 출력하시겠습니까?')) return false;
         }
-        location.href = '/excel'+convertEncoding(module.pagenation.params);
+//        location.href = '/excel'+convertEncoding(module.pagenation.params);
+        location.href = convertEncoding(module.pagenation.excelParams);
     }
 
     $(document).ready(function() {

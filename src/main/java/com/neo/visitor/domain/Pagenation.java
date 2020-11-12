@@ -13,6 +13,7 @@ public class Pagenation {
     private int size = 0;
     private String URL;
     private String params;
+    private String excelParams;
     private String conditionURL;
     private String firstURL;
     private String prevURL;
@@ -44,6 +45,7 @@ public class Pagenation {
         this.URL = pagenationType.getValue();
         this.conditionURL = conditionURL();
         this.params = params();
+        this.excelParams = excelParams();
         this.firstURL = firstURL();
         this.prevURL = prevURL();
         this.nextURL = nextURL();
@@ -53,6 +55,11 @@ public class Pagenation {
 
     private String params() {
         return this.URL+"?page="+this.page+"&size="+this.size+this.conditionURL;
+    }
+
+    // 엑셀 다운로드
+    private String excelParams() {
+        return "/excel/"+this.URL+"?page="+this.page+"&size="+this.size+this.conditionURL;
     }
 
     private String firstURL() {

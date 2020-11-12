@@ -25,7 +25,7 @@
     <script>
         function convertEncoding(data) {
             var ua = window.navigator.userAgent;
-            return (ua.indexOf('MSIE') > 0 || ua.indexOf('Trident') > 0) ? encodeURI('/admin'+data) : '/admin'+data;
+            return (ua.indexOf('MSIE') > 0 || ua.indexOf('Trident') > 0) ? encodeURI('/admin/'+data) : '/admin/'+data;
         }
         var callApi = {
             getData : function(url, callbackFunc) {

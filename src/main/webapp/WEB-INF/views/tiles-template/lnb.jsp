@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <p class="lnb_close pc_skip">LNB 닫기</p>
 <div class="nv_lnb">
-    <h1 class="nv_logo tpc_skip m_skip">SFA 에스에프에이</h1>
+    <h1 class="nv_logo tpc_skip m_skip">DOOSAN 두산</h1>
     <div class="nv_m_profile pc_skip">
         <div class="img_box"><img src="/admin/static/imgaes/profileimg.png" alt="프로필이미지"></div>
         <div class="name_box">

@@ -87,6 +87,7 @@
             , A.LastChangePWDate
             , H.HostID
             , H.HostName
+            , H.Company
             , H.DeptCD
             , CASE
                 WHEN H.Auth='1' THEN '관리자'

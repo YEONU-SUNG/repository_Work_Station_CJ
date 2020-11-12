@@ -14,8 +14,8 @@ public class VisitorScheduler {
     @Autowired VisitorHistoryRepository visitorHistoryRepository;
     @Autowired VisitorDashboardRepository visitorDashboardRepository;
 
-    private final static String POSITION1 = "화성";
-    private final static String POSITION2 = "아산";
+    private final static String POSITION1 = "두산";
+//    private final static String POSITION2 = "아산";
 
     @Scheduled(cron = "10 0 0 * * *")
     //@Scheduled(cron = "30 * * * * *")
@@ -25,8 +25,8 @@ public class VisitorScheduler {
         position1.addDefaultVisitApplicationCount(visitorHistoryRepository.countByPlanFromDateTime(position1));
         visitorDashboardRepository.save(position1);
         
-        VisitorDashboard position2 = new VisitorDashboard().makeDashBoard(POSITION2);
-        position2.addDefaultVisitApplicationCount(visitorHistoryRepository.countByPlanFromDateTime(position2));
-        visitorDashboardRepository.save(position2);
+//        VisitorDashboard position2 = new VisitorDashboard().makeDashBoard(POSITION2);
+//        position2.addDefaultVisitApplicationCount(visitorHistoryRepository.countByPlanFromDateTime(position2));
+//        visitorDashboardRepository.save(position2);
     }
 }
