@@ -112,7 +112,8 @@ public class VisitorApiController {
     } */
     // 수정본
     @PostMapping(path = "visitor-reject/{visitorHistorySeq}")
-    public VisitorHistory updateVisitApprovalReject(HttpServletRequest request,@PathVariable int visitorHistorySeq
+    public VisitorHistory updateVisitApprovalReject(HttpServletRequest request
+        , @PathVariable int visitorHistorySeq
         , @RequestParam(defaultValue = "") String visitRejectComment
         , @RequestParam(defaultValue = "") String visitRejectType) {
         return visitorService.updateVisitorApprovalReject(request, visitorHistorySeq, visitRejectComment);

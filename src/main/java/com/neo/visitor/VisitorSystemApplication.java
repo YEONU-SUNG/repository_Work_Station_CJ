@@ -12,7 +12,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class VisitorSystemApplication extends SpringBootServletInitializer implements CommandLineRunner{
 
-    //@Autowired InsaRepository insaRepository;
     public static void main(String[] args) {
         SpringApplication.run(VisitorSystemApplication.class, args);
     }
@@ -25,6 +24,5 @@ public class VisitorSystemApplication extends SpringBootServletInitializer imple
     @Override
     public void run(String... args) throws Exception {
         // TODO Auto-generated method stub
-        //insaRepository.getAll();
     }
 }

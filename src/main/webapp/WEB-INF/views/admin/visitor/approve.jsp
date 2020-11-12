@@ -124,7 +124,7 @@
             visitorRejection : function(row) {
                 if(row.rejectFlag==='Y'){
                     if(row.rejectType==='1') return '규칙위반';
-                    if(row.rejectType==='2') return '보안위반';
+                    if(row.rejectType==='2') return '보안위반'; 
                     else return '기타';
                 }
                 else return '';

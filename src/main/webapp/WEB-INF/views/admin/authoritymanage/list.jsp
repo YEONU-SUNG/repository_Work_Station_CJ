@@ -8,14 +8,15 @@
         tableHTML : '',
         auth : [],
         authSelectBox : function(auth) {
-            var str = auth ? auth : '관리자';
+            var str = auth ? auth : '시스템관리자';
 
             return '<div class="nv_select_box">' +
                         '<p>' + str + '</p>' +
                         '<ul>' + 
-                            '<li>관리자</li>' +
-                            '<li>보안실</li>' + 
-                            '<li>임직원</li>' + 
+                            '<li>시스템관리자</li>' +
+                            '<li>보안담당자</li>' +
+                            '<li>계열사담당자</li>' +
+                            '<li>안내데스크</li>' +
                         '</ul>' +
                     '</div>';
 					
@@ -200,11 +201,12 @@
                     <dt>권한</dt>
                     <dd class="nv_dd_full">
                         <div class="nv_select_box" id="authCmbBox">
-                            <p>관리자</p>
-                            <ul> 
-                                <li>관리자</li>
-                                <li>보안실</li> 
-                                <li>임직원</li> 
+                            <p>시스템관리자</p>
+                            <ul>
+                                <li>시스템담당자</li>
+                                <li>보안담당자</li>
+                                <li>계열사담당자</li>
+                                <li>안내데스크</li>
                             </ul>
                         </div>
                     </dd>
