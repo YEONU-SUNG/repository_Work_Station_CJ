@@ -85,6 +85,7 @@
                 }
             }
         };
+
         var approveActionCommponet = {
             visitorButton : function(row) {
                 if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
@@ -301,9 +302,6 @@
                     for(var i=0; i<this.tableData.length;i++) {
                     var strcarryStuffUsed = this.tableData[i].carryStuffUsed.trim() == "" ? "사용안함":this.tableData[i].carryStuffUsed;
                     this.tableHTML +=   '<tr class="nv_view_nexttable" id="'+this.tableData[i].visitorHistorySeq+'">' +
-                                            '<td class="nv_gray_check">' +
-                                            '<input type="checkbox" id="n1_'+(this.tableData[i].visitorHistorySeq)+'" value="'+(this.tableData[i].visitorHistorySeq)+'">' +
-                                            '<label for="n1_'+(this.tableData[i].visitorHistorySeq)+'">선택</label></td>' +
                                             '<td>' +this.tableData[i].visitorName+ '</td>' +
                                             '<td>' +this.tableData[i].visitorCompany+ '</td>' +
                                             '<td class="tpc_skip m_skip">' +this.tableData[i].visitorMobile+ '</td>' +
@@ -406,7 +404,7 @@
                 //var target = $(this).parent().parent().children('td:eq(5)');
 
                 /* if($(this).parent().parent().children('td:eq(9)').children().attr("type") == "button" && $(this).parent().parent().children('td:eq(9)').children().text() == "승인") */
-                if($(this).parent().parent().children('td:eq(16)').children().attr("type") == "button" && $(this).parent().parent().children('td:eq(16)').children().text() == "승인")
+                if($(this).parent().parent().children('td:eq(15)').children().attr("type") == "button" && $(this).parent().parent().children('td:eq(15)').children().text() == "승인")
                 {
                     $('#visitApprovalForm').attr('action', '/visitor-approval/'+$(this).parent().parent().attr("id"));
 
@@ -445,11 +443,11 @@
     }
 
     function search() {
-        var searchFromDateTime = $('input[name="searchFromDateTime"]').val();
-        var searchToDateTime = $('input[name="searchToDateTime"]').val();
+        var visitorFromDateTime = $('input[name="visitorFromDateTime"]').val();
+        var visitorToDateTime = $('input[name="visitorToDateTime"]').val();
         var conditionKey = $('#conditionKey').html();
         var conditionValue = $('#conditionValue').val();
-        init('/visitor/approve-list?page=1&size=10&conditionKey='+conditionKey+"&conditionValue="+conditionValue+"&searchFromDateTime"+searchFromDateTime+"&searchToDateTime"+searchToDateTime);
+        init('/visitor/history-list?page=1&size=10&conditionKey='+conditionKey+"&conditionValue="+conditionValue+'&visitorFromDateTime='+visitorFromDateTime+'&visitorToDateTime='+visitorToDateTime);
     }
 
     function reasonRejectRead() {
@@ -459,8 +457,8 @@
     }
 
     $(document).ready(function() {
-        var searchFromDateTime = $('input[name="searchFromDateTime"]').val();
-        var searchToDateTime = $('input[name="searchToDateTime"]').val();
+        var visitorFromDateTime = $('input[name="visitorFromDateTime"]').val();
+        var visitorToDateTime = $('input[name="visitorToDateTime"]').val();
         init('/visitor/approve-list?page=1&size=10');
         $("#conditionValue").focus();
 
@@ -508,6 +506,7 @@
     $(document).on('click', '#approveTable button', function() {
         var target = $(this);
         var targetId = target.parent().parent().attr('id');
+<<<<<<< HEAD
         if(target.val()==='approve') {
             //$('#visitApprovalForm').attr('action', '/visitor-approval/'+targetId);
             callApi.setData('/visitor-approval/'+targetId, {}, function (result) {
@@ -515,6 +514,10 @@
                 init(module.pagenation.params);     // 금일방문객 리랜더링
                 dashBoardInit();
             })
+=======
+        if(target.val()==='reject') {
+            $('#visitRejectForm').attr('action', '/visitor-reject/'+targetId);
+>>>>>>> 1a15c55ecf746a8624c7162ea6164411c9825897
         }
          else if(target.val()==='reject') {
             $('#visitRejectForm').attr('action', '/visitor-reject/'+targetId);
@@ -611,13 +614,14 @@
         }
     });
 
-    $(document).on('click', '.nv_modal2 button.nv_green_button', function() {
+//    $(document).on('click', '.nv_modal2 button.nv_green_button', function() {
+    $(document).on('click', '.nv_modal5 button.nv_green_button', function() {
         var form = $(this).parents().parents().parents().parents().parents();
         var url =  form.attr('action');
         url = url.replace(/approval/,"reject");
         var formData = new FormData();
-        formData.append('carryStuff', $('#carryStuff').val());
-        formData.append('visitApprovalComment', $('#visitApprovalComment').val());
+//        formData.append('carryStuff', $('#carryStuff').val());
+        formData.append('rejectComment', $('#rejectComment').val());
         callApi.setFormData(url, formData, function(result) {
             alert('승인거부처리되었습니다.');
             form.children().removeClass('on');
@@ -626,6 +630,7 @@
         });
     });
 
+<<<<<<< HEAD
     // 원본
     /* $(document).on('click', '.nv_modal4 button.nv_green_button', function() { */
     // 수정본
@@ -633,6 +638,12 @@
         // if(_varApprovalchecked.length > 0)
         // {
             var form = $('#visitRejectForm');
+=======
+    $(document).on('click', '.nv_modal4 button.nv_green_button', function() {
+        if(_varApprovalchecked.length > 0)
+        {
+            var form = $(this).parents().parents().parents().parents().parents();
+>>>>>>> 1a15c55ecf746a8624c7162ea6164411c9825897
             var url =  form.attr('action');
             var targetId = url.replace('/visitor-reject/', '');
             var formData = new FormData();
@@ -727,13 +738,13 @@
 </script>
 <div class="nv_contents_header"><h4>방문현황</h4></div>
 <%-- <c:if test="${sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2'}"> --%>
-<c:if test="${sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '3'}">
+    <%--<c:if test="${sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '3'}">
 <div class="btn_left toggle_btn">
-    <%-- <button type="button" class="nv_blue_button on" id="selectorModify">선택 수정</button>
-    <button type="button" class="nv_green_button" id="selectorSave">선택 저장</button> --%>
+     <button type="button" class="nv_blue_button on" id="selectorModify">선택 수정</button>
+    <button type="button" class="nv_green_button" id="selectorSave">선택 저장</button>
     <button type="button" class="nv_blue_button on" id="selectorModifyapproval">선택 승인/반려</button>
 </div>
-</c:if>
+</c:if> --%>
 <div class="nv_contents_search">
     <p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
         <div class="nv_date_box">
@@ -814,12 +825,8 @@
                 <th>방문관리</th>
             </tr> -->
             <tr>
-                <th class="nv_gray_check">
-                    <input type="checkbox" id="allcheck">
-                    <label for="allcheck">전체 선택</label>
-                </th>
-                <th>성명</th>
-                <th>회사</th>
+                <th>방문자</th>
+                <th>업체명</th>
                 <th class="tpc_skip m_skip">연락처</th>
                 <th class="tpc_skip m_skip">방문목적</th>
                 <th class="tpc_skip m_skip">방문위치</th>

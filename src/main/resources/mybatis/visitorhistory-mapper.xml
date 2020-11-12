@@ -286,7 +286,7 @@
             LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(VisitFromDateTime, DATE) = curdate())) vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
             ]]> -->
             <![CDATA[
-            LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(varchar(10), VisitFromDateTime, 23) = GETDATE())) AS vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
+            LEFT JOIN (SELECT * FROM visitinouttime where (VisitToDateTime = '' OR VisitToDateTime IS NULL) OR(CONVERT(varchar(10), VisitFromDateTime, 23) = CONVERT(varchar(10), GETDATE(), 23))) AS vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq
             ]]>
 
           <!--

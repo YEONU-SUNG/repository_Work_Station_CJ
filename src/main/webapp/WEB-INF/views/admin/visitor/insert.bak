@@ -267,47 +267,49 @@
             }
         }   
     }
-    function isCheckedSiteNameOverlap(elements) {
-        var _siteName = '';
-        elements.find('li').each(function(i,e) {
-            if(_siteName==e.innerHTML) this.remove();
-            _siteName = e.innerHTML;
-        });
-    }
+
     function setWorkSite() {
 		callApi.getData('/visitor/worksite', function (result) {
-            var siteDepth1 = $('#div_sitedepth1 > ul');
-            var siteDepth2 = $('#div_sitedepth2 > ul');
-            var siteDepth3 = $('#div_sitedepth3 > ul');
-            $.each(result, function(i1, e1) {
-                var depth1 = $('<li>');
-                depth1.html(e1.siteDepth1);
-                depth1.on('click', function() {
-                    $.each(result, function(i2, e2) {
-                        if(e1.siteDepth1==e2.siteDepth1) {
-                            var depth2 = $('<li>');
-                            depth2.html(e2.siteDepth2);
-                            depth2.on('click', function() {
-                                $.each(result, function(i3, e3) {
-                                    if(e2.siteDepth2==e3.siteDepth2) {
-                                        var depth3 = $('<li>');
-                                        depth3.html(e3.siteDepth3);
-                                        siteDepth3.append(depth3);
-                                    }
-                                });
-                                isCheckedSiteNameOverlap(siteDepth3);
-                            });
-                            siteDepth2.append(depth2);
-                        }
-                    });
-                    isCheckedSiteNameOverlap(siteDepth2);
-                });
-                siteDepth1.append(depth1);
-            });
-            isCheckedSiteNameOverlap(siteDepth1);
+			var strdepth1="";
+			var siteDepth1pre="";
+			
+			if(result.length >= 1){
+                // strdepth1 +="<P>"+result[0].siteDepth1+"</P>"
+                strdepth1 +="<P>선택</P>"
+                strdepth1 += "<ul id ='ui_sitedepth1'>";
+                strdepth1 += "<li>선택</li>";
+
+                module_html.strdepth2["선택"] = "<P>선택</P><ul><li>선택</li></ul>";
+				for(var i=0; i < result.length; i++){
+					if(siteDepth1pre !=result[i].siteDepth1){
+						strdepth1 += "<li>" + result[i].siteDepth1 + "</li>";
+
+						if(siteDepth1pre != ""){
+							module_html.strdepth2[siteDepth1pre] += "</ul>";
+						}
+						siteDepth1pre = result[i].siteDepth1;
+
+                        //module_html.strdepth2[siteDepth1pre] ="<P>"+result[0].siteDepth2+"</P>"
+                        module_html.strdepth2[siteDepth1pre] ="<P>선택</P>"
+                        module_html.strdepth2[siteDepth1pre] += "<ul>";
+                        module_html.strdepth2[siteDepth1pre] += "<li>선택</li>";
+					}
+					module_html.strdepth2[siteDepth1pre] += "<li>" + result[i].siteDepth2 + "</li>";
+				}
+				
+				module_html.strdepth2[siteDepth1pre] += "</ul>";
+				strdepth1 += "</ul>";
+				$("#div_sitedepth1").html('');
+				$("#div_sitedepth1").html(strdepth1);
+
+				$("#div_sitedepth2").html('');
+                //$("#div_sitedepth2").html(module_html.strdepth2[result[0].siteDepth1]);
+                $("#div_sitedepth2").html(module_html.strdepth2["선택"]);
+                $("#div_sitedepth3").html(module_html.strdepth2["선택"]);
+			}
         });
     }
-	
+
     function removeThisRow(dom) {
         if ($(dom).parents("tbody").children("tr").length == 1 && $(dom).parents("tr").index() == 0) {
 			$(dom).parents("tr").find("input").val("");
@@ -315,6 +317,12 @@
 			$(dom).parents("tr").remove();
 		}
     }
+    
+    // 두산 체크안함
+    // function isPurposeVaild(type) {
+    //     var vaild = $('#vistorPurpose > p').html() == '납품/반출' ? 'car' : module_html.defaultType;
+    //     return type==vaild;
+    // }
 
     /**
     * 방문객 외부인 추가 row 
@@ -329,6 +337,19 @@
         target.append(module_html.tbody.tr(visitInfo));
         regenDatepicker();
         setDatePicker();
+        // 두산 체크안함
+        // type = type || ($('#vistorPurpose > p').html()) == '납품/반출' ? 'car' : module_html.defaultType;
+        // if(isPurposeVaild(type)) {
+        //     car = car ||  { id : target.find('tr').length, carNo : '' };
+        //     carray = carray || { serial : '', purpose : '', used : '', type : false};
+        //     visitor = visitor || { name : '', birth : '', phone : '' };
+        //     console.log(car, carray, visitor, type);
+        //     target.append(module_html.tbody.tr(type, car, carray, visitor));
+        //     regenDatepicker();
+        //     setDatePicker();
+        // } else {
+        //     alert('방문목적과 입력데이터가 매칭되지않습니다.');
+        // }
     }
     
     function init() {
@@ -371,9 +392,49 @@
 				}
 			}
         });
+
+        // 방문객 방문 위치 선택 정보 가져오기
+        callApi.getData('/visitor/worksite', function (result) {
+			var strdepth1="";
+			var siteDepth1pre="";
+			
+			if(result.length >= 1){
+                // strdepth1 +="<P>"+result[0].siteDepth1+"</P>"
+                strdepth1 +="<P>선택</P>"
+                strdepth1 += "<ul id ='ui_sitedepth1'>";
+                strdepth1 += "<li>선택</li>";
+
+                module_html.strdepth2["선택"] = "<P>선택</P><ul><li>선택</li></ul>";
+				for(var i=0; i < result.length; i++){
+					if(siteDepth1pre !=result[i].siteDepth1){
+						strdepth1 += "<li>" + result[i].siteDepth1 + "</li>";
+
+						if(siteDepth1pre != ""){
+							module_html.strdepth2[siteDepth1pre] += "</ul>";
+						}
+						siteDepth1pre = result[i].siteDepth1;
+
+                        //module_html.strdepth2[siteDepth1pre] ="<P>"+result[0].siteDepth2+"</P>"
+                        module_html.strdepth2[siteDepth1pre] ="<P>선택</P>"
+                        module_html.strdepth2[siteDepth1pre] += "<ul>";
+                        module_html.strdepth2[siteDepth1pre] += "<li>선택</li>";
+					}
+					module_html.strdepth2[siteDepth1pre] += "<li>" + result[i].siteDepth2 + "</li>";
+				}
+				
+				module_html.strdepth2[siteDepth1pre] += "</ul>";
+				strdepth1 += "</ul>";
+				$("#div_sitedepth1").html('');
+				$("#div_sitedepth1").html(strdepth1);
+
+				$("#div_sitedepth2").html('');
+                //$("#div_sitedepth2").html(module_html.strdepth2[result[0].siteDepth1]);
+                $("#div_sitedepth2").html(module_html.strdepth2["선택"]);
+                $("#div_sitedepth3").html(module_html.strdepth2["선택"]);
+			}
+        });
         
         init();
-        setWorkSite();
         regenDatepicker();
 		setDatePicker();
 
@@ -393,6 +454,7 @@
                     targetId.val(e.hostID);
                     targetName.val('['+e.company+']['+e.deptCD+']'+e.hostName);
                 });
+
                 _tr.append('<td>'+e.company+'</td>');
                 _tr.append('<td>'+e.deptCD+'</td>');
                 _tr.append('<td>'+e.hostName+'</td>');
@@ -621,9 +683,9 @@
                 </dd>
                 <dt>방문위치</dt>
                 <dd class="nv_dd_full nv_date nv_double_select">
-                    <div class="nv_select_box" id= "div_sitedepth1"><p>선택</p><ul></ul></div>
-                    <div class="nv_select_box" id= "div_sitedepth2"><p>선택</p><ul></ul></div>
-                    <div class="nv_select_box" id= "div_sitedepth3"><p>선택</p><ul></ul></div>
+                    <div class="nv_select_box" id= "div_sitedepth1"></div>
+                    <div class="nv_select_box" id= "div_sitedepth2"></div>
+                    <div class="nv_select_box" id= "div_sitedepth3"></div>
                 </dd>
             </dl>
         </div>
