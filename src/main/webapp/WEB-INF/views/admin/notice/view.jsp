@@ -45,7 +45,7 @@ function download(url , param) {
                 </tbody>
             </table>
             <div class="btn_area nv_page_bottomarea_type2">
-                <button type="button" class="nv_green_button m_w_100" onclick="javascript:location.href='/notice'">목록</button>
+                <button type="button" class="nv_green_button m_w_100" onclick="javascript:location.href='/admin/notice'">목록</button>
                 <button type="submit" class="nv_blue_button m_w_100">수정</button>
             </div>
         </div>

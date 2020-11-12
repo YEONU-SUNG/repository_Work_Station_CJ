@@ -23,7 +23,7 @@
                                             '<input type="checkbox" id="n1_'+(this.tableData[i].faqID)+'" value="'+(this.tableData[i].faqID)+'">' +
                                             '<label for="n1_'+(this.tableData[i].faqID)+'">선택</label></td>' +
                                             '<td>'+this.activeButton(this.tableData[i])+'</td>' +
-                                            '<td class="tit"><a href="/faq/view/'+(this.tableData[i].faqID)+'">'+(this.tableData[i].question)+'</a></td>' +
+                                            '<td class="tit"><a href="/admin/faq/view/'+(this.tableData[i].faqID)+'">'+(this.tableData[i].question)+'</a></td>' +
                                             '<td class="name">'+(this.tableData[i].hostName)+'</td>' + 
                                         '<tr>';   
                     }
@@ -60,7 +60,7 @@
     $(document).on('click', '#faqTable > tbody > tr button', function() {
         var target = $(this);
         var faqID = target.parent().parent().attr('id');
-        callApi.setData("faq-list/"+faqID, {}, function (result) {
+        callApi.setData("dfaq-list/"+faqID, {}, function (result) {
             target.parent().html(module.activeButton(result));
         })
     });
@@ -70,9 +70,9 @@
         $('#faqTable > tbody input[type="checkbox"]:checked').each(function(){
             selectorIdArray.push($(this).val());
         });
-        callApi.setData("/faq-list", { FaqID : selectorIdArray }, function(result) {
+        callApi.setData("/admin/faq-list", { FaqID : selectorIdArray }, function(result) {
             alert('삭제되었습니다.');
-            init('/faq-list?page=1&size=10');
+            init('/admin/faq-list?page=1&size=10');
         });
     });
 </script>
@@ -121,7 +121,7 @@
 			</table>
 			<div class="nv_m_btn_area nv_bord_btn_area">
 				<button type="button" class="nv_red_button delete_icon_btn left" id="selectorDelete">선택 항목 삭제</button>
-                <button type="button" class="nv_blue_button add_icon_btn right" onclick="javascript:location.href='/faq/view'">FAQ 등록</button>
+                <button type="button" class="nv_blue_button add_icon_btn right" onclick="javascript:location.href='/admin/faq/view'">FAQ 등록</button>
 			</div>
 			<div class="nv_table_pagenum" id="pagenation"></div>
 		</div>

@@ -19,12 +19,12 @@
         formData.append('answer', CKEDITOR.instances.answer.getData());
         callApi.setMultipartData(url, formData, function(result) {
             alert('정상적으로 처리되었습니다.');
-            location.href = '/faq/view/'+result.faqID;
+            location.href = '/admin/faq/view/'+result.faqID;
         })
     });
 
     function init(faqID, form) {
-        callApi.getData('/faq-view/'+faqID, function(result) {
+        callApi.getData('/admin/faq-view/'+faqID, function(result) {
             module.faq = result;
             //form.question.innerHTML = module.faq.question;
             form.question.value = module.faq.question;
@@ -79,7 +79,7 @@
                 </tbody>
             </table>
             <div class="btn_area nv_page_bottomarea_type2">
-                <button type="button" class="nv_green_button m_w_100" onclick="javascript:location.href='/faq'">목록</button>
+                <button type="button" class="nv_green_button m_w_100" onclick="javascript:location.href='/admin/faq'">목록</button>
                 <button type="submit" class="nv_blue_button m_w_100">저장</button>
             </div>
         </form>

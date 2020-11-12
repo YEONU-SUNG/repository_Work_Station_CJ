@@ -23,7 +23,7 @@
         formData.append('upload', $('input[type="file"]')[0].files[0]);
         callApi.setMultipartData('/notice-add', formData, function(result) {
             alert('정상적으로 처리되었습니다.');
-            location.href = '/notice/view/'+result.noticeID;
+            location.href = '/admin/notice/view/'+result.noticeID;
         })
     });
 
@@ -107,7 +107,7 @@
                 </tbody>
             </table>
             <div class="btn_area nv_page_bottomarea_type2">
-                <button type="button" class="nv_green_button m_w_100" onclick="javascript:location.href='/notice'">목록</button>
+                <button type="button" class="nv_green_button m_w_100" onclick="javascript:location.href='/admin/notice'">목록</button>
                 <button type="submit" class="nv_blue_button m_w_100">저장</button>
             </div>
         </form>

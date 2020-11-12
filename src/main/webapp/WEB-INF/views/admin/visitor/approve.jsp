@@ -36,40 +36,6 @@
 </script>
 <c:if test="${sessionScope.login.host.auth eq '1'}">
     <script>
-
-// 원본
- /*        var approveActionCommponet = {
-            visitorButton : function(row) {
-                if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
-                    return '미수료';
-                }
-                if(row.visitApprovalYN==='Y') {
-                    if(row.toDayYN==='Y')
-                    {
-                        for(var i in row.visitorInoutTimes) {
-                            //var visitDate = new Date(row.visitorInoutTimes[i].visitFromDateTime);
-                            var ds = row.visitorInoutTimes[i].visitFromDateTime;
-                            var arr = ds.split("-");  // 2018,01,01 00:10:11
-                            var visitDate = new Date(arr[0] + "/" + arr[1] + "/" + arr[2]);
-                            if(date.compare(visitDate)) {
-                                if(row.visitorInoutTimes[i].visitToDateTime=='')
-                                    // return '<button type="button" class="nv_red_button">퇴실</button>';
-                                    return '<button type="button" class="nv_red_button">출문</button>';
-                                else 
-                                    $('#'+row.visitorHistorySeq).remove();
-                            }
-                        }
-                        // return '<button type="button" class="nv_blue_button">방문</button>';
-                        return '<button type="button" class="nv_blue_button nv_green_button">입문</button>';
-                    }
-                    else if(row.toDayYN==='N')
-                        return '승인완료';
-                } else {
-                    return '<button type="button" class="nv_blue_button nv_modal2_open" value="approve">승인/거부</button>';
-                }
-            }
-        }; */
-// 수정본
         var approveProcessStatus = {
             visitorApprove : function(row) {
                 if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
@@ -115,7 +81,7 @@
                     else if(row.toDayYN==='N')
                         return '';
                 } else {
-                    return '<button type="button" class="nv_blue_button" value="approve">승인</button><button type="button" class="nv_red_button nv_modal5_open" onclick="$(\'.nv_modal5\').addClass(\'on\');" value="reject">반려</button>';
+                    return '<button type="button" class="nv_blue_button" value="approve">승인</button> <button type="button" class="nv_red_button nv_modal5_open" onclick="$(\'.nv_modal5\').addClass(\'on\');" value="reject">반려</button>';
                 }
             }
         };
@@ -301,9 +267,6 @@
                     for(var i=0; i<this.tableData.length;i++) {
                     var strcarryStuffUsed = this.tableData[i].carryStuffUsed.trim() == "" ? "사용안함":this.tableData[i].carryStuffUsed;
                     this.tableHTML +=   '<tr class="nv_view_nexttable" id="'+this.tableData[i].visitorHistorySeq+'">' +
-                                            '<td class="nv_gray_check">' +
-                                            '<input type="checkbox" id="n1_'+(this.tableData[i].visitorHistorySeq)+'" value="'+(this.tableData[i].visitorHistorySeq)+'">' +
-                                            '<label for="n1_'+(this.tableData[i].visitorHistorySeq)+'">선택</label></td>' +
                                             '<td>' +this.tableData[i].visitorName+ '</td>' +
                                             '<td>' +this.tableData[i].visitorCompany+ '</td>' +
                                             '<td class="tpc_skip m_skip">' +this.tableData[i].visitorMobile+ '</td>' +
@@ -456,6 +419,13 @@
         $(".nv_modal5").addClass("on");
         $(".nv_modal5").attr("readonly", true);
         $(".nv_modal5").attr("disabled", true);
+    }
+
+    function excel() {
+        if(module.tableData.length==0) {
+            if(!confirm('조회결과가 존재하지않습니다. 출력하시겠습니까?')) return false;
+        }
+        location.href = '/excel'+convertEncoding(module.pagenation.params);
     }
 
     $(document).ready(function() {
@@ -723,20 +693,20 @@
 </script>
 <div class="nv_contents_header"><h4>방문현황</h4></div>
 <%-- <c:if test="${sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2'}"> --%>
-<c:if test="${sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '3'}">
+    <%--<c:if test="${sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '3'}">
 <div class="btn_left toggle_btn">
-    <%-- <button type="button" class="nv_blue_button on" id="selectorModify">선택 수정</button>
-    <button type="button" class="nv_green_button" id="selectorSave">선택 저장</button> --%>
+     <button type="button" class="nv_blue_button on" id="selectorModify">선택 수정</button>
+    <button type="button" class="nv_green_button" id="selectorSave">선택 저장</button> 
     <button type="button" class="nv_blue_button on" id="selectorModifyapproval">선택 승인/반려</button>
 </div>
-</c:if>
+</c:if>--%>
 <div class="nv_contents_search">
     <p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
         <div class="nv_date_box">
             <span class="icon_date">달력 아이콘</span>
-            <input type="text" class="nv_input" id="datepicker" name="visitorFromDateTime">
+            <input type="text" class="nv_input" id="datepicker" name="searchFromDateTime">
             <span>~</span>
-            <input type="text" class="nv_input" id="datepicker2" name="visitorToDateTime">
+            <input type="text" class="nv_input" id="datepicker2" name="searchToDateTime">
         </div>
     <p class="m_tit nv_bold pc_skip tpc_skip">검색 설정</p>
     <div class="nv_select_box">
@@ -810,12 +780,8 @@
                 <th>방문관리</th>
             </tr> -->
             <tr>
-                <th class="nv_gray_check">
-                    <input type="checkbox" id="allcheck">
-                    <label for="allcheck">전체 선택</label>
-                </th>
-                <th>성명</th>
-                <th>회사</th>
+                <th>방문자</th>
+                <th>업체명</th>
                 <th class="tpc_skip m_skip">연락처</th>
                 <th class="tpc_skip m_skip">방문목적</th>
                 <th class="tpc_skip m_skip">방문위치</th>

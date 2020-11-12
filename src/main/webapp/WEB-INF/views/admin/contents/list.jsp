@@ -84,11 +84,11 @@
 				<ul id="contentsmanageList"></ul>
 			</div>
 			<div class="add_contents_btn_area">
-				<button type="button" class="nv_red_button add_icon_btn m_skip" onclick="javascript:location.href='/contentsmanage/view'">컨텐츠 등록</button>
+				<button type="button" class="nv_red_button add_icon_btn m_skip" onclick="javascript:location.href='/admin/contentsmanage/view'">컨텐츠 등록</button>
 			</div>
 			<div class="nv_m_btn_area pc_skip tpc_skip">
 				<button type="button" class="nv_red_button delete_icon_btn left">선택 항목 삭제</button>
-				<button type="button" class="nv_blue_button add_icon_btn right" onclick="javascript:location.href='/contentsmanage/view'">컨텐츠 등록</button>
+				<button type="button" class="nv_blue_button add_icon_btn right" onclick="javascript:location.href='/admin/contentsmanage/view'">컨텐츠 등록</button>
 			</div>
 		</div>
 	</div>

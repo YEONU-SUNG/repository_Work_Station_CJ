@@ -22,7 +22,7 @@
                                             '<input type="checkbox" id="n1_'+(this.tableData[i].noticeID)+'" value="'+(this.tableData[i].noticeID)+'">' +
                                             '<label for="n1_'+(this.tableData[i].noticeID)+'">선택</label></td>' +
                                             '<td>'+this.activeButton(this.tableData[i])+'</td>' +
-                                            '<td class="tit"><a href="/notice/view/'+(this.tableData[i].noticeID)+'">'+(this.tableData[i].title)+'</a></td>' +
+                                            '<td class="tit"><a href="/admin/notice/view/'+(this.tableData[i].noticeID)+'">'+(this.tableData[i].title)+'</a></td>' +
                                             '<td class="name">'+(this.tableData[i].hostName)+'</td>' + 
                                         '<tr>';   
                     }
@@ -119,7 +119,7 @@
 			</table>
 			<div class="nv_m_btn_area nv_bord_btn_area">
 				<button type="button" class="nv_red_button delete_icon_btn left" id="selectorDelete">선택 항목 삭제</button>
-				<button type="button" class="nv_blue_button add_icon_btn right" onclick="javascript:location.href='/notice/view'">공지사항 등록</button>
+				<button type="button" class="nv_blue_button add_icon_btn right" onclick="javascript:location.href='/admin/notice/view'">공지사항 등록</button>
 			</div>
 			<div class="nv_table_pagenum" id="pagenation"></div>
 		</div>

@@ -19,7 +19,7 @@ $(document).on('click', '#save', function(event) {
     callApi.setMultipartData('/contentsmanage/view', formData, function(result) {
         alert('정상적으로 처리되었습니다.');
         //location.href='/contentsmanage/list';
-        location.href='/contentsmanage';
+        location.href='/admin/contentsmanage';
     });
 });
 $(document).on('change', 'input[type="file"]', function() {
@@ -68,7 +68,7 @@ $(document).on('click', '.delete_contents_btn', function() {
 				</tbody>
 			</table>
 			<div class="btn_area nv_page_bottomarea_type2">
-				<button type="button" class="nv_green_button m_w_100" onclick="javascript:location.href='/contentsmanage'">목록</button>
+				<button type="button" class="nv_green_button m_w_100" onclick="javascript:location.href='/admin/contentsmanage'">목록</button>
 				<button type="button" class="nv_blue_button m_w_100" id="save">저장</button>
 			</div>
 		</div>
