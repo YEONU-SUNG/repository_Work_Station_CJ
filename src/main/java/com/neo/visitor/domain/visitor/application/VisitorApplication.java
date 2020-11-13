@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.neo.visitor.config.AES256Util;
 import com.neo.visitor.domain.Pagenation;
 import com.neo.visitor.domain.PagenationResponse;
 import com.neo.visitor.domain.PagenationType;
@@ -37,7 +38,20 @@ public class VisitorApplication {
         map.put("pagenation", pagenation);
         map.put("host", loginService.getUserSessionInfo(request));
         //pagenationResponse.setResponse(visitorInoutTimeService.findAllHistory(pagenation));
-        pagenationResponse.setResponse(visitorInoutTimeService.findAllHistory(map));
+        List<VisitorInoutTime> findAllHistoryList = visitorInoutTimeService.findAllHistory(map);
+        for(int i = 0, len = findAllHistoryList.size(); i < len; i++){
+            String visitorName = findAllHistoryList.get(i).getVisitorHistory().getVisitorName().toString();
+            String visitorMobile = findAllHistoryList.get(i).getVisitorHistory().getVisitorMobile();
+
+            try{
+                findAllHistoryList.get(i).getVisitorHistory().setVisitorName(AES256Util.decrypt(visitorName));
+                findAllHistoryList.get(i).getVisitorHistory().setVisitorMobile(AES256Util.decrypt(visitorMobile));
+            }catch(Exception e){
+                continue;
+            }
+        }
+
+        pagenationResponse.setResponse(findAllHistoryList);
         //pagenationResponse.setPagenation(pagenation.makePagenation(visitorInoutTimeService.findAllHistoryCount(pagenation), PagenationType.VISITOR_HISTORY));
         pagenationResponse.setPagenation(pagenation.makePagenation(visitorInoutTimeService.findAllHistoryCount(map), PagenationType.VISITOR_HISTORY));
         return pagenationResponse;
@@ -52,7 +66,19 @@ public class VisitorApplication {
 
         // pagenationResponse.setResponse(visitorService.findByPlanDateTime(map));
         // pagenationResponse.setPagenation(pagenation.makePagenation(visitorService.countByDeleteFlag(map), PagenationType.VISITOR_APPROVE));
-        pagenationResponse.setResponse(visitorService.findByPlanDateTime(map));
+        List<VisitorHistory> findByPlanDateTimeList = visitorService.findByPlanDateTime(map);
+        for(int i = 0, len = findByPlanDateTimeList.size(); i < len; i++){
+            String visitorName = findByPlanDateTimeList.get(i).getVisitorName().toString();
+            String visitorMobile = findByPlanDateTimeList.get(i).getVisitorMobile();
+
+            try{
+                findByPlanDateTimeList.get(i).setVisitorName(AES256Util.decrypt(visitorName));
+                findByPlanDateTimeList.get(i).setVisitorMobile(AES256Util.decrypt(visitorMobile));
+            }catch(Exception e){
+                continue;
+            }
+        }
+        pagenationResponse.setResponse(findByPlanDateTimeList);
         pagenationResponse.setPagenation(pagenation.makePagenation(visitorService.countByDeleteFlag(map), PagenationType.VISITOR_APPROVE));
         return pagenationResponse;
     }
@@ -65,7 +91,20 @@ public class VisitorApplication {
         map.put("searchToDateTime", searchToDateTime);
         map.put("host", loginService.getUserSessionInfo(request));
 
-        pagenationResponse.setResponse(visitorService.findByConfirm(map));
+        List<VisitorHistory> findByConfirmList = visitorService.findByConfirm(map);
+        for(int i = 0, len = findByConfirmList.size(); i < len; i++){
+            String visitorName = findByConfirmList.get(i).getVisitorName().toString();
+            String visitorMobile = findByConfirmList.get(i).getVisitorMobile();
+
+            try{
+                findByConfirmList.get(i).setVisitorName(AES256Util.decrypt(visitorName));
+                findByConfirmList.get(i).setVisitorMobile(AES256Util.decrypt(visitorMobile));
+            }catch(Exception e){
+                continue;
+            }
+        }
+
+        pagenationResponse.setResponse(findByConfirmList);
         pagenationResponse.setPagenation(pagenation.makePagenation(visitorService.countByConfirm(map), PagenationType.VISITOR_CONFIRM));
         return pagenationResponse;
     }
