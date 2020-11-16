@@ -3,12 +3,14 @@ package com.neo.visitor.domain.user.entity;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import com.neo.visitor.domain.visitor.entity.Visiter;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter @Setter @ToString
-public class Host {
+public class Host extends Visiter {
 
 	private String hostID;                 //임직원 ID
     private String hostName;            //임직원 이름
@@ -25,6 +27,11 @@ public class Host {
     private String auth;                //임직원 권한
     private String upperDeptCD;          //임직원 상위 부서
     private String activeFlag;          //임직원 상위 부서
+
+    public Host makeHost(String hostID) {
+        this.hostID = hostID;
+        return this;
+    }
 
     public void updateHostAuth(String auth) {
         switch (auth) {

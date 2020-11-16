@@ -8,4 +8,9 @@ public class SMSMsgQue {
     private String dstaddr;
     private String callback;
     private String text;
+
+    public SMSMsgQue() {}
+    public SMSMsgQue(String callBack) {
+        this.callback = callBack;
+    }
 }

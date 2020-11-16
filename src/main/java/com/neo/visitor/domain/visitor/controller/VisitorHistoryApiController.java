@@ -1,11 +1,17 @@
 package com.neo.visitor.domain.visitor.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.neo.visitor.domain.Pagenation;
 import com.neo.visitor.domain.PagenationResponse;
+import com.neo.visitor.domain.user.entity.Host;
 import com.neo.visitor.domain.visitor.application.VisitorApplication;
 import com.neo.visitor.domain.visitor.application.VisitorHistoryApplication;
+import com.neo.visitor.domain.visitor.entity.Visiter;
+import com.neo.visitor.domain.visitor.entity.Visitor;
 import com.neo.visitor.domain.visitor.entity.VisitorHistory;
 import com.neo.visitor.domain.visitor.entity.VisitorInoutTime;
 
@@ -41,31 +47,46 @@ public class VisitorHistoryApiController {
 
     @PostMapping(path = "visitor")
     public void setVisitor(HttpServletRequest req) {
-        String hostName = req.getParameter("hostName");
-        String hostDept = req.getParameter("hostDept");
+        // String hostName = req.getParameter("hostName");
+        // String hostDept = req.getParameter("hostDept");
+        String hostId = req.getParameter("hostId");
         String planFromDateTime = req.getParameter("planFromDate");
         String planToDateTime = req.getParameter("planToDate");
         String visitPurpose = req.getParameter("visitPurpose");
         String visitPurposeDetail = req.getParameter("visitPurposeDetail");
         String visitorPosition1 = req.getParameter("visitPosition1");
         String visitorPosition2 = req.getParameter("visitPosition2");
-        String visitorCompany = req.getParameter("visitorCompany");
+        String visitorPosition3 = req.getParameter("visitPosition3");
+        String visitorCar = req.getParameter("visitorCar");
 
         VisitorHistory visitorHistory = new VisitorHistory();
-        visitorHistory.makeVisitorHistory(hostName, hostDept, planFromDateTime, planToDateTime, visitPurpose, visitPurposeDetail, visitorPosition1, visitorPosition2, visitorCompany);
+        visitorHistory.makeVisitorHistory(hostId, planFromDateTime, planToDateTime, visitPurpose, visitPurposeDetail, visitorPosition1, visitorPosition2, visitorPosition3, visitorCar);
 
+        String[] visitorIds = req.getParameterValues("visitorId");
         String[] visitorNames = req.getParameterValues("visitorName");
         String[] visitorBirths = req.getParameterValues("visitorBirth");
         String[] visitorPhones = req.getParameterValues("visitorPhone");
-        if(visitPurpose.equals("납품/반출")) {
-            String[] visitorCarTypes = req.getParameterValues("visitorCarType");
-            String[] visitorCars = req.getParameterValues("visitorCar");
-            visitorHistoryApplication.saveHistoryVisitPurposeCar(visitorHistory, visitorNames, visitorBirths, visitorPhones, visitorCarTypes, visitorCars);
-        } else {
-            String[] visitorSerials = req.getParameterValues("visitorSerial");
-            String[] visitorPurpose = req.getParameterValues("visitorPurpose");
-            String[] visitorUseds = req.getParameterValues("visitorUsed");
-            visitorHistoryApplication.saveHistoryVisitPurposeWork(visitorHistory, visitorNames, visitorBirths, visitorPhones, visitorSerials, visitorPurpose, visitorUseds);
+        String[] visitorCompanys = req.getParameterValues("visitorCompany");
+        String[] visitorWares = req.getParameterValues("visitorCompany");
+        String[] visitorSerials = req.getParameterValues("visitorSerial");
+        String[] visitorPurpose = req.getParameterValues("visitorPurpose");
+        String[] visitorUseds = req.getParameterValues("visitorUsed");
+
+        List<Visiter> visiters = new ArrayList<>();
+        for(int i=0; i<visitorIds.length; i++) {
+            Visiter visiter = 
+                (!visitorIds[i].equals(""))
+                // 임직원인경우
+                ? new Host().makeHost(visitorIds[i])
+                // 외부인인경우
+                : new Visitor().makeVisitor(visitorNames[i], visitorBirths[i], visitorPhones[i], visitorCompanys[i]);
+
+            // 반입물품
+            visiter.setCarryInWareByVisiter(visitorWares[i], visitorSerials[i], visitorPurpose[i], visitorUseds[i]);
+            visiters.add(visiter);
         }
+
+        visitorHistoryApplication.saveHistoryVisit(visitorHistory, visiters);
+        
     }
 }

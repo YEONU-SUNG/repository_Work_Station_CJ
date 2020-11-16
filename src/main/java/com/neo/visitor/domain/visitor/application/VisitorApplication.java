@@ -13,6 +13,7 @@ import com.neo.visitor.config.AES256Util;
 import com.neo.visitor.domain.Pagenation;
 import com.neo.visitor.domain.PagenationResponse;
 import com.neo.visitor.domain.PagenationType;
+import com.neo.visitor.domain.user.entity.AdminUser;
 import com.neo.visitor.domain.user.service.LoginService;
 import com.neo.visitor.domain.visitor.entity.VisitorHistory;
 import com.neo.visitor.domain.visitor.entity.VisitorInoutTime;
@@ -42,7 +43,6 @@ public class VisitorApplication {
         for(int i = 0, len = findAllHistoryList.size(); i < len; i++){
             String visitorName = findAllHistoryList.get(i).getVisitorHistory().getVisitorName().toString();
             String visitorMobile = findAllHistoryList.get(i).getVisitorHistory().getVisitorMobile();
-
             try{
                 findAllHistoryList.get(i).getVisitorHistory().setVisitorName(AES256Util.decrypt(visitorName));
                 findAllHistoryList.get(i).getVisitorHistory().setVisitorMobile(AES256Util.decrypt(visitorMobile));
@@ -58,11 +58,15 @@ public class VisitorApplication {
     }
 
     public PagenationResponse<VisitorHistory> dashboard(HttpServletRequest request, Pagenation pagenation, LocalDateTime localDateTime) {
+
+        AdminUser adminUser = loginService.getUserSessionInfo(request);
+        if(adminUser==null) throw new IllegalArgumentException("세션연결이 해제되었습니다. 다시 로그인해주세요.");
+
         PagenationResponse<VisitorHistory> pagenationResponse = new PagenationResponse<>();
         Map<String, Object> map = new HashMap<>();
+        map.put("host", adminUser);
         map.put("pagenation", pagenation);
-        map.put("date", localDateTime.toString());
-        map.put("host", loginService.getUserSessionInfo(request));
+        map.put("date", localDateTime.toString());        
 
         // pagenationResponse.setResponse(visitorService.findByPlanDateTime(map));
         // pagenationResponse.setPagenation(pagenation.makePagenation(visitorService.countByDeleteFlag(map), PagenationType.VISITOR_APPROVE));

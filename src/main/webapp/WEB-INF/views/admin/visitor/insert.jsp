@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="/static/js/Inputmask/dist/jquery.inputmask.min.js"></script>
+<script src="/admin/static/js/Inputmask/dist/jquery.inputmask.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-<script src="/static/js/xlsx.full.min.js"></script>
+<script src="/admin/static/js/xlsx.full.min.js"></script>
 <script>
     $(function() {
 		$.datepicker.setDefaults({
@@ -70,13 +70,7 @@
     }); 
 </script>
 <script>
-    /**
-    * 임직원 or 외부인의 유형값
-    */
-    const visitorType = {
-        INSIDE : 1,
-        OUTSIDE : 2
-    }
+    
     /**
     * 방문객 객체
     */
@@ -156,7 +150,6 @@
         tbody : {
             component : {
                 carray : function(carray) {
-                    console.log(carray);
                     return  '<input type="hidden" class="nv_input max_100" name="guest_ware" value="'+carray.ware+'" />' +
                             '<input type="hidden" class="nv_input max_100" name="guest_serial" value="'+carray.serial+'" />' +
                             '<input type="hidden" class="nv_input max_100" name="guest_purpose" value="'+carray.purpose+'"/>' +
@@ -181,22 +174,19 @@
             //                 '<td><button type="button" class="nv_red_button" onclick="removeThisRow(this);">삭제</button></td>' +
             //             '</tr>';
             // },
-            tr : function(visitInfo) {
-                console.log(visitInfo);
+            tr : function(visitInfo) {                
                 if(visitInfo.visitorType==1) {
                     // 임직원인경우
                     return '<tr id="group'+visitInfo.id+'">' +
-                            '<td colspan="3">' +
-                                '<input type="hidden" id="guest_id'+visitInfo.id+'" name="guest_id'+visitInfo.id+'" value="'+visitInfo.visitor.id+'">' +
-                                '<input type="hidden" id="guest_type'+visitInfo.id+'" name="guest_type'+visitInfo.id+'" value="'+visitInfo.visitorType+'">' +
-                                '<input type="hidden" id="guest_company'+visitInfo.id+'" name="guest_company'+visitInfo.id+'" value="'+visitInfo.visitor.company+'">' +
-                                '<input type="hidden" id="guest_dept'+visitInfo.id+'" name="guest_dept'+visitInfo.id+'" value="'+visitInfo.visitor.dept+'">' +
-                                '<input type="hidden" class="nv_input" id="guest_name'+visitInfo.id+'" name="guest_name'+visitInfo.id+'" value="'+visitInfo.visitor.name+'"/>' +
-                                '<input type="text" class="nv_input" id="guest_view_name'+visitInfo.id+'" name="guest_view_name'+visitInfo.id+'" value="'+visitInfo.visitor.dept+'" placeholder="[회사][부서]이름"/>' +
+                            '<td colspan="4">' +
+                                // '<input type="hidden" id="guest_type'+visitInfo.id+'" name="guest_type" value="'+visitInfo.visitorType+'">' +
+                                // '<input type="hidden" id="guest_company'+visitInfo.id+'" name="guest_company" value="'+visitInfo.visitor.company+'">' +
+                                // '<input type="hidden" id="guest_dept'+visitInfo.id+'" name="guest_dept" value="'+visitInfo.visitor.dept+'">' +
+                                // '<input type="hidden" class="nv_input" id="guest_name'+visitInfo.id+'" name="guest_name'+visitInfo.id+'" value="'+visitInfo.visitor.name+'"/>' +
+                                '<input type="text" class="nv_input" id="guest_name'+visitInfo.id+'" name="guest_name" placeholder="검색 할 방문자 입력"/>' +
+                                '<button type="button" class="nv_blue_button find_modal">찾기</button>' +
+                                '<input type="hidden" id="guest_id'+visitInfo.id+'" name="guest_id" value="'+visitInfo.visitor.id+'">' +
                             '</td>' +
-                            '<td style="text-align: left;">' +
-                                '<button type="button" class="nv_blue_button" onclick="open_find_host();">찾기</button>' +
-                            '</td>'+
                             '<td>'+(module_html.tbody.component.carray(visitInfo.carray))+'</td>'+
                             '<td><button type="button" class="nv_red_button" onclick="removeThisRow(this);">삭제</button></td>' +
                         '</tr>';
@@ -267,49 +257,14 @@
             }
         }   
     }
-    function isCheckedSiteNameOverlap(elements) {
-        var _siteName = '';
-        elements.find('li').each(function(i,e) {
-            if(_siteName==e.innerHTML) this.remove();
-            _siteName = e.innerHTML;
-        });
-    }
-    function setWorkSite() {
-		callApi.getData('/visitor/worksite', function (result) {
-            var siteDepth1 = $('#div_sitedepth1 > ul');
-            var siteDepth2 = $('#div_sitedepth2 > ul');
-            var siteDepth3 = $('#div_sitedepth3 > ul');
-            $.each(result, function(i1, e1) {
-                var depth1 = $('<li>');
-                depth1.html(e1.siteDepth1);
-                depth1.on('click', function() {
-                    $.each(result, function(i2, e2) {
-                        if(e1.siteDepth1==e2.siteDepth1) {
-                            var depth2 = $('<li>');
-                            depth2.html(e2.siteDepth2);
-                            depth2.on('click', function() {
-                                $.each(result, function(i3, e3) {
-                                    if(e2.siteDepth2==e3.siteDepth2) {
-                                        var depth3 = $('<li>');
-                                        depth3.html(e3.siteDepth3);
-                                        siteDepth3.append(depth3);
-                                    }
-                                });
-                                isCheckedSiteNameOverlap(siteDepth3);
-                            });
-                            siteDepth2.append(depth2);
-                        }
-                    });
-                    isCheckedSiteNameOverlap(siteDepth2);
-                });
-                siteDepth1.append(depth1);
-            });
-            isCheckedSiteNameOverlap(siteDepth1);
-        });
-    }
-	
+   
+    /**
+    * 방문객 외부인 삭제 row 
+    * @param this
+    */
     function removeThisRow(dom) {
-        if ($(dom).parents("tbody").children("tr").length == 1 && $(dom).parents("tr").index() == 0) {
+        if ($(dom).parents("tbody").children("tr").length == 1
+             && $(dom).parents("tr").index() == 0) {
 			$(dom).parents("tr").find("input").val("");
 		} else {
 			$(dom).parents("tr").remove();
@@ -335,63 +290,102 @@
         $('#visitorThead').html(module_html.thead.tr());
         //$('#visitorTbody').html(addRow());
     }
-
-    var _companylist = new Array();
-
     $(function() {
-		$("#guest_company").autocomplete({
-            source : _companylist//,
-            ,messages: {
-                noResults: '',
-                results: function() {
-                    $("ul.ui-autocomplete li").css("background", "white");
-                }
-            }
-			//조회를 위한 최소글자수
-			//minLength : 2,
-			//select : function(event, ui) {
-			//	// 만약 검색리스트에서 선택하였을때 선택한 데이터에 의한 이벤트발생
-			//}
-		});
-
-        $('#host_name').keydown(function(event) {
-			if (event.keyCode == 13) {
-				find_host('host_name');
-			} else {
-				$("#host_id").val("");
-				$("#host_dept").val("");
-			}
-        });
-
-        //방문객 회사정보 가져오기
-        callApi.getData('/visitor/company', function (result) {
-			if(result.length >= 1){
-				for(var i=0; i < result.length; i++){
-					_companylist[i] = result[i].company;
-				}
-			}
+        //방문객 회사정보 가져오기 및 자동완성
+        callApi.getData('/visitor/company', function (result) {            
+            $(document).on('focus', 'input[name="guest_company"]' , function() {
+                $(this).autocomplete({
+                    source : result.map(x=> x.company),
+                    messages: {
+                        noResults: '',
+                        results: function() {
+                            $("ul.ui-autocomplete li").css("background", "white");
+                        }
+                    }
+                });
+            });
         });
         
         init();
-        setWorkSite();
+        
+        // 방문객 방문 위치정보 가져오기
+        callApi.getData('/visitor/worksite', function (result) {
+            var siteDepth1 = $('#div_sitedepth1 > ul');
+            var siteDepth2 = $('#div_sitedepth2 > ul');
+            var siteDepth3 = $('#div_sitedepth3 > ul');
+
+            function removeSiteNameOverlap(element) {
+                var _siteName = '';
+                element.find('li').each(function(i,e) {
+                    if(_siteName==e.innerHTML) this.remove();
+                    _siteName = e.innerHTML;
+                });
+            }
+
+            $.each(result, function(i1, e1) {
+                // 1depth
+                var depth1 = $('<li>');
+                depth1.html(e1.siteDepth1);
+                depth1.on('click', function() {
+                    siteDepth2.empty();
+                    $.each(result, function(i2, e2) {
+                        if(e1.siteDepth1==e2.siteDepth1) {
+                            // 2depth
+                            var depth2 = $('<li>');
+                            depth2.html(e2.siteDepth2);
+                            depth2.on('click', function() {
+                                siteDepth3.empty();
+                                $.each(result, function(i3, e3) {
+                                    if(e2.siteDepth2==e3.siteDepth2) {
+                                        // 3depth
+                                        var depth3 = $('<li>');
+                                        depth3.html(e3.siteDepth3);
+                                        siteDepth3.append(depth3);
+                                    }
+                                });
+                                removeSiteNameOverlap(siteDepth3);
+                            });
+                            siteDepth2.append(depth2);
+                        }
+                    });
+                    removeSiteNameOverlap(siteDepth2);
+                });
+                siteDepth1.append(depth1);
+            });
+            removeSiteNameOverlap(siteDepth1);
+        });
+
         regenDatepicker();
 		setDatePicker();
-
 	});
 
+    $(document).on('keydown', '#host_name, input[name="guest_name"]', function(event) {
+        if (event.keyCode == 13) event.target.nextElementSibling.click();
+        else {
+            $("#host_id").val("");
+            $("#host_dept").val("");
+        }
+    });
+
     $(document).on('click', '.find_modal', function() {
-        $(".nv_modal1").addClass("on");
         var target = $(this);
         var targetId = target.next();
         var targetName = target.prev();
-        callApi.getData('/host-list?hostName=' + targetName.val(), function (result) {
-            if(result.length == 0 ) alert('이름을 정확히 입력해주세요.');
+        var _targetName = targetName.val().split(']').length==3 ? targetName.val().split(']')[2] : targetName.val();
+        callApi.getData('/host-list?hostName=' + _targetName, function (result) {
+            if(result.length == 0 ) {
+                alert('이름을 정확히 입력해주세요.');
+                return;
+            }
+            $(".nv_modal1").addClass("on");
             var tableTbody = $('#host_table_tbody');
+            tableTbody.empty();
             $.each(result, function(i, e) {
                 var _tr = $('<tr>');
                 _tr.on('click', function() {
                     targetId.val(e.hostID);
                     targetName.val('['+e.company+']['+e.deptCD+']'+e.hostName);
+                    $('.nv_modal1').removeClass('on');
                 });
                 _tr.append('<td>'+e.company+'</td>');
                 _tr.append('<td>'+e.deptCD+'</td>');
@@ -401,80 +395,6 @@
             
         });
     })
-
-    // $(document).on('change', '#excelFile', function() {
-    //     var reader = new FileReader();
-    //     reader.onload = function() {
-
-    //         var fileData = "";
-	// 	    var bytes = new Uint8Array(reader.result);
-	// 	    var length = bytes.byteLength;
-	// 	    for (var i = 0; i < length; i++) {
-	// 	    	fileData += String.fromCharCode(bytes[i]);
-	// 	    }
-
-    //         //var wb = XLSX.read(reader.result, { type : 'binary' });
-    //         var wb = XLSX.read(fileData, { type : 'binary' });
-    //         var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기 
-    //         var firstSheetName = sheetNameList[0]; // 첫번째 시트명
-    //         var rowObj = XLSX.utils.sheet_to_json(wb.Sheets[firstSheetName], { header : 1, defval : '', raw : false});
-    //         if (rowObj.length > 1) {
-    //             $('#visitorTbody').children().remove();
-    //             for (var i = 1; i < rowObj.length; i++) {
-    //                 var car = { id : i, carNo : '' };
-    //                 var carray = { serial : '', purpose : '', used : '' };
-    //                 var visitor = { name : '', birth : '', phone : '' };
-    //                 for (var j = 0; j < rowObj[i].length; j++) {
-    //                     switch (j) {
-    //                         case 0 : visitor.name = rowObj[i][j]; break;
-    //                         case 1 : visitor.birth = rowObj[i][j]; break;
-    //                         case 2 : visitor.phone = rowObj[i][j]; break;
-    //                         case 3 : car.carNo = rowObj[i][j]; break;
-    //                         case 4 : carray.serial = rowObj[i][j]; break;
-    //                         case 5 : carray.purpose = rowObj[i][j]; break;
-    //                         case 6 : carray.used = rowObj[i][j]; break;
-    //                     }
-    //                 }
-    //                 addRow((car.carNo == '' ? 'carray' : 'car'), car, carray, visitor);
-    //             }
-    //             if($('#visitorTbody').children().size()<1)
-    //             {
-    //                 $('#visitorTbody').html(addRow());
-    //             }
-    //         }
-    //     }
-    //     //reader.readAsBinaryString(event.target.files[0]);
-    //     reader.readAsArrayBuffer(event.target.files[0]);
-    //     $(this).parent().html('<input type="file" id="excelFile" />');
-    // });
-
-    // $(document).on('click', '#vistorPurpose > ul li', function() {
-    //     var visitType = ($(this).html() == '납품/반출') ? 'car' : module_html.defaultType;
-    //     $('#visitorThead').html(module_html.thead.tr(visitType));
-    //     $('#visitorTbody > tr').each(function(index, item) {
-    //         $(this).find('td:eq(3)').html(visitType=='carray' ? module_html.tbody.component.carray({ serial : '', purpose : '', used : '' }) : module_html.tbody.component.car({ id : index, carNo : '' }));
-    //     });
-    // });
-    
-	$(document).on('click', '#ui_sitedepth1 li', function() {
-		$("#div_sitedepth2").html('');		
-		$("#div_sitedepth2").html(module_html.strdepth2[$(this).text()]);
-    });
-    $(document).on('click', '#ui_sitedepth1 li', function() {
-		$("#div_sitedepth2").html('');		
-		$("#div_sitedepth2").html(module_html.strdepth2[$(this).text()]);
-	});
-
-    $(document).on('click', 'input[name="guest_car_type"]', function(event) {
-        if(this.checked) {
-            var target = $(this).parent();
-            target.find('input[name="guest_car_type"]').each(function(index, item) {
-                this.checked = false;
-            });
-            this.checked = true;
-            target.find('input[name="guest_car"]').css('display', (target.find('input[name="guest_car"]').css('display')=='none' ? '' : 'none'));
-        }
-    });
 
     $(document).on('click', '.nv_modal2_open', function() {
         var visitInfo = new VisitInfo();
@@ -512,54 +432,67 @@
     });
 
     $(document).on('click', '#visitorInfoSave', function(event) {
-        var hostName = $('input[name="host_name"]').val();
-        var hostDept = $('input[name="host_dept"]').val();
+        var hostId = $('input[name="host_id"]').val();
+        // var hostName = $('input[name="host_name"]').val();
+        // var hostDept = $('input[name="host_dept"]').val();
         var planFromDate = $('input[name="plan_from_date"]').val();
         var planToDate = $('input[name="plan_to_date"]').val();
         var visitPurpose = $('#vistorPurpose > p').html();
         var visitPosition1 = $('#div_sitedepth1 > p').html();
         var visitPosition2 = $('#div_sitedepth2 > p').html();
         var visitPosition3 = $('#div_sitedepth3 > p').html();
-        var visitorCompany = $('input[name="guest_company"]').val();
+        var visitorCar = $('input[name="guest_carNo"]').val();
         var visitPurposeDetail = $('#vistorPurposeDetail').val();
 
-        if(visitPosition1 == "선택" || visitPosition2 == "선택" || visitPosition2 == "선택") {
+        if(visitPosition1 == "선택" || visitPosition2 == "선택" || visitPosition3 == "선택") {
             alert('방문 위치를 선택해 주세요.');
             return;
         }    
         var visitorForm = new FormData();
-        visitorForm.append('hostName', hostName);
-        visitorForm.append('hostDept', hostDept);
+        visitorForm.append('hostId', hostId);
+        // visitorForm.append('hostName', hostName);
+        // visitorForm.append('hostDept', hostDept);
         visitorForm.append('planFromDate', planFromDate);
         visitorForm.append('planToDate', planToDate);
         visitorForm.append('visitPurpose', visitPurpose);
         visitorForm.append('visitPurposeDetail', visitPurposeDetail);
+        visitorForm.append('visitorCar', visitorCar);
         visitorForm.append('visitPosition1', visitPosition1);
         visitorForm.append('visitPosition2', visitPosition2);
         visitorForm.append('visitPosition3', visitPosition3);
-        visitorForm.append('visitorCompany', visitorCompany);
 
+        var visitorId = $('input[name="guest_id"]');
         var visitorName = $('input[name="guest_name"]');
         var visitorBirth = $('input[name="guest_birth"]');
         var visitorPhone = $('input[name="guest_phone"]');
+        var visitorWare =  $('input[name="guest_ware"]');
         var visitorSerial = $('input[name="guest_serial"]');
         var visitorPurpose = $('input[name="guest_purpose"]');
         var visitorUsed = $('input[name="guest_used"]');
-        var visitorCarType = $('input[name="guest_car_type"]');
-        var visitorCar = $('input[name="guest_car"]');
+        var visitorCompany = $('input[name="guest_company"]');
+        
+        //var visitorCarType = $('input[name="guest_car_type"]');
+        //var visitorCar = $('input[name="guest_car"]');
      
         $('#visitorTbody > tr').each(function(i, item) {
-            visitorForm.append('visitorName', visitorName[i].value);
-            visitorForm.append('visitorBirth', visitorBirth[i].value);
-            visitorForm.append('visitorPhone', visitorPhone[i].value);
-            if(visitPurpose=='납품/반출') {
-                visitorForm.append('visitorCarType', visitorCarType[i].value);
-                visitorForm.append('visitorCar', visitorCar[i].value);
-            } else {
-                visitorForm.append('visitorSerial', visitorSerial[i].value);
-                visitorForm.append('visitorPurpose', visitorPurpose[i].value);
-                visitorForm.append('visitorUsed', visitorUsed[i].value);
-            }
+            visitorForm.append('visitorId', visitorId[i]!=undefined ? visitorId[i].value : '');
+            visitorForm.append('visitorName', visitorName[i]!=undefined ? visitorName[i].value : '');
+            visitorForm.append('visitorBirth', visitorBirth[i]!=undefined ? visitorBirth[i].value : '');
+            visitorForm.append('visitorPhone', visitorPhone[i]!=undefined ? visitorPhone[i].value : '');
+            visitorForm.append('visitorCompany', visitorCompany[i]!=undefined ? visitorCompany[i].value : '');
+            visitorForm.append('visitorWare', visitorWare[i].value);
+            visitorForm.append('visitorSerial', visitorSerial[i].value);
+            visitorForm.append('visitorPurpose', visitorPurpose[i].value);
+            visitorForm.append('visitorUsed', visitorUsed[i].value);
+            
+            // if(visitPurpose=='납품/반출') {
+            //     visitorForm.append('visitorCarType', visitorCarType[i].value);
+            //     visitorForm.append('visitorCar', visitorCar[i].value);
+            // } else {
+            //     visitorForm.append('visitorSerial', visitorSerial[i].value);
+            //     visitorForm.append('visitorPurpose', visitorPurpose[i].value);
+            //     visitorForm.append('visitorUsed', visitorUsed[i].value);
+            // }
         });
         callApi.setFormData('/visitor', visitorForm, function(result) {
             alert('정상적으로 등록되었습니다.');
@@ -580,7 +513,7 @@
             <dl class="nv_dl_table">
                 <dt>접견인</dt>
                 <dd>
-                    <input type="text" class="nv_input" style="width: 85%;" id="host_name" name="host_name" placeholder="검색할 접견인 입력">
+                    <input type="text" class="nv_input" style="width: 85%;" id="host_name" name="host_name" placeholder="검색 할 접견인 입력">
                     <button type="button" class="nv_blue_button find_modal">찾기</button>
                     <input type="hidden" id="find_id" name="host_id" />
                 </dd>
@@ -635,8 +568,8 @@
                 <button type="button" class="nv_green_button down_icon_btn tpc_skip m_skip" onclick="javascript:location.href='/upload/sample/visitsample.xlsx'">엑셀 다운로드</button>
                 <button type="button" class="nv_green_button up_icon_btn tpc_skip m_skip" onclick="$('#excelFile').click();">엑셀 등록</button>
                 --%>
-                <button type="button" class="nv_blue_button add_icon_btn" onclick="addRow(undefined, visitorType.OUTSIDE);">방문객 추가(외부인)</button>
-                <button type="button" class="nv_blue_button add_icon_btn" onclick="addRow(undefined, visitorType.INSIDE);">방문객 추가(임직원)</button>
+                <button type="button" class="nv_blue_button add_icon_btn" onclick="addRow(undefined, 2);">방문객 추가(외부인)</button>
+                <button type="button" class="nv_blue_button add_icon_btn" onclick="addRow(undefined, 1);">방문객 추가(임직원)</button>
             </div>
         </div>
         <div class="nv_table_box">

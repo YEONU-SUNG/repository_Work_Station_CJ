@@ -5,10 +5,12 @@
     <resultMap id="VisitorHistory" type="com.neo.visitor.domain.visitor.entity.VisitorHistory">
         <id column="VisitorHistorySeq" property="visitorHistorySeq" />
         <result column="VisitorReservationNumber" property="visitorReservationNumber" />
+        <result column="VisitorType" property="visitorType" />
         <result column="VisitorID" property="visitorID" />
         <result column="VisitorName" property="visitorName" />
         <result column="VisitorBirth" property="visitorBirth" />
         <result column="VisitorMobile" property="visitorMobile" />
+        <result column="VisitorDept" property="visitorDept" />
         <result column="VisitorCompany" property="visitorCompany" />
         <result column="VisitorPosition1" property="visitorPosition1" />
         <result column="VisitorPosition2" property="visitorPosition2" />
@@ -33,6 +35,7 @@
         <result column="VisitApprovalDateTime" property="visitApprovalDateTime" />
         <result column="EduCompleteDateTime" property="eduCompleteDateTime" />
         <result column="CarryStuff" property="carryStuff" />
+        <result column="CarryStuffWare" property="carryStuffWare" />
         <result column="CarryStuffSerialNo" property="carryStuffSerialNo" />
         <result column="CarryStuffUsed" property="carryStuffUsed" />
         <result column="CarryStuffPurpose" property="carryStuffPurpose" />
@@ -66,10 +69,12 @@
     <sql id="VisitorHistoryInfo">
 		SELECT V.VisitorHistorySeq
 		      ,V.VisitorReservationNumber
-		      ,V.VisitorID
+              ,V.VisitorID
+              ,V.VisitorType
 		      ,V.VisitorName
 		      ,V.VisitorBirth
-		      ,V.VisitorMobile
+              ,V.VisitorMobile
+              ,V.VisitorDept
               ,V.VisitorCompany
               ,V.VisitorPosition1
               ,V.VisitorPosition2
@@ -95,6 +100,7 @@
               ,V.VisitApprovalDateTime
               ,V.EduCompleteDateTime
               ,V.CarryStuff
+              ,V.CarryStuffWare
               ,V.CarryStuffSerialNo
               ,V.CarryStuffUsed
               ,V.CarryStuffPurpose
@@ -102,6 +108,9 @@
               ,V.VisitPurpose
               <!-- 방문목적 상세내용 필요없음 -->
               <!-- ,V.VisitPurposeDetail -->
+              ,V.RejectFlag
+              ,V.RejectComment
+              ,V.RejectType
           FROM visitorhistory AS V
           JOIN visitor AS V1 ON V.VisitorID = V1.VisitorID
           <!-- JOIN host AS H ON V.HostID = H.HostID -->
@@ -326,6 +335,7 @@
             ,VisitApprovalDateTime
             ,EduCompleteDateTime
             ,CarryStuff
+            ,CarryStuffWare
             ,CarryStuffSerialNo
             ,CarryStuffUsed
             ,CarryStuffPurpose
@@ -578,11 +588,13 @@
             <!-- VisitorHistorySeq
             , VisitorReservationNumber -->
             VisitorID
+            , VisitorType
             <!-- ,RepresentativeVisitorHistorySeq -->
             , VisitorReservationNumber
             , VisitorName
             , VisitorBirth
             , VisitorMobile
+            , VisitorDept
             , VisitorCompany
             , VisitorPosition1
             , VisitorPosition2
@@ -608,6 +620,7 @@
             , VisitApprovalDateTime
             , EduCompleteDateTime
             , CarryStuff
+            , CarryStuffWare
             , CarryStuffSerialNo
             , CarryStuffUsed
             , CarryStuffPurpose
@@ -619,10 +632,12 @@
             <!-- #{visitorHistorySeq} 
             , #{visitorReservationNumber}-->
             #{visitorID}
+            , #{visitorType}
             , #{visitorReservationNumber}
             , #{visitorName}
             , #{visitorBirth}
             , #{visitorMobile}
+            , #{visitorDept}
             , #{visitorCompany}
             , #{visitorPosition1}
             , #{visitorPosition2}
@@ -649,6 +664,7 @@
             , #{visitApprovalDateTime}
             , #{eduCompleteDateTime}
             , #{carryStuff}
+            , #{carryStuffWare}
             , #{carryStuffSerialNo}
             , #{carryStuffUsed}
             , #{carryStuffPurpose}

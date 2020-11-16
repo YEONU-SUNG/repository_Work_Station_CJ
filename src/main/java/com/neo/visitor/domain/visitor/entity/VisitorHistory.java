@@ -1,28 +1,33 @@
 package com.neo.visitor.domain.visitor.entity;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.neo.visitor.config.AES256Util;
 import com.neo.visitor.domain.user.entity.Host;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-@Getter @Setter @ToString
+@Getter
+@Setter
 public class VisitorHistory {
-    
+
     private int visitorHistorySeq;
     private String representativeVisitorHistorySeq;
     private String visitorReservationNumber = "";
     private String visitorID;
+    private int visitorType;
     private String visitorName;
     private String visitorBirth;
     private String visitorMobile;
     private String visitorCompany;
+    private String visitorDept;
     private String visitorPosition1;
     private String visitorPosition2;
     private String visitorPosition3;
@@ -47,13 +52,14 @@ public class VisitorHistory {
     private String visitApprovalDateTime;
     private String eduCompleteDateTime;
     private String carryStuff = "";
+    private String carryStuffWare = "";
     private String carryStuffSerialNo = "";
     private String carryStuffUsed = "";
     private String carryStuffPurpose = "";
     private String deleteFlag;
     private String visitPurpose = "";
     private String visitPurposeDetail = "";
-    private String toDayYN = ""; //가상 컬럼- 방문일자가 오늘날짜에 포함되는지
+    private String toDayYN = ""; // 가상 컬럼- 방문일자가 오늘날짜에 포함되는지
     private String rejectFlag = "";
     private String rejectType = "";
     private String rejectComment = "";
@@ -63,88 +69,167 @@ public class VisitorHistory {
     private List<VisitorInoutTime> visitorInoutTimes = new ArrayList<>();
 
     public VisitorHistory updateCardID(int visitorHistorySeq, String cardID) {
-        if(visitorHistorySeq==0) throw new IllegalArgumentException("잘못된 요청 값");
+        if (visitorHistorySeq == 0)
+            throw new IllegalArgumentException("잘못된 요청 값");
         this.visitorHistorySeq = visitorHistorySeq;
         this.cardID = cardID;
         return this;
     }
 
     public void updateApproval(String visitApprovalComment, String carryStuff) {
-        if(this.visitApprovalYN=="Y") throw new IllegalArgumentException("잘못된 요청 값");
+        if (this.visitApprovalYN == "Y")
+            throw new IllegalArgumentException("잘못된 요청 값");
         this.visitApprovalYN = "Y";
         this.visitApprovalDateTime = LocalDateTime.now().toString();
         this.visitApprovalComment = visitApprovalComment;
-        //this.carryStuff = carryStuff;
+        // this.carryStuff = carryStuff;
     }
 
     // 추가본
     public void updateReject(String rejectComment) {
-        if(this.rejectFlag=="Y") throw new IllegalArgumentException("잘못된 요청 값");
+        if (this.rejectFlag == "Y")
+            throw new IllegalArgumentException("잘못된 요청 값");
         this.rejectFlag = "Y";
         this.rejectComment = rejectComment;
-        //this.carryStuff = carryStuff;
+        // this.carryStuff = carryStuff;
     }
 
     // 방문객 정보 생성
-    public void makeVisitorHistory(String hostName, String hostDept, String planFromDate, String planToDateTime, String visitPurpose, String visitPurposeDetail, String visitorPosition1, String visitorPosition2, String visitorCompany) {
-        this.hostName = hostName;
-        this.hostDept = hostDept;
+    public void makeVisitorHistory(String hostId, String planFromDate, String planToDateTime, String visitPurpose,
+            String visitPurposeDetail, String visitorPosition1, String visitorPosition2, String visitorPosition3,
+            String visitorCar) {
+        this.hostID = hostId;
         this.planFromDateTime = planFromDate;
         this.planToDateTime = planToDateTime;
         this.visitPurpose = visitPurpose;
         this.visitPurposeDetail = visitPurposeDetail;
         this.visitorPosition1 = visitorPosition1;
         this.visitorPosition2 = visitorPosition2;
-        this.visitorCompany = visitorCompany;
+        this.visitorPosition3 = visitorPosition3;
+        this.carNo = visitorCar;
     }
 
     // 호스트 정보 바인딩
     public void addHost(Host host) {
         this.hostID = host.getHostID();
-        this.hostName = host.getHostName();
-        this.hostMobile = host.getMobile();
         this.hostTel = host.getTel();
         this.hostDept = host.getDeptCD();
         this.hostCompany = host.getCompany();
         this.hostGradeName = host.getGradeName();
         this.hostPositionName = host.getPositionName();
+        this.hostName = host.getHostName();
+        this.hostMobile = host.getMobile();
+        // try {
+        //     this.hostName = AES256Util.encrypt(host.getHostName());
+        //     this.hostMobile = AES256Util.encrypt(host.getMobile());
+        // } catch (UnsupportedEncodingException | GeneralSecurityException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     // 방문객 방문목적 바인딩 (납품)
+    @Deprecated
     public void addVisitPurposeCar(Visitor visitor, String visitorCarType, String visitorCar) {
-        this.visitorID = visitor.getVisitorID()+"";
+        this.visitorID = visitor.getVisitorID() + "";
         this.visitorName = visitor.getVisitorName();
         this.visitorBirth = visitor.getVisitorBirth();
         this.visitorMobile = visitor.getMobile();
-        if(!visitorCarType.equals("도보")) this.carNo = visitorCar;
+        if (!visitorCarType.equals("도보"))
+            this.carNo = visitorCar;
     }
 
     // 방문객 방문목적 바인딩 (작업)
-    public void addVisitPurposeWork(Visitor visitor, String visitorSerial,  String visitorPurpose2, String visitorUsed) {
-        this.visitorID = visitor.getVisitorID()+"";
+    @Deprecated
+    public void addVisitPurposeWork(Visitor visitor, String visitorSerial, String visitorPurpose2, String visitorUsed) {
+        this.visitorID = visitor.getVisitorID() + "";
         this.visitorName = visitor.getVisitorName();
         this.visitorBirth = visitor.getVisitorBirth();
         this.visitorMobile = visitor.getMobile();
-        if(!visitorSerial.trim().equals(""))
-        {
+        if (!visitorSerial.trim().equals("")) {
             this.carryStuff = "PC";
             this.carryStuffSerialNo = visitorSerial;
             this.carryStuffPurpose = visitorPurpose2;
             this.carryStuffUsed = visitorUsed;
         }
-        
     }
 
-    // 방문객 교육이력 체크
-    public void educationCheck(VisitorHistory visitorHistory) {
-        if(visitorHistory!=null) 
+    /**
+     * 외부인 방문자 정보 셋팅
+     * 
+     * @param _visitor
+     * @throws GeneralSecurityException
+     * @throws UnsupportedEncodingException
+     */
+    public void setVisitorByVisiter(Visitor _visitor) {
+        // 외부인
+        this.visitorType = 2;
+        this.visitorID = _visitor.getVisitorID()+"";
+        this.visitorCompany = _visitor.getCompany();
+        try {
+            this.visitorName = AES256Util.encrypt(_visitor.getVisitorName());
+            this.visitorBirth = AES256Util.encrypt(_visitor.getVisitorBirth());
+            this.visitorMobile = AES256Util.encrypt(_visitor.getMobile());
+        } catch (UnsupportedEncodingException | GeneralSecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 임직원 방문자 정보 셋팅
+     * 
+     * @param _host
+     * @throws GeneralSecurityException
+     * @throws UnsupportedEncodingException
+     */
+    public void setHostByVisiter(Host _host) {
+        // 임직원
+        this.visitorType = 1;
+        this.visitorID = _host.getHostID();
+        this.visitorBirth = "";
+        this.visitorCompany = _host.getCompany();
+        this.visitorDept = _host.getDeptCD();
+        try {
+            this.visitorName = AES256Util.encrypt(_host.getHostName());
+            this.visitorMobile = AES256Util.encrypt(_host.getMobile());
+        } catch (UnsupportedEncodingException | GeneralSecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 방문자가 요청한 반입물품을 기록
+     * @param visiter
+     */
+    public void setCarryinWareByVisitor(Visiter visiter) {
+        this.carryStuff = "";
+        this.carryStuffWare = visiter.getCarryStuffWare();
+        this.carryStuffSerialNo = visiter.getCarryStuffSerialNo();
+        this.carryStuffPurpose = visiter.getCarryStuffPurpose();
+        this.carryStuffUsed = visiter.getCarryStuffUsed();
+    }
+
+
+    /**
+     * 방문자 교육완료 여부 체크
+     * @param visitorHistory
+     * @return true(완료), false(미완료)
+     */
+    public boolean isEducationCheck(VisitorHistory visitorHistory) {
+        if(visitorHistory!=null) {
             this.eduCompleteDateTime = visitorHistory.getEduCompleteDateTime();
-        else 
+            return true;
+        } else {
             this.eduCompleteDateTime = null;
+            return false;
+        }
     }
 
+    /**
+     * 방문자 예약번호 생성
+     * @return (South : S, North : N) + yyMMdd + seq%10000
+     */
     public void makeReservationNumber() {
-        String strReserveNo = this.visitorPosition1.equals("아산")  ? "A" :"H";
+        String strReserveNo = this.visitorPosition2.equals("South")  ? "S" :"N";
         strReserveNo += LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
         strReserveNo += String.format("%04d", (this.visitorHistorySeq)%10000);
         this.visitorReservationNumber = strReserveNo;
@@ -158,4 +243,5 @@ public class VisitorHistory {
         if(this.cardID.length()==0 || this.cardID.equals("null") || this.cardID==null || this.cardID.equals("undefined"))
             throw new IllegalArgumentException("잘못된 카드정보입니다.");
     }
+
 }
