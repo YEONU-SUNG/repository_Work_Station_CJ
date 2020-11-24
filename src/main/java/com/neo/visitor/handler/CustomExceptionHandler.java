@@ -16,6 +16,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseEntity<?> handleException(HttpServletRequest request, Exception ex) {
+        ex.printStackTrace();
         return new ResponseEntity<>("처리실패, 다시시도해주세요.", HttpStatus.BAD_REQUEST);
     }
 

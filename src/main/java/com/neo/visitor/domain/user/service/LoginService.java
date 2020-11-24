@@ -20,9 +20,9 @@ public class LoginService {
         AdminUser resultHost = adminUserRepository.getLoginUserInfo(adminUser);
         if(isNull(resultHost)) {
             session.setAttribute("login", resultHost);
-            if(resultHost.getHost().getAuth().equals("2") || resultHost.getHost().getAuth().equals("1")) {
+            // if(resultHost.getHost().getAuth().equals("2") || resultHost.getHost().getAuth().equals("1")) {
                 session.setMaxInactiveInterval(60*60*12);
-            }
+            // }
         } else {
             return false;
         }

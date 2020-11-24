@@ -32,11 +32,13 @@ public class AdminUser {
     public AdminUser insaInterface(Map<String, Object> map) {
         System.out.println(map);
 
-        this.adminID = map.get("USER_ID").toString();
-        //this.adminPW = map.get("USER_ID").toString(); //패스워드 암호화방법 몰라서 일단ID값으로 넣어줌
+        this.adminID = map.get("UserID").toString();
+        this.adminPW = map.get("UserID").toString(); //패스워드 암호화방법 몰라서 일단ID값으로 넣어줌
         //this.adminPW = map.get("LOG_PWD").toString();
-        this.adminPW = "";
-        this.insertDate = map.get("INS_DATE").toString();
+        //this.adminPW = "";
+        this.insertDate = map.get("InsertDate").toString();
+        this.siteCode = map.get("SiteCode").toString();
+        
         if(map.get("RET_DATE") == null)
             this.deleteFlag = "N";
         else
@@ -44,4 +46,5 @@ public class AdminUser {
 
         return this;
     }
+
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.visitor.repository.VisitorBlackListRepository">
+    <resultMap id="VisitorBlackList" type="com.neo.visitor.domain.visitor.entity.VisitorBlackList">
+        <id column="VisitorID" property="visitorId" />
+        <result column="AdminID" property="adminId" />
+        <result column="blacklistState" property="blacklistState" />
+        <result column="blacklistReason" property="blacklistReason" />
+        <result column="planFromDate" property="planFromDate" />
+        <result column="planToDate" property="planToDate" />
+        <result column="Desc" property="comment" />
+        <result column="modifedDate" property="modifedDate" javaType="java.time.LocalDateTime" />
+        <result column="InsertDate" property="createDate" javaType="java.time.LocalDateTime" />
+
+        <association property="visitor" column="VisitorID" javaType="com.neo.visitor.domain.visitor.entity.Visitor">
+            <result column="VisitorName" property="visitorName" />
+            <result column="VisitorBirth" property="visitorBirth" />
+            <result column="Mobile" property="mobile" />
+            <result column="Company" property="company" />
+        </association>
+    </resultMap>
+
+    <insert id="save" parameterType="com.neo.visitor.domain.visitor.entity.VisitorBlackList">
+        INSERT INTO VisitorBlackList (VisitorID, AdminID, blacklistState, blacklistReason, Desc, planFromDate, planToDate, modifedDate, InsertDate)
+        VALUES (#{visitorId}, #{adminId}, #{blacklistState}, #{blacklistReason}, #{blacklistReasonComment}, #{planFromDate}, #{planToDate}, GETDATE(), GETDATE() )
+    </insert>
+
+    <update id="update" parameterType="com.neo.visitor.domain.visitor.entity.VisitorBlackList">
+        UPDATE VisitorBlackList 
+        SET 
+            AdminID = #{adminId},
+            blacklistState = #{blacklistState},
+            blacklistReason = #{blacklistReason},
+            [Desc] = #{blacklistReasonComment},
+            planFromDate = #{planFromDate},
+            planToDate = #{planToDate},
+            modifedDate = GETDATE()
+        WHERE
+            VisitorID = #{visitorId}
+    </update>
+
+    <select id="findAll" resultMap="VisitorBlackList">
+        SELECT * FROM VisitorBlackList vbl
+        JOIN Visitor v ON vbl.VisitorID = v.VisitorID
+    </select>
+
+    <select id="findByVisitorIdAndDate" parameterType="java.util.HashMap" resultMap="VisitorBlackList">
+        SELECT * FROM VisitorBlackList vbl
+        JOIN Visitor v ON vbl.VisitorID = v.VisitorID
+        WHERE
+         vbl.VisitorID = #{visitorId}
+        AND 
+        <![CDATA[
+            (
+                CONVERT(varchar(50), vbl.planFromDate, 23) <= CONVERT(varchar(50), CONVERT(DATETIME, #{date}), 23)
+            AND
+                CONVERT(varchar(50), vbl.planToDate, 23) >= CONVERT(varchar(50), CONVERT(DATETIME, #{date}), 23)
+            )
+        ]]>
+    </select>
+</mapper>

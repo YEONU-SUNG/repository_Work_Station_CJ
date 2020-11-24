@@ -93,7 +93,8 @@
 
     <insert id="insaSave" parameterType="com.neo.visitor.domain.user.entity.Host">
         INSERT INTO Host (
-            HostID, HostName, Mobile, Tel, Company, GradeName, PositionName, InsertDate, DeleteFlag, AdminID, Email, DeptCD, Auth, UpperDeptCD
+            HostID, HostName, Mobile, Tel, Company, GradeName, PositionName, InsertDate, DeleteFlag, AdminID, Email, DeptCD, Auth
+            <!-- , UpperDeptCD -->
             ) 
             VALUES (
             #{hostID}
@@ -108,10 +109,10 @@
             , #{adminID}
             , #{email}
             , #{deptCD}
-            , "3"
-            , #{upperDeptCD}
+            , #{auth}
+            <!-- , #{upperDeptCD} -->
             )
-            ON
+            <!-- ON
                 DUPLICATE KEY
             UPDATE
                 HostID = #{hostID},
@@ -126,7 +127,7 @@
                 AdminID = #{adminID},
                 Email = #{email},
                 DeptCD = #{deptCD},
-                UpperDeptCD = #{upperDeptCD}
+                UpperDeptCD = #{upperDeptCD} -->
 
     </insert>
 </mapper>

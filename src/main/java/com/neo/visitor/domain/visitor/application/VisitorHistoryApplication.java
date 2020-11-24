@@ -3,13 +3,16 @@ package com.neo.visitor.domain.visitor.application;
 import com.neo.visitor.domain.user.service.HostService;
 import com.neo.visitor.domain.visitor.entity.Visiter;
 import com.neo.visitor.domain.visitor.entity.Visitor;
+import com.neo.visitor.domain.visitor.entity.VisitorBlackList;
 import com.neo.visitor.domain.visitor.entity.VisitorHistory;
 import com.neo.visitor.domain.visitor.repository.VisitorHistoryRepository;
+import com.neo.visitor.domain.visitor.service.VisitorBlackListService;
 import com.neo.visitor.domain.visitor.service.VisitorDashboardService;
 import com.neo.visitor.domain.visitor.service.VisitorService;
 import com.neo.visitor.sms.entity.SMSMsgQue;
 import com.neo.visitor.sms.repository.SMSRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.neo.visitor.domain.user.entity.Host;
@@ -28,6 +31,8 @@ public class VisitorHistoryApplication {
     @Autowired VisitorHistoryRepository visitorHistoryRepository;
     @Autowired SMSRepository smsRepository;
     @Autowired MailSenderUtil mailSenderUtil;
+    @Autowired VisitorBlackListService visitorBlackListService;
+    
 
     /*
     @Transactional
@@ -223,7 +228,16 @@ public class VisitorHistoryApplication {
         
         for (Visiter _visiter : visiters) {
             if(_visiter instanceof Visitor) {
-                visitorHistory.setVisitorByVisiter(visitorService.save((Visitor) _visiter));
+                Visitor visitor = (Visitor) _visiter;
+                VisitorBlackList visitorBlackList = visitorBlackListService.isBlackList(visitor);
+                if(visitorBlackList!=null && visitorBlackList.getBlacklistState().equals("출입제한"))
+                     throw new IllegalArgumentException(
+                         "\r\n"+
+                         visitorBlackList.getVisitor().getVisitorName()+"님은\r\n" +
+                         "다음과 같은 사유로 인하여 방문 신청이 불가 합니다.\r\n"+
+                         "기간 : "+visitorBlackList.getPlanFromDate()+" ~ "+visitorBlackList.getPlanToDate()+"\r\n" +
+                         "사유 : "+visitorBlackList.getBlacklistReason()+"\r\n");
+                visitorHistory.setVisitorByVisiter(visitorService.save(visitor));
             } else {
                 Host _host = (Host) _visiter;
                 _host = hostService.findByHostID(_host.getHostID());
@@ -240,6 +254,7 @@ public class VisitorHistoryApplication {
             visitorHistory.makeReservationNumber();
             visitorHistoryRepository.save(visitorHistory);
             visitorDashBoardService.updateVisitApplicationCount(visitorHistory);
+            visitorDashBoardService.updateApprovalStandbyCount(visitorHistory);
         }
     }
 

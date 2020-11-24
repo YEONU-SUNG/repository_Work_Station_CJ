@@ -133,11 +133,11 @@
             , #{insertDate}
             , #{deleteFlag}
             )
-            ON
+            <!-- ON
                 DUPLICATE KEY
             UPDATE
                 AdminID = #{adminID},
                 AdminPW = #{adminPW},
-                DeleteFlag = #{deleteFlag}
+                DeleteFlag = #{deleteFlag} -->
     </insert>
 </mapper>

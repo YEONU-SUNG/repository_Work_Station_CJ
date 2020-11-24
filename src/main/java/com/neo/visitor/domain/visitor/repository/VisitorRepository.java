@@ -8,9 +8,6 @@ import com.neo.visitor.domain.visitor.entity.Visitor;
 import com.neo.visitor.domain.visitor.entity.VisitorCompany;
 import com.neo.visitor.domain.visitor.entity.WorkSite;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
-
 @PrimaryMapperScan
 public interface VisitorRepository {
     
@@ -24,5 +21,6 @@ public interface VisitorRepository {
     List<VisitorCompany> getVisitorCompany();
 
     Visitor findByVisitorNameAndVisitorBirthAndVisitorMobile(Visitor visitor);
+    Visitor findByVisitornameAndVisitorCompanyAndVisitorMobile(Visitor visitor);
     void save(Visitor visitor);
 }

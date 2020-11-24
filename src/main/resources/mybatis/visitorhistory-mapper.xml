@@ -8,6 +8,8 @@
         <result column="VisitorType" property="visitorType" />
         <result column="VisitorID" property="visitorID" />
         <result column="VisitorName" property="visitorName" />
+        <result column="VisitorGender" property="visitorGender" />
+        <result column="VisitorLocation" property="visitorLocation" />
         <result column="VisitorBirth" property="visitorBirth" />
         <result column="VisitorMobile" property="visitorMobile" />
         <result column="VisitorDept" property="visitorDept" />
@@ -71,7 +73,9 @@
 		      ,V.VisitorReservationNumber
               ,V.VisitorID
               ,V.VisitorType
-		      ,V.VisitorName
+              ,V.VisitorName
+              ,V.VisitorGender
+              ,V.VisitorLocation
 		      ,V.VisitorBirth
               ,V.VisitorMobile
               ,V.VisitorDept
@@ -592,6 +596,8 @@
             <!-- ,RepresentativeVisitorHistorySeq -->
             , VisitorReservationNumber
             , VisitorName
+            , VisitorGender
+            , VisitorLocation
             , VisitorBirth
             , VisitorMobile
             , VisitorDept
@@ -635,6 +641,8 @@
             , #{visitorType}
             , #{visitorReservationNumber}
             , #{visitorName}
+            , #{visitorGender}
+            , #{visitorLocation}
             , #{visitorBirth}
             , #{visitorMobile}
             , #{visitorDept}
@@ -662,7 +670,8 @@
             , #{planToDateTime}
             , 'N'<!-- , #{approval} -->
             , #{visitApprovalDateTime}
-            , #{eduCompleteDateTime}
+            <!-- , #{eduCompleteDateTime} -->
+            , GETDATE()
             , #{carryStuff}
             , #{carryStuffWare}
             , #{carryStuffSerialNo}

@@ -1,8 +1,5 @@
 package com.neo.visitor.domain.user.repository;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Map;
 

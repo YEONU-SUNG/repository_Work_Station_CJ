@@ -2,7 +2,6 @@ package com.neo.visitor.domain.visitor.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.neo.visitor.domain.Pagenation;
@@ -64,6 +63,8 @@ public class VisitorHistoryApiController {
 
         String[] visitorIds = req.getParameterValues("visitorId");
         String[] visitorNames = req.getParameterValues("visitorName");
+        String[] visitorGenders = req.getParameterValues("visitorGender");
+        String[] visitorLocations = req.getParameterValues("visitorLocation");
         String[] visitorBirths = req.getParameterValues("visitorBirth");
         String[] visitorPhones = req.getParameterValues("visitorPhone");
         String[] visitorCompanys = req.getParameterValues("visitorCompany");
@@ -79,7 +80,7 @@ public class VisitorHistoryApiController {
                 // 임직원인경우
                 ? new Host().makeHost(visitorIds[i])
                 // 외부인인경우
-                : new Visitor().makeVisitor(visitorNames[i], visitorBirths[i], visitorPhones[i], visitorCompanys[i]);
+                : new Visitor().makeVisitor(visitorNames[i], visitorGenders[i], visitorLocations[i], visitorBirths[i], visitorPhones[i], visitorCompanys[i]);
 
             // 반입물품
             visiter.setCarryInWareByVisiter(visitorWares[i], visitorSerials[i], visitorPurpose[i], visitorUseds[i]);

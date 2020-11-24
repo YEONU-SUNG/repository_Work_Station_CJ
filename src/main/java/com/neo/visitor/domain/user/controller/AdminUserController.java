@@ -1,7 +1,10 @@
 package com.neo.visitor.domain.user.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.neo.visitor.login.api.doosan.DoosanLogin;
 import com.neo.visitor.domain.user.entity.AdminUser;
 import com.neo.visitor.domain.user.entity.Host;
 import com.neo.visitor.domain.user.service.HostService;
 import com.neo.visitor.domain.user.service.LoginApiConnect;
 import com.neo.visitor.domain.user.service.LoginService;
+import com.neo.visitor.insa.repository.InsaRepository;
 
 @Controller
 public class AdminUserController {
@@ -30,6 +35,10 @@ public class AdminUserController {
     LoginApiConnect loginApiConnect;
     @Autowired
     HostService hostService;
+
+    @Autowired DoosanLogin login;
+
+    @Autowired InsaRepository insaRepository;
 
     @RequestMapping(value = { "/", "login" }, method = RequestMethod.GET)
     public String login(HttpSession session, Model model) {
@@ -43,33 +52,9 @@ public class AdminUserController {
     public String loginAction(HttpSession session, @RequestParam(name = "AdminID") String AdminID,
             @RequestParam(name = "AdminPW") String AdminPW, @RequestParam(name = "LoginType") String LoginType) {
         try {
-            //System.out.println(loginApiConnect.httpURLConnection(AdminID, AdminPW));
-            // if(loginApiConnect.httpURLConnection(AdminID, AdminPW).equals("(false)")) {
-            //     if(loginService.getUserInfo(session, new AdminUser().login(AdminID, AdminPW))) {
-            //         return "Y";
-            //     } else {
-            //         return "N";
-            //     }
-            // } else {
-            //     return "Y";
-            // }
-            if(LoginType.equals("L"))
-            {
-                if(loginService.getUserInfo(session, new AdminUser().login(AdminID, AdminPW))) {
-                    return "Y";
-                } else {
-                    return "N";
-                }
-            }
-            else if(LoginType.equals("S"))
-            {
-                if(loginService.getUserInfosso(session, new AdminUser().login(AdminID,""))) {
-                    return "Y";
-                } else {
-                    return "N";
-                }
-            }
-            
+            login.authorize(session, AdminID, AdminPW);
+            //loginService.getUserInfo(session, new AdminUser().login(AdminID, AdminPW));
+            return "Y";
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,6 +71,13 @@ public class AdminUserController {
 	@ResponseBody
     public List<Host> getHostList(HttpServletRequest request
     , @RequestParam(defaultValue = "") String hostName) {
-        return hostService.findByHostName(hostName);
+        List<Map<String, Object>> mapList = insaRepository.findByName(hostName);
+        List<Host> hostList = new ArrayList<Host>();
+        for (Map<String,Object> map : mapList) {
+            hostList.add(new Host().insaInterface(map));
+        }
+        //return hostService.findByHostName(hostName);
+        return hostList;
     }
+
 }

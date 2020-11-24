@@ -21,6 +21,11 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 
 @Configuration
+@MapperScan(annotationClass = SecondaryMapperScan.class, sqlSessionFactoryRef="secondarySqlSessionFactory",
+ basePackageClasses = {
+    InsaRepository.class
+    }
+)
 public class SecondaryDatasource {
  
     @Bean(name="secondaryDataSource")

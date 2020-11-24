@@ -5,9 +5,6 @@ import java.util.List;
 import com.neo.visitor.config.PrimaryMapperScan;
 import com.neo.visitor.domain.visitor.entity.VisitorDashboard;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
-
 @PrimaryMapperScan
 public interface VisitorDashboardRepository {
     

@@ -24,6 +24,8 @@ public class VisitorHistory {
     private String visitorID;
     private int visitorType;
     private String visitorName;
+    private String visitorGender;
+    private String visitorLocation;
     private String visitorBirth;
     private String visitorMobile;
     private String visitorCompany;
@@ -165,6 +167,8 @@ public class VisitorHistory {
         this.visitorType = 2;
         this.visitorID = _visitor.getVisitorID()+"";
         this.visitorCompany = _visitor.getCompany();
+        this.visitorGender = _visitor.getVisitorGender();
+        this.visitorLocation = _visitor.getVisitorLocation();
         try {
             this.visitorName = AES256Util.encrypt(_visitor.getVisitorName());
             this.visitorBirth = AES256Util.encrypt(_visitor.getVisitorBirth());

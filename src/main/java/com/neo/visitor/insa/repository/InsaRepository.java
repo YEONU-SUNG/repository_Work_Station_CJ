@@ -3,19 +3,11 @@ package com.neo.visitor.insa.repository;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
+import com.neo.visitor.config.SecondaryMapperScan;
 
-@Repository
-public class InsaRepository {
-
-    @Autowired
-    @Qualifier("secondarySqlSession")
-    private SqlSession secondarySqlSession;
-
-    public List<Map<String, Object>> getInsa() {
-        return secondarySqlSession.selectList("insa.getInsa");
-    }
+@SecondaryMapperScan
+public interface InsaRepository {
+    public List<Map<String, Object>> findAll();
+    public Map<String, Object> findByEmail(String email);
+    public List<Map<String, Object>> findByName(String name);
 }   

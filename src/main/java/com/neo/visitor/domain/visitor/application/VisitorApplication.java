@@ -15,8 +15,10 @@ import com.neo.visitor.domain.PagenationResponse;
 import com.neo.visitor.domain.PagenationType;
 import com.neo.visitor.domain.user.entity.AdminUser;
 import com.neo.visitor.domain.user.service.LoginService;
+import com.neo.visitor.domain.visitor.entity.VisitorBlackList;
 import com.neo.visitor.domain.visitor.entity.VisitorHistory;
 import com.neo.visitor.domain.visitor.entity.VisitorInoutTime;
+import com.neo.visitor.domain.visitor.service.VisitorBlackListService;
 import com.neo.visitor.domain.visitor.service.VisitorInoutTimeService;
 import com.neo.visitor.domain.visitor.service.VisitorService;
 
@@ -26,9 +28,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class VisitorApplication {
 
-    @Autowired LoginService loginService;
-    @Autowired VisitorService visitorService;
-    @Autowired VisitorInoutTimeService visitorInoutTimeService;
+    @Autowired
+    LoginService loginService;
+    @Autowired
+    VisitorService visitorService;
+    @Autowired
+    VisitorInoutTimeService visitorInoutTimeService;
+
+    @Autowired
+    VisitorBlackListService visitorBlackListservice;
 
     public PagenationResponse<VisitorInoutTime> history(HttpServletRequest request,Pagenation pagenation, String visitorFromDateTime, String visitorToDateTime) {
         PagenationResponse<VisitorInoutTime> pagenationResponse = new PagenationResponse<>();
@@ -52,6 +60,22 @@ public class VisitorApplication {
         }
 
         pagenationResponse.setResponse(findAllHistoryList);
+        //pagenationResponse.setPagenation(pagenation.makePagenation(visitorInoutTimeService.findAllHistoryCount(pagenation), PagenationType.VISITOR_HISTORY));
+        pagenationResponse.setPagenation(pagenation.makePagenation(visitorInoutTimeService.findAllHistoryCount(map), PagenationType.VISITOR_HISTORY));
+        return pagenationResponse;
+    }
+
+    public PagenationResponse<VisitorBlackList> blacklist(HttpServletRequest request,Pagenation pagenation, String visitorFromDateTime, String visitorToDateTime) {
+        PagenationResponse<VisitorBlackList> pagenationResponse = new PagenationResponse<>();
+        pagenation.PagenationExpansionDate(visitorFromDateTime.equals("") ? LocalDate.now().toString() : visitorFromDateTime
+                                            , visitorToDateTime.equals("") ? LocalDate.now().toString() : visitorToDateTime);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("pagenation", pagenation);
+        map.put("host", loginService.getUserSessionInfo(request));
+        List<VisitorBlackList> visitorBlackListfindAll = visitorBlackListservice.findAll();
+        
+        pagenationResponse.setResponse(visitorBlackListfindAll);
         //pagenationResponse.setPagenation(pagenation.makePagenation(visitorInoutTimeService.findAllHistoryCount(pagenation), PagenationType.VISITOR_HISTORY));
         pagenationResponse.setPagenation(pagenation.makePagenation(visitorInoutTimeService.findAllHistoryCount(map), PagenationType.VISITOR_HISTORY));
         return pagenationResponse;

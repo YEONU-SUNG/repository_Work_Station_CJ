@@ -4,15 +4,21 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.neo.visitor.domain.Pagenation;
 import com.neo.visitor.domain.PagenationResponse;
+import com.neo.visitor.domain.user.entity.AdminUser;
+import com.neo.visitor.domain.user.service.LoginService;
 import com.neo.visitor.domain.visitor.application.VisitorApplication;
+import com.neo.visitor.domain.visitor.entity.Visitor;
+import com.neo.visitor.domain.visitor.entity.VisitorBlackList;
 import com.neo.visitor.domain.visitor.entity.VisitorCompany;
 import com.neo.visitor.domain.visitor.entity.VisitorDashboard;
 import com.neo.visitor.domain.visitor.entity.VisitorHistory;
 import com.neo.visitor.domain.visitor.entity.WorkSite;
 import com.neo.visitor.domain.visitor.application.VisitorHistoryApplication;
+import com.neo.visitor.domain.visitor.service.VisitorBlackListService;
 import com.neo.visitor.domain.visitor.service.VisitorDashboardService;
 import com.neo.visitor.domain.visitor.service.VisitorInoutTimeService;
 import com.neo.visitor.domain.visitor.service.VisitorService;
@@ -32,6 +38,7 @@ public class VisitorApiController {
     @Autowired VisitorHistoryApplication visitorHistoryApplication;
     @Autowired VisitorApplication visitorApplication;
     @Autowired VisitorDashboardService visitorDashboardService;
+    @Autowired VisitorBlackListService visitorBlackListService;
 
     @GetMapping(path = "visitor/dashboard")
 	public List<VisitorDashboard> getDashboard() {
@@ -153,4 +160,47 @@ public class VisitorApiController {
         return visitorService.getVisitorCompany();
     }
 
+    @PostMapping(path = "visitor/blacklist")
+    public void addBlackList(HttpSession session
+        , @RequestParam(defaultValue = "") String visitorId
+        , @RequestParam String visitorName
+        , @RequestParam String visitorCompany
+        , @RequestParam String visitorPhone
+        , @RequestParam String blacklistState
+        , @RequestParam String blacklistReason
+        , @RequestParam String blacklistReasonComment
+        , @RequestParam String planFromDate
+        , @RequestParam String planToDate
+    ) {
+        if(blacklistReason.equals("기타") && blacklistReasonComment.trim().length()==0) throw new IllegalArgumentException("기타 선택 시 상세내용입력은 필수입니다.");
+        AdminUser adminUser = (AdminUser) session.getAttribute("login");
+        Visitor visitor = new Visitor().makeVisitor(visitorName, "", "", "", visitorPhone, visitorCompany);
+        if(visitorId.equals("")) {
+            VisitorBlackList visitorBlackList
+                = new VisitorBlackList().makeBlackList(adminUser.getAdminID(), blacklistState, blacklistReason, blacklistReasonComment, planFromDate, planToDate);
+            visitorBlackListService.addBlacklist(visitor, visitorBlackList);
+        } else {
+            visitorBlackListService.updateBlackList(
+                new VisitorBlackList()
+                .updateBlackList(Integer.parseInt(visitorId), adminUser.getAdminID(), blacklistState, blacklistReason, blacklistReasonComment, planFromDate, planToDate));        
+        }
+    }
+
+    @GetMapping(value = "visitor/black-list")
+	public PagenationResponse<VisitorBlackList> getBlackList(HttpServletRequest request, @RequestParam int page, @RequestParam int size
+        , @RequestParam(defaultValue = "") String visitorFromDateTime
+        , @RequestParam(defaultValue = "") String visitorToDateTime
+        , @RequestParam(defaultValue = "") String conditionKey
+        , @RequestParam(defaultValue = "") String conditionValue) {
+        switch (conditionKey) {
+            // case "예약번호" : conditionKey = "VisitorHistorySeq"; break;
+            case "예약번호" : conditionKey = "VisitorReservationNumber"; break;
+            case "이름" : conditionKey = "VisitorName"; break;
+            case "회사명" : conditionKey = "VisitorCompany"; break;
+            case "방문목적" : conditionKey = "VisitPurpose"; break;
+            case "방문증번호" : conditionKey = "CardID"; break;
+            //default : conditionKey = ""; break;
+        }
+        return visitorApplication.blacklist(request, new Pagenation(page, size, conditionKey, conditionValue), visitorFromDateTime, visitorToDateTime);
+    }
 }

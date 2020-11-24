@@ -30,4 +30,9 @@ public class VisitorController {
         return "visitor/blacklist";
     }
 
+    @GetMapping(value="visitor/add-blacklist")
+    public String addBlacklist(Model model) {
+        return "visitor/add-blacklist";
+    }
+
 }

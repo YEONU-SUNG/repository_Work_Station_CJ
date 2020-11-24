@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="insa">
-    <select id="getInsa" resultType="java.util.Map">
+<mapper namespace="com.neo.visitor.insa.repository.InsaRepository">
+    <!-- <select id="getInsa" resultType="java.util.Map">
         SELECT 
         P.*, C.COM_NM,
         RIGHT(SUBSTRING(DEPT_NM_PATH, 0, LEN(DEPT_NM_PATH)-CHARINDEX('\', REVERSE(DEPT_NM_PATH))+1),CHARINDEX('\', REVERSE(SUBSTRING(DEPT_NM_PATH, 0, LEN(DEPT_NM_PATH)-CHARINDEX('\', REVERSE(DEPT_NM_PATH))+1)))-1) AS DEPT_NM_PATH         
@@ -22,6 +22,46 @@
 
     <select id="getAll" resultType="java.util.Map">
         SELECT * FROM GWUserInfo_ALL
+    </select> -->
+    <sql id="insaInfo">
+        select 
+        D2.DeptName As SiteName,A.* 
+        from (SELECT 
+
+            D.RootOrgUnitID As SiteCode
+            ,D.DeptName as DeptCD
+            ,I.[UserID]
+            ,ISNULL(I.[EmployeeID], '') AS HostID
+            ,I.[Name] AS HostName
+            ,I.[DisplayName]
+            ,I.[Mail] AS Email
+            ,ISNULL(REPLACE(I.[OfficePhoneNumber],'+82 ','0'), '') AS Tel
+            ,ISNULL(G.HRCodeName, '') AS GradeName
+            ,ISNULL(P.HRCodeName, '') AS PositionName
+            ,I.StartDate AS InsertDate
+            ,C.HRCodeName AS Company
+        FROM [ADMasterDB].[dbo].[ViewGHRISUserMaster2] I
+        left outer join [ADMasterDB].[dbo].[ViewGHRISDeptMaster2] D ON I.OrgUnitID = D.OrgUnitID
+        left outer join (SELECT * FROM ViewGHRISHRCodeMaster where Separator = 'CallingTitle' AND Language = 'KO') G ON I.CallingTitleCode = G.HRCode
+        left outer join (SELECT * FROM ViewGHRISHRCodeMaster where Separator = 'PositionGroup' AND Language = 'KO') P ON I.PositionGroupCode = P.HRCode
+        left outer join (SELECT * FROM ViewGHRISHRCodeMaster where Separator = 'PersonnelArea') C ON I.OriginPersonnelAreaCode = C.HRCode
+        where EmployeeStatus = '3' and mail is not null AND D.RootOrgUnitID is not null
+        ) AS A
+        left outer join ViewGHRISDeptMaster2 D2 on A.SiteCode = D2.OrgUnitID
+
+    </sql>
+
+    <select id="findAll" resultType="java.util.Map">
+        <include refid="insaInfo"></include>
+    </select>
+
+    <select id="findByEmail" parameterType="java.lang.String" resultType="java.util.Map">
+        <include refid="insaInfo"></include>
+        WHERE A.Email = #{email}
+    </select>
+    <select id="findByName" parameterType="java.lang.String" resultType="java.util.Map">
+        <include refid="insaInfo"></include>
+        WHERE A.HostName = #{name}
     </select>
     
 </mapper>

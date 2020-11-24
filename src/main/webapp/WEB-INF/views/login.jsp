@@ -16,6 +16,7 @@
     <!---<script src="js/jquery.mCustomScrollbar.js"></script>--->
     <script src="/admin/static/js/common.js"></script>
     <script src="/admin/static/js/select.js"></script>
+    <script src="/admin/static/js/crypto-js.js"></script>
     <link rel="stylesheet" href="/admin/static/css/common.css" />
     <link rel="stylesheet" href="/admin/static/css/jquery.mCustomScrollbar.css" />
     <title>DOOSAN - 방문관리시스템</title>
@@ -68,13 +69,18 @@
 
     function locallogin(Type)
     {
+        var encryptedId = CryptoJS.AES.encrypt($('#AdminID').val(), "passwordQ1W2E3R!").toString();
+        var encryptedPwd = CryptoJS.AES.encrypt($('#AdminPW').val(), "passwordQ1W2E3R!").toString();
+        console.log(encryptedId, encryptedPwd);
+        var encryptedId = $('#AdminID').val();
+        var encryptedPwd = $('#AdminPW').val();
         $.ajax({
             url: '/admin/login',
             type: 'POST',
             //data: $(this).serialize(),
             data: {
-                AdminID : $('#AdminID').val(),
-                AdminPW : $('#AdminPW').val(),
+                AdminID : encryptedId,
+                AdminPW : encryptedPwd,
                 LoginType : Type
             },
             success: function (result) {
@@ -99,55 +105,8 @@
             alert("패스워드를 입력하세요.");
             return;
         }
-        // locallogin('L');
-
-        $.ajax({
-                   type: 'GET',
-                   url: 'https://smart.sfa.co.kr/gswfimage/legacyAuth.aspx',
-                   dataType: 'jsonp',
-                   contentType: 'application/json',
-                   //crossOrigin : true,
-                   data: { userId: $('#AdminID').val(), userpwd: $('#AdminPW').val(), pwdEncType: '' },//패스워드가 평문인경우
-                   //async: false,
-                   //jsonp: 'callback',
-                   success: function (result) {
-                       if (result) {
-                           //alert('인증 성공');
-                            //location.href = '/dashboard';
-                            locallogin('S');
-                       } else{
-                            //alert('인증 실패');
-                            locallogin('L');
-                        }
-                   },
-                   error: function (result) {
-                       alert(JSON.stringify(result));
-
-                   }
-        })
-
+        locallogin('L');
     }
-    // $(document).on('submit', '#loginForm', function(event) {
-    //     event.preventDefault();
-        
-    //     $.ajax({
-    //         url: '/login',
-    //         type: 'POST',
-    //         data: $(this).serialize(),
-    //         // data: {
-    //         //     AdminID : 'test',
-    //         //     AdminPW : 'test'
-    //         // },
-    //         success: function (result) {
-    //             if (result=='Y'){
-    //                 location.href = '/dashboard';
-    //             } else {
-                    
-    //             }
-    //         }
-    //     });
-
-    // });
 </script>
 </body>
 </html>

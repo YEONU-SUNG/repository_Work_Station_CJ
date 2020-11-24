@@ -1,6 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
+    function getStrAuth(auth) {
+        switch (auth) {
+            case '1' : return '계열사관리자';
+            case '2' : return '보안담당자';
+            case '3' : return '안내데스크';
+            default : return '시스템관리자';
+        }
+    }
+    function authSelect(auth) {
+        return
+            <c:if test="${sessionScope.login.host.auth eq '0'}">
+             '<div class="nv_select_box">' +
+                '<p>' + getStrAuth(auth) + '</p>' +
+                '<ul>' + 
+                    '<li>시스템관리자</li>' +
+                    '<li>계열사담당자</li>' +
+                    '<li>보안담당자</li>' +
+                    '<li>안내데스크</li>' +
+                '</ul>' +
+            '</div>';
+            </c:if>
+            <c:if test="${sessionScope.login.host.auth eq '1'}">
+            '<div class="nv_select_box">' +
+                '<p>' + getStrAuth(auth) + '</p>' +
+                '<ul>' + 
+                    '<li>계열사담당자</li>' +
+                    '<li>보안담당자</li>' +
+                    '<li>안내데스크</li>' +
+                '</ul>' +
+            '</div>';
+            </c:if>
+            <c:if test="${sessionScope.login.host.auth eq '2'}">
+            '<div class="nv_select_box">' +
+                '<p>' + getStrAuth(auth) + '</p>' +
+                '<ul>' + 
+                    '<li>보안담당자</li>' +
+                    '<li>안내데스크</li>' +
+                '</ul>' +
+            '</div>';
+            </c:if>
+    }
+</script>
+<script>
     var module = {
         tableData : [],
         pagenation : {},
@@ -8,18 +51,7 @@
         tableHTML : '',
         auth : [],
         authSelectBox : function(auth) {
-            var str = auth ? auth : '시스템관리자';
-
-            return '<div class="nv_select_box">' +
-                        '<p>' + str + '</p>' +
-                        '<ul>' + 
-                            '<li>시스템관리자</li>' +
-                            '<li>보안담당자</li>' +
-                            '<li>계열사담당자</li>' +
-                            '<li>안내데스크</li>' +
-                        '</ul>' +
-                    '</div>';
-					
+            return authSelect(auth);
         },
         makeTable : function(pagenation, type) {
             if(this.tableData.length==0 && type) {

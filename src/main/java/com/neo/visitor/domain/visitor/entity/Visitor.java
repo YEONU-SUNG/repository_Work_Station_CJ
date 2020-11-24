@@ -8,6 +8,8 @@ public class Visitor extends Visiter {
 
     private int visitorID;
     private String visitorName;
+    private String visitorGender;
+    private String visitorLocation;
     private String visitorBirth;
     private String mobile;
     private String company;
@@ -24,8 +26,10 @@ public class Visitor extends Visiter {
     //     return this;
     // }
 
-    public Visitor makeVisitor(String visitorName, String visitorBirth, String mobile, String company) {
+    public Visitor makeVisitor(String visitorName, String visitorGender, String visitorLocation, String visitorBirth, String mobile, String company) {
         this.visitorName = visitorName;
+        this.visitorGender = visitorGender;
+        this.visitorLocation = visitorLocation;
         this.visitorBirth = visitorBirth;
         this.mobile = mobile;
         this.company = company;

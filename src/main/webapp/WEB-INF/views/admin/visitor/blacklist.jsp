@@ -22,6 +22,8 @@
         
         $('#datepicker').datepicker('setDate', 'today');
         $('#datepicker2').datepicker('setDate', 'today');
+
+        $(document).find(".birth").removeClass('hasDatepicker').datepicker();
     });
 </script>
 <script>
@@ -36,14 +38,6 @@
                 return this.tableHTML;
             } else {
                 this.tableHTML = '';
-                var oData;
-                for(var i = 0, len = this.tableData.length; i < len; i++){
-                    oData = this.tableData[i];
-                }
-                // for(var i=0; i<this.tableData.length;i++) {
-                //     var strcarryStuffUsed = this.tableData[i].visitorHistory.carryStuffUsed.trim() == "" ? "사용안함":this.tableData[i].visitorHistory.carryStuffUsed;
-                    
-                // }
                 pagenation.html(page.makePagenation(module.pagenation));
                 return this.tableHTML;
             }
@@ -55,17 +49,41 @@
             module.pagenation = result.pagenation;
             module.tableData = result.response;
             $('#historyTable > tbody').html(module.makeTable($('#pagenation')));
+            $.each(result.response, function(i, e) {
+                var tr = $('<tr>');
+                tr.append('<input type="hidden" name="visitorId" value="'+e.visitorId+'"></input>');
+                tr.append('<td>'+e.visitor.visitorName+'</td>');
+                tr.append('<td>'+e.visitor.company+'</td>');
+                tr.append('<td>'+e.visitor.mobile+'</td>');
+                tr.append('<td>'+e.planFromDate+'</td>');
+                tr.append('<td>'+e.planToDate+'</td>');
+                tr.append('<td>'+e.blacklistState+'</td>');
+                tr.append('<td>'+e.blacklistReason+'</td>');
+                var btn = $('<td><button class="nv_blue_button nv_modal2_open">편집</button></td>');
+                
+                btn.on('click', function() {
+                    $('#name').text('성명 : '+e.visitor.visitorName);
+                    $('#company').text('업체명 : '+e.visitor.company);
+                    $('#phone').text('연락처 : '+e.visitor.mobile);
+                    $('#plan_from_date').val(e.planFromDate);
+                    $('#plan_to_date').val(e.planToDate);
+                    $('#blacklistState > p').text(e.blacklistState);
+                    $('#blacklistReason > p').text(e.blacklistReason);
+                    $('#blacklistReasonComment').val(e.comment);
+                })
+                tr.append(btn);
+                $('#historyTable > tbody').append(tr);
+            });
         });
     }
 
     function search() {
         var visitorFromDateTime = $('input[name="visitorFromDateTime"]').val();
         var visitorToDateTime = $('input[name="visitorToDateTime"]').val();
-        console.log(visitorFromDateTime);
-        console.log(visitorToDateTime);
+      
         var conditionKey = $('#conditionKey').html();
         var conditionValue = $('#conditionValue').val();
-        init('/visitor/history-list?page=1&size=10&conditionKey='+conditionKey+"&conditionValue="+conditionValue+'&visitorFromDateTime='+visitorFromDateTime+'&visitorToDateTime='+visitorToDateTime);
+        init('/visitor/black-list?page=1&size=10&conditionKey='+conditionKey+"&conditionValue="+conditionValue+'&visitorFromDateTime='+visitorFromDateTime+'&visitorToDateTime='+visitorToDateTime);
     }
 
     function excel() {
@@ -80,7 +98,7 @@
         var visitorFromDateTime = $('input[name="visitorFromDateTime"]').val();
         var visitorToDateTime = $('input[name="visitorToDateTime"]').val();
         //init('/visitor/history-list?page=1&size=10&visitorFromDateTime='+visitorFromDateTime+'&visitorToDateTime='+visitorToDateTime);
-        init('/visitor/history-list?page=1&size=10');
+        init('/visitor/black-list?page=1&size=10');
 
         $('#conditionValue').keydown(function(event) {
 			if (event.keyCode == 13) {
@@ -92,6 +110,26 @@
     $(document).on('click', '.nv_modal1_open', function() {
         $('.nv_modal1 textarea').html($(this).find('span').html());
     });
+
+    $(document).on('submit', '#visitBlackListForm', function(e) {
+        e.preventDefault();
+        var visitorId = $('input[name="visitorId"]').val();
+        var blacklistState = $('#blacklistState > p').text();
+        var blacklistReason = $('#blacklistReason > p').text();
+        var planFromDate = $('input[name="plan_from_date"]').val();
+        var planToDate = $('input[name="plan_to_date"]').val();
+        var visitorForm = new FormData();
+        visitorForm.append('visitorId', visitorId);
+        visitorForm.append('blacklistState', blacklistState);
+        visitorForm.append('blacklistReason', blacklistReason);
+        visitorForm.append('planFromDate', planFromDate);
+        visitorForm.append('planToDate', planToDate);
+
+        callApi.setFormData('/visitor/blacklist', visitorForm, function(result) {
+            alert('정상적으로 등록되었습니다.');
+            location.reload();
+        });
+    })
 </script>
 <div class="nv_contents_wrap">
 	<div class="nv_contents">
@@ -132,7 +170,7 @@
 		</div>
 		<div class="nv_table_box">
             <div class="nv_m_btn_area nv_bord_btn_area">
-                <button type="button" class="nv_blue_button add_icon_btn right" style="margin-right: 30px;">출입 제한 추가</button>
+                <button type="button" class="nv_blue_button add_icon_btn right" onclick="javascript:location.href='add-blacklist'" style="margin-right: 30px;">출입 제한 추가</button>
             </div>
 			<table class="nv_table textcenter" cellspacing="0" cellpadding="0" id="historyTable">
 				<thead>
@@ -155,21 +193,62 @@
 		</div>
 	</div>
 </div>
-
-<div class="nv_modal nv_modal1">
+<form id="visitBlackListForm">
+<div class="nv_modal nv_modal2" id="nv_modal_2">
     <div class="nv_modal_container">
         <div class="nv_modal_header">
-            <h2>반입 물품 확인</h2>
+            <h2>출입 제한 편집</h2>
             <p class="nv_modal_close">닫기</p>
         </div>
         <div class="nv_modal_contents">
             <div>
-                <h4 class="textarea_name">반입물품</h4>
-                <textarea name="" id="" cols="30" rows="10" class="nv_textarea" readonly></textarea>
+                <h4 class="textarea_name" id="name">성명</h4>
+            </div>
+            <div>
+                <h4 class="textarea_name" id="company">업체명</h4>
+            </div>
+            <div>
+                <h4 class="textarea_name" id="phone">연락처</h4>
+            </div>
+            <div>
+                <h4 class="textarea_name">제한기간</h4>
+                <input type="text" class="nv_input max_200 birth" id="plan_from_date" name="plan_from_date" />
+                <span>~</span>
+                <input type="text" class="nv_input max_200 birth" id="plan_to_date" name="plan_to_date" />
+            </div>
+            <div>
+                <h4 class="textarea_name">제한상태
+                    <div class="nv_select_box" id="blacklistState" style="float:right; margin:10px 0;">
+                        <p>선택</p>
+                        <ul> 
+                            <li>출입제한</li>
+                            <li>출입허용</li>
+                        </ul>
+                    </div>
+                </h4>
+            </div>
+            <div>
+                <h4 class="textarea_name">제한사유
+                    <div class="nv_select_box" id="blacklistReason" style="float:right; margin:10px 0;">
+                        <p>선택</p>
+                        <ul> 
+                            <li>보안위반</li>
+                            <li>경쟁업체/직원</li>
+                            <li>방문규정 위반</li>
+                            <li>기타</li>
+                        </ul>
+                    </div>
+                </h4>
+            </div>
+            <div>
+                <h4 class="textarea_name">상세내용</h4>
+                <textarea name="blacklistReasonComment" id="blacklistReasonComment" cols="30" rows="10" class="nv_textarea" placeholder="제한 상세 내용 입력"></textarea>
             </div>
             <div class="btn_area">
-                <button type="button" class="nv_blue_button" onclick="javascript:$('.nv_modal_close').click();">확인</button>
+                <button type="submit" class="nv_blue_button" onclick="javascript:$('#nv_modal_2').removeClass('on');">확인</button>
+                <button type="button" class="nv_red_button">취소</button>
             </div>
         </div>
     </div>
 </div>
+</form>

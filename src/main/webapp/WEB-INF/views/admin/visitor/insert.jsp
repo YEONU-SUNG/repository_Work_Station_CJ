@@ -90,6 +90,8 @@
             name : '',
             birth : '',
             phone : '',
+            gender : '',
+            location : '',
             company : '',
             dept : ''
         };
@@ -139,7 +141,7 @@
             tr : function() {
                 // 임직원 방문객 정보 입력 폼
                 return '<tr>' +
-                            '<th colspan="4" style="text-align: left;">' +
+                            '<th colspan="6" style="text-align: left;">' +
                                 '<span style="padding-left: 13px;">방문자</span>' +
                             '</th>' +
                             '<th>반입물품</th>' +
@@ -178,7 +180,7 @@
                 if(visitInfo.visitorType==1) {
                     // 임직원인경우
                     return '<tr id="group'+visitInfo.id+'">' +
-                            '<td colspan="4">' +
+                            '<td colspan="6">' +
                                 // '<input type="hidden" id="guest_type'+visitInfo.id+'" name="guest_type" value="'+visitInfo.visitorType+'">' +
                                 // '<input type="hidden" id="guest_company'+visitInfo.id+'" name="guest_company" value="'+visitInfo.visitor.company+'">' +
                                 // '<input type="hidden" id="guest_dept'+visitInfo.id+'" name="guest_dept" value="'+visitInfo.visitor.dept+'">' +
@@ -195,6 +197,240 @@
                     return '<tr id="group'+visitInfo.id+'">' +
                             '<td><input type="text" class="nv_input" name="guest_name" placeholder="이름을 입력해주세요." value="'+visitInfo.visitor.name+'" /></td>' +
                             '<td><input type="text" placeholder="생년월일을 입력해주세요." class="nv_input birth" name="guest_birth" value="'+visitInfo.visitor.birth+'" /></td>' +
+                            '<td>' +
+                                '<div class="nv_select_box">' +
+                                    ((visitInfo.visitor.gender == '') 
+                                    ? '<p id="guest_gender'+visitInfo.id+'">성별을 선택해주세요.</p>' 
+                                    : '<p id="guest_gender'+visitInfo.id+'">'+visitInfo.visitor.gender+'</p>')+
+                                    '<ul>' +
+                                        '<li>남</li>' +
+                                        '<li>여</li>' +
+                                    '</ul>' +
+                                '</div>' +
+                            '</td>' +
+                            '<td>' +
+                                '<div class="nv_select_box">' +
+                                    ((visitInfo.visitor.location == '') 
+                                    ? '<p id="guest_location'+visitInfo.id+'">국적을 선택해주세요.</p>' 
+                                    : '<p id="guest_location'+visitInfo.id+'">'+visitInfo.visitor.gender+'</p>')+
+                                    '<ul>' +
+                                        '<li>Korea South</li>'+
+                                        '<li>USA </li>'+
+                                        '<li>Algeria</li>'+
+                                        '<li>Andorra</li>'+
+                                        '<li>Angola</li>'+
+                                        '<li>Anguilla</li>'+
+                                        '<li>Antigua &amp; Barbuda</li>'+
+                                        '<li>Argentina</li>'+
+                                        '<li>Armenia</li>'+
+                                        '<li>Aruba</li>'+
+                                        '<li>Australia</li>'+
+                                        '<li>Austria</li>'+
+                                        '<li>Azerbaijan</li>'+
+                                        '<li>Bahamas</li>'+
+                                        '<li>Bahrain</li>'+
+                                        '<li>Bangladesh</li>'+
+                                        '<li>Barbados</li>'+
+                                        '<li>Belarus</li>'+
+                                        '<li>Belgium</li>'+
+                                        '<li>Belize</li>'+
+                                        '<li>Benin</li>'+
+                                        '<li>Bermuda</li>'+
+                                        '<li>Bhutan</li>'+
+                                        '<li>Bolivia</li>'+
+                                        '<li>Bosnia Herzegovina</li>'+
+                                        '<li>Botswana</li>'+
+                                        '<li>Brazil</li>'+
+                                        '<li>Brunei</li>'+
+                                        '<li>Bulgaria</li>'+
+                                        '<li>Burkina Faso</li>'+
+                                        '<li>Burundi</li>'+
+                                        '<li>Cambodia</li>'+
+                                        '<li>Cameroon</li>'+
+                                        '<li>Canada</li>'+
+                                        '<li>Cape Verde Islands</li>'+
+                                        '<li>Cayman Islands</li>'+
+                                        '<li>Central African Republic</li>'+
+                                        '<li>Chile</li>'+
+                                        '<li>China</li>'+
+                                        '<li>Colombia</li>'+
+                                        '<li>Comoros</li>'+
+                                        '<li>Congo</li>'+
+                                        '<li>Cook Islands</li>'+
+                                        '<li>Costa Rica</li>'+
+                                        '<li>Croatia</li>'+
+                                        '<li>Cuba</li>'+
+                                        '<li>Cyprus North</li>'+
+                                        '<li>Cyprus South</li>'+
+                                        '<li>Czech Republic</li>'+
+                                        '<li>Denmark</li>'+
+                                        '<li>Djibouti</li>'+
+                                        '<li>Dominica</li>'+
+                                        '<li>Dominican Republic</li>'+
+                                        '<li>Ecuador</li>'+
+                                        '<li>Egypt</li>'+
+                                        '<li>El Salvador</li>'+
+                                        '<li>Equatorial Guinea</li>'+
+                                        '<li>Eritrea</li>'+
+                                        '<li>Estonia</li>'+
+                                        '<li>Ethiopia</li>'+
+                                        '<li>Falkland Islands</li>'+
+                                        '<li>Faroe Islands</li>'+
+                                        '<li>Fiji</li>'+
+                                        '<li>Finland</li>'+
+                                        '<li>France</li>'+
+                                        '<li>French Guiana</li>'+
+                                        '<li>French Polynesia</li>'+
+                                        '<li>Gabon</li>'+
+                                        '<li>Gambia</li>'+
+                                        '<li>Georgia</li>'+
+                                        '<li>Germany</li>'+
+                                        '<li>Ghana</li>'+
+                                        '<li>Gibraltar</li>'+
+                                        '<li>Greece</li>'+
+                                        '<li>Greenland</li>'+
+                                        '<li>Grenada</li>'+
+                                        '<li>Guadeloupe</li>'+
+                                        '<li>Guam</li>'+
+                                        '<li>Guatemala</li>'+
+                                        '<li>Guinea</li>'+
+                                        '<li>Guinea – Bissau</li>'+
+                                        '<li>Guyana</li>'+
+                                        '<li>Haiti</li>'+
+                                        '<li>Honduras</li>'+
+                                        '<li>Hong Kong</li>'+
+                                        '<li>Hungary</li>'+
+                                        '<li>Iceland</li>'+
+                                        '<li>India</li>'+
+                                        '<li>Indonesia</li>'+
+                                        '<li>Iran</li>'+
+                                        '<li>Iraq</li>'+
+                                        '<li>Ireland</li>'+
+                                        '<li>Israel</li>'+
+                                        '<li>Italy</li>'+
+                                        '<li>Jamaica</li>'+
+                                        '<li>Japan</li>'+
+                                        '<li>Jordan</li>'+
+                                        '<li>Kazakhstan</li>'+
+                                        '<li>Kenya</li>'+
+                                        '<li>Kiribati</li>'+
+                                        '<li>Korea North</li>'+
+                                        '<li>Kuwait</li>'+
+                                        '<li>Kyrgyzstan</li>'+
+                                        '<li>Laos</li>'+
+                                        '<li>Latvia</li>'+
+                                        '<li>Lebanon</li>'+
+                                        '<li>Lesotho</li>'+
+                                        '<li>Liberia</li>'+
+                                        '<li>Libya</li>'+
+                                        '<li>Liechtenstein</li>'+
+                                        '<li>Lithuania</li>'+
+                                        '<li>Luxembourg</li>'+
+                                        '<li>Macao</li>'+
+                                        '<li>Macedonia</li>'+
+                                        '<li>Madagascar</li>'+
+                                        '<li>Malawi</li>'+
+                                        '<li>Malaysia</li>'+
+                                        '<li>Maldives</li>'+
+                                        '<li>Mali</li>'+
+                                        '<li>Malta</li>'+
+                                        '<li>Marshall Islands</li>'+
+                                        '<li>Martinique</li>'+
+                                        '<li>Mauritania</li>'+
+                                        '<li>Mayotte</li>'+
+                                        '<li>Mexico</li>'+
+                                        '<li>Micronesia</li>'+
+                                        '<li>Moldova</li>'+
+                                        '<li>Monaco</li>'+
+                                        '<li>Mongolia</li>'+
+                                        '<li>Montserrat</li>'+
+                                        '<li>Morocco</li>'+
+                                        '<li>Mozambique</li>'+
+                                        '<li>Myanmar</li>'+
+                                        '<li>Namibia</li>'+
+                                        '<li>Nauru</li>'+
+                                        '<li>Nepal</li>'+
+                                        '<li>Netherlands</li>'+
+                                        '<li>New Caledonia</li>'+
+                                        '<li>New Zealand</li>'+
+                                        '<li>Nicaragua</li>'+
+                                        '<li>Niger</li>'+
+                                        '<li>Nigeria</li>'+
+                                        '<li>Niue</li>'+
+                                        '<li>Norfolk Islands</li>'+
+                                        '<li>Northern Marianas</li>'+
+                                        '<li>Norway</li>'+
+                                        '<li>Oman</li>'+
+                                        '<li>Palau</li>'+
+                                        '<li>Panama</li>'+
+                                        '<li>Papua New Guinea</li>'+
+                                        '<li>Paraguay</li>'+
+                                        '<li>Peru</li>'+
+                                        '<li>Philippines</li>'+
+                                        '<li>Poland</li>'+
+                                        '<li>Portugal</li>'+
+                                        '<li>Puerto Rico</li>'+
+                                        '<li>Qatar</li>'+
+                                        '<li>Reunion</li>'+
+                                        '<li>Romania</li>'+
+                                        '<li>Russia</li>'+
+                                        '<li>Rwanda</li>'+
+                                        '<li>San Marino</li>'+
+                                        '<li>Sao Tome &amp; Principe</li>'+
+                                        '<li>Saudi Arabia</li>'+
+                                        '<li>Senegal</li>'+
+                                        '<li>Serbia</li>'+
+                                        '<li>Seychelles</li>'+
+                                        '<li>Sierra Leone</li>'+
+                                        '<li>Singapore</li>'+
+                                        '<li>Slovak Republic</li>'+
+                                        '<li>Slovenia</li>'+
+                                        '<li>Solomon Islands</li>'+
+                                        '<li>Somalia</li>'+
+                                        '<li>South Africa</li>'+
+                                        '<li>Spain</li>'+
+                                        '<li>Sri Lanka</li>'+
+                                        '<li>St. Helena</li>'+
+                                        '<li>St. Kitts</li>'+
+                                        '<li>St. Lucia</li>'+
+                                        '<li>Sudan</li>'+
+                                        '<li>Suriname</li>'+
+                                        '<li>Swaziland</li>'+
+                                        '<li>Sweden</li>'+
+                                        '<li>Switzerland</li>'+
+                                        '<li>Syria</li>'+
+                                        '<li>Taiwan</li>'+
+                                        '<li>Tajikstan</li>'+
+                                        '<li>Thailand</li>'+
+                                        '<li>Togo</li>'+
+                                        '<li>Tonga</li>'+
+                                        '<li>Trinidad &amp; Tobago</li>'+
+                                        '<li>Tunisia</li>'+
+                                        '<li>Turkey</li>'+
+                                        '<li>Turkmenistan</li>'+
+                                        '<li>Turkmenistan</li>'+
+                                        '<li>Turks &amp; Caicos Islands</li>'+
+                                        '<li>Tuvalu</li>'+
+                                        '<li>Uganda</li>'+
+                                        '<li>UK</li>'+
+                                        '<li>Ukraine</li>'+
+                                        '<li>United Arab Emirates</li>'+
+                                        '<li>Uruguay</li>'+
+                                        '<li>Uzbekistan</li>'+
+                                        '<li>Vanuatu</li>'+
+                                        '<li>Vatican City</li>'+
+                                        '<li>Venezuela</li>'+
+                                        '<li>Vietnam</li>'+
+                                        '<li>Virgin Islands – British</li>'+
+                                        '<li>Virgin Islands – US</li>'+
+                                        '<li>Wallis &amp; Futuna</li>'+
+                                        '<li>Yemen (North)</li>'+
+                                        '<li>Yemen (South)</li>'+
+                                        '<li>Zambia</li>'+
+                                        '<li>Zimbabwe</li>'+
+                                    '</ul>' +
+                                '</div>' +
+                            '</td>' +
                             '<td><input type="text" class="nv_input pone phone" name="guest_phone" placeholder="연락처를 입력해주세요." value="'+visitInfo.visitor.phone+'"/></td>' +
                             '<td><input type="text" class="nv_input" name="guest_company" placeholder="회사명을 입력해주세요." value="'+visitInfo.visitor.company+'" /></td>' +
                             '<td>'+(module_html.tbody.component.carray(visitInfo.carray))+'</td>'+
@@ -477,6 +713,8 @@
         $('#visitorTbody > tr').each(function(i, item) {
             visitorForm.append('visitorId', visitorId[i]!=undefined ? visitorId[i].value : '');
             visitorForm.append('visitorName', visitorName[i]!=undefined ? visitorName[i].value : '');
+            visitorForm.append('visitorGender', $('#guest_gender'+i).text());
+            visitorForm.append('visitorLocation', $('#guest_location'+i).text());
             visitorForm.append('visitorBirth', visitorBirth[i]!=undefined ? visitorBirth[i].value : '');
             visitorForm.append('visitorPhone', visitorPhone[i]!=undefined ? visitorPhone[i].value : '');
             visitorForm.append('visitorCompany', visitorCompany[i]!=undefined ? visitorCompany[i].value : '');
@@ -540,10 +778,14 @@
                 <dt>방문목적</dt>
                 <dd class="nv_dd_full">
                     <div class="nv_select_box" id="vistorPurpose">
-                        <p>작업</p>
+                        <p>업무</p>
                         <ul>
-                            <li>작업</li>
-                            <li>납품/반출</li>
+                            <li>업무</li>
+                            <li>납품</li>
+                            <li>자재사급</li>
+                            <li>반출수송</li>
+                            <li>공사(A/S)</li>
+                            <li>노동조합</li>
                             <li>기타</li>
                         </ul>
                     </div>
