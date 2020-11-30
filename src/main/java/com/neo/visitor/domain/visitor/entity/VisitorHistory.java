@@ -244,14 +244,20 @@ public class VisitorHistory {
     }
 
     /**
-     * 건물 내 층에 대한 접근권한 부여
+     * 임직원 인 경우건물 내 층에 대한 접근권한 부여
      * @param buildingName
      * @param floor
      */
     public void addAccessBuildingFloor(String buildingName, String[] floor) {
-        this.visitorAccessBuilding = buildingName;
-        for (String _floor : floor) {
-            this.visitorAceessFloor += _floor+" ,";
+        try {
+            if(this.visitorType == 1) {
+                this.visitorAccessBuilding = buildingName;
+                for (String _floor : floor) {
+                    this.visitorAceessFloor += _floor+" ,";
+                }
+            }
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("건물 접근 권한을 부여해주세요.");
         }
     }
 

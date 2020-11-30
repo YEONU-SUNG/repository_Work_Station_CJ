@@ -107,17 +107,17 @@ public class VisitorApiController {
         return adminUser.getHost().getMappingBuildings();
     }
 
-
-    // @PostMapping(path = "visitor-approval/{visitorHistorySeq}")
-    // public VisitorHistory updateVisitApproval(HttpServletRequest request
-    //     , @PathVariable int visitorHistorySeq
-    //     , @RequestParam(defaultValue = "") String visitApprovalComment
-    //     , @RequestParam(defaultValue = "") String carryStuff) {
-    //     return visitorService.updateVisitorApproval(request, visitorHistorySeq, visitApprovalComment, carryStuff);
-    // }
-
-    // 건물접근권한 부여로 버전업
+    // 외부인용
     @PostMapping(path = "visitor-approval/{visitorHistorySeq}")
+    public VisitorHistory updateVisitApproval(HttpServletRequest request
+        , @PathVariable int visitorHistorySeq
+        , @RequestParam(defaultValue = "") String visitApprovalComment
+        , @RequestParam(defaultValue = "") String carryStuff) {
+        return visitorService.updateVisitorApproval(request, visitorHistorySeq, visitApprovalComment, carryStuff, null, null);
+    }
+
+    // 건물접근권한 부여로 버전업, 임직원용
+    @PostMapping(path = "visitor-approval/staffe/{visitorHistorySeq}")
     public VisitorHistory updateVisitApproval(HttpServletRequest request
         , @PathVariable int visitorHistorySeq
         , @RequestParam String buildingName

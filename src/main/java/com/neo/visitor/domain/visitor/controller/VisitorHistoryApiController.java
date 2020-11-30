@@ -76,7 +76,7 @@ public class VisitorHistoryApiController {
         List<Visiter> visiters = new ArrayList<>();
         for(int i=0; i<visitorIds.length; i++) {
             Visiter visiter = 
-                (!visitorIds[i].equals(""))
+                (!visitorIds[i].equals("") && !visitorIds[i].equals("undefined"))
                 // 임직원인경우
                 ? new Host().makeHost(visitorIds[i])
                 // 외부인인경우

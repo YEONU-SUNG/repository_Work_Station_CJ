@@ -41,19 +41,22 @@ public class VisitorBlackListService {
      * @param planToDate 방문종료일
      */
     public void isBlackList(Visitor visitor, String planFromDate, String planToDate) {
+        // 방문이력이 존재하는지 체크 
         Visitor _visitor = visitorRepository.findByVisitornameAndVisitorCompanyAndVisitorMobile(visitor);
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("visitorId", _visitor.getVisitorID());
-        map.put("planFromDate", planFromDate);
-        map.put("planToDate", planFromDate);
-        VisitorBlackList visitorBlackList = visitorBlackListRepository.findByVisitorIdAndDate(map);
-        if(visitorBlackList!=null && visitorBlackList.getBlacklistState().equals("출입제한")) {
-            throw new IllegalArgumentException(
-                "\r\n"+
-                visitorBlackList.getVisitor().getVisitorName()+"님은\r\n" +
-                "다음과 같은 사유로 인하여 방문 신청이 불가 합니다.\r\n"+
-                "기간 : "+visitorBlackList.getPlanFromDate()+" ~ "+visitorBlackList.getPlanToDate()+"\r\n" +
-                "사유 : "+visitorBlackList.getBlacklistReason()+"\r\n");
+        if(_visitor != null) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("visitorId", _visitor.getVisitorID());
+            map.put("planFromDate", planFromDate);
+            map.put("planToDate", planFromDate);
+            VisitorBlackList visitorBlackList = visitorBlackListRepository.findByVisitorIdAndDate(map);
+            if(visitorBlackList!=null && visitorBlackList.getBlacklistState().equals("출입제한")) {
+                throw new IllegalArgumentException(
+                    "\r\n"+
+                    visitorBlackList.getVisitor().getVisitorName()+"님은\r\n" +
+                    "다음과 같은 사유로 인하여 방문 신청이 불가 합니다.\r\n"+
+                    "기간 : "+visitorBlackList.getPlanFromDate()+" ~ "+visitorBlackList.getPlanToDate()+"\r\n" +
+                    "사유 : "+visitorBlackList.getBlacklistReason()+"\r\n");
+            }
         }
     }
 }

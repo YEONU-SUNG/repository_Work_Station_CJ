@@ -195,6 +195,7 @@
                 } else {
                     // 외부인인경우
                     return '<tr id="group'+visitInfo.id+'">' +
+                            '<input type="hidden" id="guest_id'+visitInfo.id+'" name="guest_id" value="'+visitInfo.visitor.id+'">' +
                             '<td><input type="text" class="nv_input" name="guest_name" placeholder="이름을 입력해주세요." value="'+visitInfo.visitor.name+'" /></td>' +
                             '<td><input type="text" placeholder="생년월일을 입력해주세요." class="nv_input birth" name="guest_birth" value="'+visitInfo.visitor.birth+'" /></td>' +
                             '<td>' +

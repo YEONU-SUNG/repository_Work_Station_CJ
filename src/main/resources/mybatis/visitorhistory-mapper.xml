@@ -387,7 +387,14 @@
         , CONVERT(visitdate,char(10)) AS visitdate, agreefirst, agreesecond, vit.cardid, carno, hostid, hostname, hostmobile, hosttel, hostdept, hostcompany, hostgradename, hostpositionname
         , CONVERT(planfromdatetime,char(10)) AS planfromdatetime, CONVERT(plantodatetime,char(10)) AS plantodatetime, approval, visitapprovaldatetime, educompletedatetime, carrystuff, carrystuffserialno, carrystuffused, carrystuffpurpose, deleteflag, visitpurpose
         , <![CDATA[ (SELECT IF(CONVERT(V.PlanFromDateTime, DATE) <= curdate() AND CONVERT(V.PlanToDateTime, DATE) >= curdate(),'Y','N') FROM visitorhistory AS V ) AS ToDayYN ]]> -->
-        vseq, V.visitorhistoryseq, visitfromdatetime, visittodatetime, visitorreservationnumber, visitorid, visitorname, visitorbirth, visitormobile, visitorcompany, visitorposition1, visitorposition2, visitorposition3, visitapprovalyn, visitapprovalcomment
+        vseq
+        , V.visitorhistoryseq
+        , visitfromdatetime
+        , visittodatetime
+        , visitorreservationnumber
+        , visitorType
+        , visitorid
+        , visitorname, visitorbirth, visitormobile, visitorcompany, visitorposition1, visitorposition2, visitorposition3, visitapprovalyn, visitapprovalcomment
         , visitdate, agreefirst, agreesecond, vit.cardid, carno, hostid, hostname, hostmobile, hosttel, hostdept, hostcompany, hostgradename, hostpositionname
         , CONVERT(varchar(10), planfromdatetime, 23) AS planfromdatetime, CONVERT(varchar(10), plantodatetime, 23) AS plantodatetime, approval, visitapprovaldatetime, educompletedatetime, carrystuff, carrystuffserialno, carrystuffused, carrystuffpurpose, deleteflag, visitpurpose
         , rejectFlag, rejectComment, rejectType, visitorAccessBuilding, visitorAceessFloor
