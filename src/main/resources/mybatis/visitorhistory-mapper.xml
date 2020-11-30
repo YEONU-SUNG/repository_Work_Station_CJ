@@ -203,6 +203,9 @@
             <if test='host.host.auth == "3"'>
                 AND V.HostID = #{host.host.hostID}
             </if>
+            <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'>
+                AND V.HostSiteCode = #{host.host.siteCode}
+            </if>
             <!--
                 부서장인경우 정책 사라짐 
                 <if test='host.host.auth == "4"'>
@@ -293,6 +296,12 @@
             and convert(varchar(50), PlanFromDateTime, 23) >= convert(varchar(50), convert(datetime, #{searchFromDateTime}), 23)
             and convert(varchar(50), PlanToDateTime, 23) <= convert(varchar(50), convert(datetime, #{searchToDateTime}), 23)
         ]]>
+        <if test='host.host.auth == "3"'>
+            AND HostID = #{host.host.hostID}
+        </if>
+        <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'>
+            AND HostSiteCode = #{host.host.siteCode}
+        </if>
         <choose>
             <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorName"'>
                 <!-- AND V.VisitorName LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
@@ -362,6 +371,12 @@
             and convert(varchar(50), PlanFromDateTime, 23) >= convert(varchar(50), convert(datetime, #{searchFromDateTime}), 23)
             and convert(varchar(50), PlanToDateTime, 23) <= convert(varchar(50), convert(datetime, #{searchToDateTime}), 23)
         ]]>
+        <if test='host.host.auth == "3"'>
+            AND HostID = #{host.host.hostID}
+        </if>
+        <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'>
+            AND HostSiteCode = #{host.host.siteCode}
+        </if>
         <choose>
             <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorName"'>
                 <!-- AND V.VisitorName LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
@@ -442,6 +457,10 @@
         </if> -->
         <if test='host.host.auth == "3"'>
             AND V.HostID = #{host.host.hostID}
+        </if>
+
+        <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'>
+            AND V.HostSiteCode = #{host.host.siteCode}
         </if>
         <!--
             부서장인경우 정책 사라짐 
@@ -641,6 +660,7 @@
             , HostCompany
             , HostGradeName
             , HostPositionName
+            , HostSiteCode
             , PlanFromDateTime
             , PlanToDateTime
             , Approval
@@ -687,6 +707,7 @@
             , #{hostCompany}
             , #{hostGradeName}
             , #{hostPositionName}
+            , #{hostSiteCode}
             , #{planFromDateTime}
             , #{planToDateTime}
             , 'N'<!-- , #{approval} -->

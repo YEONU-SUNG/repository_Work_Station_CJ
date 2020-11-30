@@ -28,7 +28,7 @@
     <select id="findBySiteCode" parameterType="java.lang.String" resultMap="buildingSiteMapping">
         <include refid="buildingSiteMapping"></include>
         AND siteCode = #{siteCode}
-        ORDER BY buildingName, buildingFloor
+        ORDER BY buildingName, LEN(buildingFloor), buildingFloor
     </select>
 
     <delete id="delete" parameterType="com.neo.visitor.domain.buildingSiteMapping.entity.BuildingSiteMapping">

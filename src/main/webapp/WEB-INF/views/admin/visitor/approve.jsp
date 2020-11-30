@@ -95,6 +95,21 @@
 </c:if>
 <c:if test="${sessionScope.login.host.auth eq '2'}">
     <script>
+        var approveProcessStatus = {
+            visitorApprove : function(row) {
+                if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
+                    return '교육미수료';
+                }
+                if(row.rejectFlag==='Y'){
+                    return '';
+                }
+                if(row.visitApprovalYN==='Y') {
+                    return '승인완료';
+                } else {
+                    return '승인대기';
+                }
+            }
+        };
         var approveActionCommponet = {
             visitorButton : function(row) {
                 if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
@@ -125,6 +140,21 @@
 </c:if>
 <c:if test="${sessionScope.login.host.auth eq '3'}">
     <script>
+        var approveProcessStatus = {
+            visitorApprove : function(row) {
+                if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
+                    return '교육미수료';
+                }
+                if(row.rejectFlag==='Y'){
+                    return '';
+                }
+                if(row.visitApprovalYN==='Y') {
+                    return '승인완료';
+                } else {
+                    return '승인대기';
+                }
+            }
+        };
         var approveActionCommponet = {
             visitorButton : function(row) {
                 if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
@@ -156,28 +186,66 @@
 </c:if>
 <c:if test="${sessionScope.login.host.auth eq '4'}">
     <script>
+        var approveProcessStatus = {
+            visitorApprove : function(row) {
+                if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
+                    return '교육미수료';
+                }
+                if(row.rejectFlag==='Y'){
+                    return '';
+                }
+                if(row.visitApprovalYN==='Y') {
+                    return '승인완료';
+                } else {
+                    return '승인대기';
+                }
+            }
+        };
         var approveActionCommponet = {
             visitorButton : function(row) {
                 if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
                     return '미수료';
                 }
+                // if(row.visitApprovalYN==='Y') {
+                //     for(var i in row.visitorInoutTimes) {
+                //         //var visitDate = new Date(row.visitorInoutTimes[i].visitFromDateTime);
+                //         var ds = row.visitorInoutTimes[i].visitFromDateTime;
+                //             var arr = ds.split("-");  // 2018,01,01 00:10:11
+                //             var visitDate = new Date(arr[0] + "/" + arr[1] + "/" + arr[2]);
+                //         if(date.compare(visitDate)) {
+                //             if(row.visitorInoutTimes[i].visitToDateTime=='')
+                //                 // return '방문';
+                //                 return '입문';
+                //             else 
+                //                 $('#'+row.visitorHistorySeq).remove();
+                //         }
+                //     }
+                //     //return '방문';
+                //     return '승인완료';
+                // } 
                 if(row.visitApprovalYN==='Y') {
-                    for(var i in row.visitorInoutTimes) {
-                        //var visitDate = new Date(row.visitorInoutTimes[i].visitFromDateTime);
-                        var ds = row.visitorInoutTimes[i].visitFromDateTime;
+                    if(row.toDayYN==='Y')
+                    {
+                        for(var i in row.visitorInoutTimes) {
+                            //var visitDate = new Date(row.visitorInoutTimes[i].visitFromDateTime);
+                            var ds = row.visitorInoutTimes[i].visitFromDateTime;
                             var arr = ds.split("-");  // 2018,01,01 00:10:11
                             var visitDate = new Date(arr[0] + "/" + arr[1] + "/" + arr[2]);
-                        if(date.compare(visitDate)) {
-                            if(row.visitorInoutTimes[i].visitToDateTime=='')
-                                // return '방문';
-                                return '입문';
-                            else 
-                                $('#'+row.visitorHistorySeq).remove();
+                            if(date.compare(visitDate)) {
+                                if(row.visitorInoutTimes[i].visitToDateTime=='')
+                                    // return '<button type="button" class="nv_red_button">퇴실</button>';
+                                    return '<button type="button" class="nv_red_button">출문</button>';
+                                else 
+                                    $('#'+row.visitorHistorySeq).remove();
+                            }
                         }
+                        // return '<button type="button" class="nv_blue_button">방문</button>';
+                        return '<button type="button" class="nv_blue_button nv_green_button">입문</button>';
                     }
-                    //return '방문';
-                    return '승인완료';
-                } else {
+                    else if(row.toDayYN==='N')
+                        return '';
+                }
+                else {
                     return '';
                 }
             }
@@ -254,8 +322,8 @@
                     if(e.visitorType == 1 && e.visitApprovalYN == 'Y') visitorStatus = '';
 
                     var approveManagerBtn = module.makeTd('approvechidren', visitorStatus);
-                    if(auth!='4') {
-                        // 안내데스크가 아닐때
+                    if(auth!='3') {
+                        // 임직원이 아닐때
                         if(e.visitorType == 2) {
                             // 외부인인 경우 방문증 입력 폼 활성화
                             if(visitorStatus.indexOf('입문')!=-1 || visitorStatus.indexOf('출문')!=-1) {
@@ -468,11 +536,11 @@
                 <th class="tpc_skip m_skip">방문시작일</th>
                 <th class="tpc_skip m_skip">방문종료일</th>
                 <th class="tpc_skip m_skip">차량번호</th>
-                <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2'}">
+                <%-- <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2'}"> --%>
                     <th class="tpc_skip m_skip">접견인</th>
                     <th class="tpc_skip m_skip">접견인 회사</th>
                     <th class="tpc_skip m_skip">접견인 팀</th>
-                </c:if>
+                <%-- </c:if> --%>
                 <th class="tpc_skip m_skip">방문증번호</th>
                 <th class="tpc_skip m_skip">승인여부</th>
                 <th class="tpc_skip m_skip">반려사유</th>

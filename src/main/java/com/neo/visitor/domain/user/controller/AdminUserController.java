@@ -65,7 +65,18 @@ public class AdminUserController {
 	public String logout(HttpSession session) {
         session.removeAttribute("login");
 		return "redirect:/login";
-	}
+    }
+    
+    @GetMapping(path = "host-list")
+    @ResponseBody
+    public List<Host> getHostList(HttpServletRequest request
+    , @RequestParam(defaultValue = "") String hostName) {
+        if(hostName.length() < 2) throw new IllegalArgumentException("최소 2글자는 입력해주세요.");
+        
+        return insaRepository.findByLikeName(hostName);
+        
+        //return hostService.findByHostName(hostName);
+    }
 	
     @GetMapping(path = "hostpartner-list")
     @ResponseBody

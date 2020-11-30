@@ -161,6 +161,9 @@
         <if test='host.host.auth == "3"'>
             AND V.HostID = #{host.host.hostID}
         </if>
+        <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'>
+            AND V.HostSiteCode = #{host.host.siteCode}
+        </if>
         <choose>
             <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorHistorySeq"'>
                 AND V.VisitorHistorySeq = #{pagenation.conditionValue}
@@ -259,6 +262,9 @@
         <if test='host.host.auth == "3"'>
             AND V.HostID = #{host.host.hostID}
         </if>
+        <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'>
+            AND V.HostSiteCode = #{host.host.siteCode}
+        </if>
         <choose>
             <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorHistorySeq"'>
                 AND V.VisitorHistorySeq = #{pagenation.conditionValue}
@@ -353,6 +359,9 @@
         </if>
         <if test='host.host.auth == "3"'>
             AND V.HostID = #{host.host.hostID}
+        </if>
+        <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'>
+            AND V.HostSiteCode = #{host.host.siteCode}
         </if>
         <choose>
             <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorHistorySeq"'>

@@ -71,9 +71,15 @@ public class DoosanLogin extends LoginAuthApplication {
             buildings = new Building().distinctBuildingNameAndFloorAddComma2(buildingRepository.findAll());
         } else {
             //Host _host = insaRepository.findByHostId(host.getHostID());
-            Host _host = insaRepository.findByHostIdWithPartner(host.getHostID());
-            if(_host == null || _host.getSiteCode()==null) throw new IllegalArgumentException("로그인정보가 존재하지않습니다.");
-            buildings = new Building().distinctBuildingNameAndFloorAddComma(buildingSiteMappingRepository.findBySiteCode(_host.getSiteCode()));
+            if(!host.getHostName().contains("MASTER"))
+            {
+                Host _host = insaRepository.findByHostIdWithPartner(host.getHostID());
+                if(_host == null || _host.getSiteCode()==null) throw new IllegalArgumentException("로그인정보가 존재하지않습니다.");
+                buildings = new Building().distinctBuildingNameAndFloorAddComma(buildingSiteMappingRepository.findBySiteCode(_host.getSiteCode()));
+            }
+            else{
+                buildings = new Building().distinctBuildingNameAndFloorAddComma(buildingSiteMappingRepository.findBySiteCode(host.getSiteCode()));
+            }
         }
         host.setMappingBuildings(buildings);
     }

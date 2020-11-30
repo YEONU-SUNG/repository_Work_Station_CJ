@@ -11,6 +11,14 @@ public abstract class LoginAuthApplication {
     // static final String MASTER_PASSWORD = "master";
     static final String MASTER_ID = "master";
     static final String MASTER_PASSWORD = "master";
+    static final String LocationMASTER_ID = "locationmaster";
+    static final String LocationMASTER_PASSWORD = "locationmaster";
+    static final String SecurityMASTER_ID = "securitymaster";
+    static final String SecurityMASTER_PASSWORD = "securitymaster";
+    static final String DeskMASTER_ID = "deskmaster";
+    static final String DeskMASTER_PASSWORD = "deskmaster";
+    
+    
 
     private Host host = new Host();
 
@@ -60,7 +68,26 @@ public abstract class LoginAuthApplication {
         if(isMaster(id, password)) {
             this.host.setHostName("MASTER");
             this.host.setAuth("0");
-        } else {
+        }
+        else if(isLocationMaster(id, password)) {
+            this.host.setHostName("LOCATIONMASTER");
+            this.host.setAuth("1");
+            this.host.setSiteCode("03011722");
+            //this.host.setSiteCode("03014603");
+        }
+        else if(isSecurityMaster(id, password)) {
+            this.host.setHostName("SECURITYMASTER");
+            this.host.setAuth("2");
+            this.host.setSiteCode("03011722");
+            //this.host.setSiteCode("03014603");
+        } 
+        else if(isDeskMaster(id, password)) {
+            this.host.setHostName("DESKMASTER");
+            this.host.setAuth("4");
+            this.host.setSiteCode("03011722");
+            //this.host.setSiteCode("03014603");
+        } 
+        else {
             this.host =
                 isEmptyOrganizationChart(
                     checkAuthorityAD(id, password)
@@ -81,6 +108,16 @@ public abstract class LoginAuthApplication {
      */
     private boolean isMaster(String id, String password) {
         return (id.equals(MASTER_ID) && password.equals(MASTER_PASSWORD));
+    }
+
+    private boolean isLocationMaster(String id, String password) {
+        return (id.equals(LocationMASTER_ID) && password.equals(LocationMASTER_PASSWORD));
+    }
+    private boolean isSecurityMaster(String id, String password) {
+        return (id.equals(SecurityMASTER_ID) && password.equals(SecurityMASTER_PASSWORD));
+    }
+    private boolean isDeskMaster(String id, String password) {
+        return (id.equals(DeskMASTER_ID) && password.equals(DeskMASTER_PASSWORD));
     }
 
     /**
@@ -134,6 +171,13 @@ public abstract class LoginAuthApplication {
         session.setAttribute("login", adminUser);
         session.setMaxInactiveInterval(60*60*12);
     }
+    // private void setSession(HttpSession session, Host host) {
+    //     AdminUser adminUser = new AdminUser();
+    //     adminUser.setAdminID(MASTER_ID);
+    //     adminUser.setHost(this.host);
+    //     session.setAttribute("login", adminUser);
+    //     session.setMaxInactiveInterval(60*60*12);
+    // }
 
     /**
      * 건물 및 층별 권한 셋팅

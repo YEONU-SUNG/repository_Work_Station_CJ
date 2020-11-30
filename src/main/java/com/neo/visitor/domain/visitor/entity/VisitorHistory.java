@@ -48,6 +48,7 @@ public class VisitorHistory {
     private String hostCompany;
     private String hostGradeName;
     private String hostPositionName;
+    private String hostSiteCode;
     private String planFromDateTime;
     private String planToDateTime;
     private String approval;
@@ -124,6 +125,7 @@ public class VisitorHistory {
         this.hostPositionName = host.getPositionName();
         this.hostName = host.getHostName();
         this.hostMobile = host.getMobile();
+        this.hostSiteCode = host.getSiteCode();
         // try {
         //     this.hostName = AES256Util.encrypt(host.getHostName());
         //     this.hostMobile = AES256Util.encrypt(host.getMobile());

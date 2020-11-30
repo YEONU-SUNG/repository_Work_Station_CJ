@@ -223,8 +223,8 @@ public class VisitorHistoryApplication {
 
     @Transactional
     public void saveHistoryVisit(VisitorHistory visitorHistory, List<Visiter> visiters) {
-        Host host = hostService.findByHostID(visitorHistory.getHostID());
-        //Host host = insaRepository.findByHostId(visitorHistory.getHostID());
+        //Host host = hostService.findByHostID(visitorHistory.getHostID());
+        Host host = insaRepository.findByHostId(visitorHistory.getHostID());
         visitorHistory.addHost(host);
         
         for (Visiter _visiter : visiters) {

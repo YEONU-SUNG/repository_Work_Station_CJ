@@ -16,12 +16,12 @@
     </sql>
     <select id="findAll" resultMap="building">
         <include refid="building"></include>
-        ORDER BY name, floor
+        ORDER BY name, LEN(floor), floor
     </select>
 
     <select id="findByName" parameterType="java.lang.String" resultMap="building">
         <include refid="building"></include>
         AND name = #{name}
-        ORDER BY name, floor
+        ORDER BY name, LEN(floor), floor
     </select>
 </mapper>

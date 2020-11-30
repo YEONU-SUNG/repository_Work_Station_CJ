@@ -60,7 +60,7 @@
     });
 </script>
 <div class="nv_contents_wrap">
-    <c:if test="${sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2'}">
+    <c:if test="${sessionScope.login.host.auth eq '10' or sessionScope.login.host.auth eq '20'}">
 	<ul class="nv_visitoer_info">
 		<li>
 			<h4>방문 신청자 수

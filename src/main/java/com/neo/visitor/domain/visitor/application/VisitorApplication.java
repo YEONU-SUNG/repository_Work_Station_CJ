@@ -118,7 +118,8 @@ public class VisitorApplication {
             }
         }
         pagenationResponse.setResponse(findByPlanDateTimeList);
-        pagenationResponse.setPagenation(pagenation.makePagenation(visitorService.countByDeleteFlag(map), PagenationType.VISITOR_APPROVE));
+        //pagenationResponse.setPagenation(pagenation.makePagenation(visitorService.countByDeleteFlag(map), PagenationType.VISITOR_APPROVE));
+        pagenationResponse.setPagenation(pagenation.makePagenation(findByPlanDateTimeList.size(), PagenationType.VISITOR_APPROVE));
         return pagenationResponse;
     }
 
