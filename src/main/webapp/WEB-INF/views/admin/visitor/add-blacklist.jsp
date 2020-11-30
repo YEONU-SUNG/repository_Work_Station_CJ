@@ -33,6 +33,21 @@
         jQuery("#plan_from_date").datepicker("option", "minDate", today);
         jQuery("#plan_to_date").datepicker("option", "minDate", today);
         jQuery("#plan_to_date").datepicker("option", "maxDate", maxDate);
+
+        
+        $(".phone").inputmask({
+    		mask : '999-9999-9999',
+    		showMaskOnHover : false,
+    	});
+    	$(".birth").inputmask({
+    		mask : '9999-99-99',
+    		showMaskOnHover : false,
+    	});
+    	$(".carNo").inputmask({
+    		regex : '([0-9]{2}[가-힣]{1}[0-9]{4}|[가-힣]{2}[0-9]{2}[가-힣]{1}[0-9]{4})',
+    		showMaskOnHover : false,
+    	});
+
     });
 
     $(document).on('change', '#plan_from_date', function(dateText) {
@@ -56,7 +71,7 @@
         var blacklistReason = $('#blacklistReason > p').text();
         var blacklistReasonComment = $('#blacklistReasonComment').val();
         if(blacklistReason=='기타') {
-            if(blacklistReasonComment.trim().length()==0) {
+            if(blacklistReasonComment.trim().length==0) {
                 alert('상세내용을 입력해주세요.');
                 return;
             }

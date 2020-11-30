@@ -20,8 +20,8 @@ public class VisitorBlackList {
     private Visitor visitor;
 
     public VisitorBlackList makeBlackList(
-        String adminId, String blacklistState, String blacklistReasonComment,
-         String blacklistReason, String planFromDate, String planToDate) {
+        String adminId, String blacklistState, String blacklistReason, 
+        String blacklistReasonComment, String planFromDate, String planToDate) {
         this.adminId = adminId;
         this.blacklistState = blacklistState;
         this.blacklistReason = blacklistReason;

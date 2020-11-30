@@ -62,9 +62,14 @@
                 var btn = $('<td><button class="nv_blue_button nv_modal2_open">편집</button></td>');
                 
                 btn.on('click', function() {
+                    $('#visitorId').text(e.visitorId);
                     $('#name').text('성명 : '+e.visitor.visitorName);
                     $('#company').text('업체명 : '+e.visitor.company);
                     $('#phone').text('연락처 : '+e.visitor.mobile);
+                    $('#visitorId').val(e.visitorId);
+                    $('#name').val(e.visitor.visitorName);
+                    $('#company').val(e.visitor.company);
+                    $('#phone').val(e.visitor.mobile);
                     $('#plan_from_date').val(e.planFromDate);
                     $('#plan_to_date').val(e.planToDate);
                     $('#blacklistState > p').text(e.blacklistState);
@@ -113,15 +118,32 @@
 
     $(document).on('submit', '#visitBlackListForm', function(e) {
         e.preventDefault();
-        var visitorId = $('input[name="visitorId"]').val();
+        var visitorName = $('#name').val();
+        var visitorCompany = $('#company').val();
+        var visitorPhone = $('#phone').val();
+        var visitorId = $('#visitorId').val();
+        //var visitorId = $('input[name="visitorId"]').val();
         var blacklistState = $('#blacklistState > p').text();
         var blacklistReason = $('#blacklistReason > p').text();
+        var blacklistReasonComment = $('#blacklistReasonComment').val();
+        if(blacklistReason=='기타') {
+            if(blacklistReasonComment.trim().length==0) {
+                alert('상세내용을 입력해주세요.');
+                return;
+            }
+        } else {
+            blacklistReasonComment = '';
+        }
         var planFromDate = $('input[name="plan_from_date"]').val();
         var planToDate = $('input[name="plan_to_date"]').val();
         var visitorForm = new FormData();
+        visitorForm.append('visitorName', visitorName);
+        visitorForm.append('visitorCompany', visitorCompany);
+        visitorForm.append('visitorPhone', visitorPhone);
         visitorForm.append('visitorId', visitorId);
         visitorForm.append('blacklistState', blacklistState);
         visitorForm.append('blacklistReason', blacklistReason);
+        visitorForm.append('blacklistReasonComment', blacklistReasonComment);
         visitorForm.append('planFromDate', planFromDate);
         visitorForm.append('planToDate', planToDate);
 
@@ -201,6 +223,7 @@
             <p class="nv_modal_close">닫기</p>
         </div>
         <div class="nv_modal_contents">
+            <h4 class="textarea_name" id="visitorId" style="display: none;" ></h4>
             <div>
                 <h4 class="textarea_name" id="name">성명</h4>
             </div>

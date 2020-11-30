@@ -74,6 +74,17 @@ public class VisitorApplication {
         map.put("pagenation", pagenation);
         map.put("host", loginService.getUserSessionInfo(request));
         List<VisitorBlackList> visitorBlackListfindAll = visitorBlackListservice.findAll();
+
+        for(int i = 0, len = visitorBlackListfindAll.size(); i < len; i++){
+            String visitorName = visitorBlackListfindAll.get(i).getVisitor().getVisitorName().toString();
+            String visitorMobile = visitorBlackListfindAll.get(i).getVisitor().getMobile();
+            try{
+                visitorBlackListfindAll.get(i).getVisitor().setVisitorName(AES256Util.decrypt(visitorName));
+                visitorBlackListfindAll.get(i).getVisitor().setMobile(AES256Util.decrypt(visitorMobile));
+            }catch(Exception e){
+                continue;
+            }
+        }
         
         pagenationResponse.setResponse(visitorBlackListfindAll);
         //pagenationResponse.setPagenation(pagenation.makePagenation(visitorInoutTimeService.findAllHistoryCount(pagenation), PagenationType.VISITOR_HISTORY));

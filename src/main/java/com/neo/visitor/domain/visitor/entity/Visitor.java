@@ -1,5 +1,9 @@
 package com.neo.visitor.domain.visitor.entity;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import com.neo.visitor.config.AES256Util;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,11 +31,23 @@ public class Visitor extends Visiter {
     // }
 
     public Visitor makeVisitor(String visitorName, String visitorGender, String visitorLocation, String visitorBirth, String mobile, String company) {
-        this.visitorName = visitorName;
+        // this.visitorName = visitorName;
+        // this.visitorGender = visitorGender;
+        // this.visitorLocation = visitorLocation;
+        // this.visitorBirth = visitorBirth;
+        // this.mobile = mobile;
+        // this.company = company;
+
+        try {
+            this.visitorName = AES256Util.encrypt(visitorName);
+            this.visitorBirth = AES256Util.encrypt(visitorBirth);
+            this.mobile = AES256Util.encrypt(mobile);
+        } catch (UnsupportedEncodingException | GeneralSecurityException e) {
+            e.printStackTrace();
+        }
+        
         this.visitorGender = visitorGender;
         this.visitorLocation = visitorLocation;
-        this.visitorBirth = visitorBirth;
-        this.mobile = mobile;
         this.company = company;
         return this;
     }

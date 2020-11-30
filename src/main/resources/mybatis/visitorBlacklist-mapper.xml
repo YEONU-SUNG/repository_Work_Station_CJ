@@ -22,8 +22,8 @@
     </resultMap>
 
     <insert id="save" parameterType="com.neo.visitor.domain.visitor.entity.VisitorBlackList">
-        INSERT INTO VisitorBlackList (VisitorID, AdminID, blacklistState, blacklistReason, Desc, planFromDate, planToDate, modifedDate, InsertDate)
-        VALUES (#{visitorId}, #{adminId}, #{blacklistState}, #{blacklistReason}, #{blacklistReasonComment}, #{planFromDate}, #{planToDate}, GETDATE(), GETDATE() )
+        INSERT INTO VisitorBlackList (VisitorID, AdminID, blacklistState, blacklistReason, [Desc], planFromDate, planToDate, modifedDate, InsertDate)
+        VALUES (#{visitorId}, #{adminId}, #{blacklistState}, #{blacklistReason}, #{comment}, #{planFromDate}, #{planToDate}, GETDATE(), GETDATE() )
     </insert>
 
     <update id="update" parameterType="com.neo.visitor.domain.visitor.entity.VisitorBlackList">
@@ -32,7 +32,7 @@
             AdminID = #{adminId},
             blacklistState = #{blacklistState},
             blacklistReason = #{blacklistReason},
-            [Desc] = #{blacklistReasonComment},
+            [Desc] = #{comment},
             planFromDate = #{planFromDate},
             planToDate = #{planToDate},
             modifedDate = GETDATE()
