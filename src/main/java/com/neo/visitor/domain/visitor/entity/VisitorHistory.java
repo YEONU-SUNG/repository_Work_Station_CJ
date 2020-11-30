@@ -92,10 +92,11 @@ public class VisitorHistory {
     }
 
     // 추가본
-    public void updateReject(String rejectComment) {
+    public void updateReject(String rejectType, String rejectComment) {
         if (this.rejectFlag == "Y")
             throw new IllegalArgumentException("잘못된 요청 값");
         this.rejectFlag = "Y";
+        this.rejectType = rejectType;
         this.rejectComment = rejectComment;
         // this.carryStuff = carryStuff;
     }

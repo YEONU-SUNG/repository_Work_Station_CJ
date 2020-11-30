@@ -357,7 +357,8 @@
 
                     var rejectPopup = module.makeTd('tpc_skip m_skip', rejectName);
                     rejectPopup.on('click', function() {
-
+                        $('.nv_modal5_open').addClass('on');
+                        $('#visitRejectFormId').val(e.visitorHistorySeq);
                     })
                     tr.append(rejectPopup);
                     tr.append(approveManagerBtn);
@@ -365,6 +366,20 @@
             });
         });
     }
+
+    $(document).on('submit', '#visitRejectForm', function(e) {
+        e.preventDefault();
+        var formData = new FormData();
+        formData.append('visitRejectType', $('#rejectCmbBox > p').text());
+        formData.append('visitRejectComment', $('#rejectComment').val());
+        callApi.setFormData('/visitor-reject/'+$('#visitRejectFormId').val(), formData, function(result) {
+            alert('반려처리되었습니다.');
+            location.reload();
+            // form.children().removeClass('on');
+            // init(module.pagenation.params);     // 금일방문객 리랜더링
+            // dashBoardInit();                    // 대시보드 리렌더링
+        });
+    });
 
     function excel() {
         location.href = convertEncoding(module.pagenation.excelParams);

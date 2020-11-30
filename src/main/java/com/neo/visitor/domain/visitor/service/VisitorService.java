@@ -241,9 +241,16 @@ public class VisitorService {
         //return visitorHistory;
     }
 
-    public VisitorHistory updateVisitorApprovalReject(HttpServletRequest request, int visitorHistorySeq, String rejectComment) {
+    public VisitorHistory updateVisitorApprovalReject(HttpServletRequest request, int visitorHistorySeq, String rejectComment, String visitRejectType) {
         VisitorHistory visitorHistory = visitorHistoryService.findById(visitorHistorySeq);
-        visitorHistory.updateReject(rejectComment);
+        String rejectType = "0";
+        switch (visitRejectType) {
+            case "보안위반" : rejectType = "1"; break;
+            case "경쟁업체/직원" : rejectType = "2"; break;
+            case "방문규정 위반" : rejectType = "3"; break;
+            case "기타" : rejectType = "4"; break;
+        }
+        visitorHistory.updateReject(rejectComment, rejectType);
         visitorHistoryRepository.updateVisitorApprovalReject(visitorHistory);
         // visitorDashboardService.updateVisitStandbyCount(visitorHistory);
 

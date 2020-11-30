@@ -158,7 +158,7 @@ public class VisitorApiController {
         , @PathVariable int visitorHistorySeq
         , @RequestParam(defaultValue = "") String visitRejectComment
         , @RequestParam(defaultValue = "") String visitRejectType) {
-        return visitorService.updateVisitorApprovalReject(request, visitorHistorySeq, visitRejectComment);
+        return visitorService.updateVisitorApprovalReject(request, visitorHistorySeq, visitRejectComment, visitRejectType);
     }
 
     @PostMapping(path = "visitor-reject/all")
