@@ -73,14 +73,9 @@ public class AdminUserController {
     , @RequestParam(defaultValue = "") String hostName) {
         if(hostName.length() < 2) throw new IllegalArgumentException("최소 2글자는 입력해주세요.");
         
-        // List<Map<String, Object>> mapList = insaRepository.findByName(hostName);
-        // List<Host> hostList = new ArrayList<Host>();
-        // for (Map<String,Object> map : mapList) {
-        //     hostList.add(new Host().insaInterface(map));
-        // }
-        // return hostList;
+        return insaRepository.findByLikeName(hostName);
         
-        return hostService.findByHostName(hostName);
+        //return hostService.findByHostName(hostName);
         
     }
 

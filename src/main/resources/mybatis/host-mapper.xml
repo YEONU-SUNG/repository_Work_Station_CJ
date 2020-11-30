@@ -18,7 +18,48 @@
         <result column="Auth" property="auth" />
         <result column="UpperDeptCD" property="upperDeptCD" />
         <result column="ActiveFlag" property="activeFlag" />
+        <result column="siteCode" property="siteCode" />
     </resultMap>
+
+    <select id="count" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        SELECT 
+            count(*)
+        FROM
+            Host H
+            WHERE 1=1 AND DeleteFlag = 'N'
+        <choose>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="HostName"'>
+                <!-- AND H.HostName LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND H.HostName LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="DeptCD"'>
+                <!-- AND H.DeptCD LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND H.DeptCD LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+        </choose>
+    </select>
+
+    <select id="findAll" parameterType="java.util.HashMap" resultType="com.neo.visitor.domain.user.entity.Host">
+        SELECT 
+            *
+        FROM
+            Host H
+            WHERE 1=1 AND DeleteFlag = 'N'
+        <choose>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="HostName"'>
+                <!-- AND H.HostName LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND H.HostName LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="DeptCD"'>
+                <!-- AND H.DeptCD LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND H.DeptCD LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+        </choose>
+        <!-- LIMIT
+            #{pagenation.startPage}, #{pagenation.size} -->
+    order by H.InsertDate DESC
+        offset #{pagenation.startPage} rows fetch next #{pagenation.size} rows only
+    </select>
 
     <select id="findByHostID" parameterType="java.lang.String" resultType="com.neo.visitor.domain.user.entity.Host">
         SELECT 

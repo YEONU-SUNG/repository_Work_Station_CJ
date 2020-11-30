@@ -24,12 +24,12 @@ public class InsaScheduler {
     //@Scheduled(cron = "0 54 23 * * *")
     public void contentsStateSchedulCheckRun() {
         //List<Host> hostList = new ArrayList<>();
-        List<Map<String, Object>> insaList = insaRepository.findAll();
-        for (Map<String, Object> _data : insaList) {
-            hostRepository.insaSave(new Host().insaInterface(_data));
-            hostRepository.insaAdminSave(new AdminUser().insaInterface(_data));
-            //hostList.add(new Host().insaInterface(_data));
-        }
+        // List<Map<String, Object>> insaList = insaRepository.findAll();
+        // for (Map<String, Object> _data : insaList) {
+        //     hostRepository.insaSave(new Host().insaInterface(_data));
+        //     hostRepository.insaAdminSave(new AdminUser().insaInterface(_data));
+        //     //hostList.add(new Host().insaInterface(_data));
+        // }
 
         //List<Map<String, Object>> positionList = insaRepository.getInsa();
         // 

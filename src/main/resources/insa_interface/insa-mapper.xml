@@ -16,6 +16,7 @@
         <result column="Email" property="email" />
         <result column="DeptCD" property="deptCD" />
         <result column="Auth" property="auth" />
+        <result column="SiteCode" property="siteCode" />
     </resultMap>
 
     <sql id="insaInfo">
@@ -46,19 +47,19 @@
 
     </sql>
 
-    <select id="findAll" resultType="java.util.Map">
+    <select id="findAll" resultMap="Host">
         <include refid="insaInfo"></include>
     </select>
 
-    <select id="findByEmail" parameterType="java.lang.String" resultType="java.util.Map">
+    <select id="findByEmail" parameterType="java.lang.String" resultMap="Host">
         <include refid="insaInfo"></include>
         WHERE A.Email = #{email}
     </select>
-    <select id="findByName" parameterType="java.lang.String" resultMap="Host">
+    <select id="findByLikeName" parameterType="java.lang.String" resultMap="Host">
         <include refid="insaInfo"></include>
-        WHERE A.HostName LIKE '%'+#{name}
+        WHERE A.HostName LIKE '%'+#{name}+'%'
     </select>
-    <select id="findByHostId" parameterType="java.lang.String" resultType="java.util.Map">
+    <select id="findByHostId" parameterType="java.lang.String" resultMap="Host">
         <include refid="insaInfo"></include>
         WHERE A.HostID = #{hostId}
     </select>

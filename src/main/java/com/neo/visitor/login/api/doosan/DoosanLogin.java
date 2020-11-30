@@ -44,9 +44,9 @@ public class DoosanLogin extends LoginAuthApplication {
 
     @Override
     public Host isEmptyOrganizationChart(String id) {
-        Map<String, Object> response = insaRepository.findByEmail("singhal.anju@doosan.com");
-        if(response == null) throw new IllegalArgumentException("로그인정보가 존재하지않습니다.");
-        return new Host().insaInterface(response);
+        Host host = insaRepository.findByEmail("singhal.anju@doosan.com");
+        if(host == null) throw new IllegalArgumentException("로그인정보가 존재하지않습니다.");
+        return host;
     }
 
     @Override
@@ -56,11 +56,9 @@ public class DoosanLogin extends LoginAuthApplication {
             // 마스터인경우 모든 건물의 층 권한 부여 가능
             buildings = new Building().distinctBuildingNameAndFloorAddComma2(buildingRepository.findAll());
         } else {
-            Map<String, Object> response = insaRepository.findByHostId(host.getHostID());
-            if(response == null || response.get("SiteCode")==null) throw new IllegalArgumentException("로그인정보가 존재하지않습니다.");
-            
-            String siteCode = response.get("SiteCode").toString();
-            buildings = new Building().distinctBuildingNameAndFloorAddComma(buildingSiteMappingRepository.findBySiteCode(siteCode));
+            Host _host = insaRepository.findByHostId(host.getHostID());
+            if(_host == null || _host.getSiteCode()==null) throw new IllegalArgumentException("로그인정보가 존재하지않습니다.");
+            buildings = new Building().distinctBuildingNameAndFloorAddComma(buildingSiteMappingRepository.findBySiteCode(_host.getSiteCode()));
         }
         host.setMappingBuildings(buildings);
     }

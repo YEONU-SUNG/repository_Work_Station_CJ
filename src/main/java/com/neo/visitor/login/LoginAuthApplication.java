@@ -22,12 +22,38 @@ public abstract class LoginAuthApplication {
      * 임직원 3
      * 안내데스크 4
      */
-    private enum ROLE {
-        MASTER,         // 마스터
-        BRANCH_ADMIN,   // 계열사관리자
-        SECURITY_ADMIN, // 보안관리자
-        NONE,           // 임직원
-        DESK;           // 안내데스크
+    public enum ROLE {
+        MASTER("0", "시스템담당자"),            // 시스템담당자
+        BRANCH_ADMIN("1", "계열사담당자"),      // 계열사담당자
+        SECURITY_ADMIN("2", "보안담당자"),      // 보안담당자
+        NONE("3", "임직원"),                    // 임직원
+        DESK("4", "안내데스크");                // 안내데스크
+
+        private String roleNumber;
+        private String roleName;
+
+        ROLE(String roleNumber, String roleName) {
+            this.roleNumber = roleNumber;
+            this.roleName = roleName;
+        }
+
+        public static String findByRoleNumber(String roleName) {
+            for (ROLE role : ROLE.values()) {
+                if(role.roleName.equals(roleName)) {
+                    return role.roleNumber;
+                }
+            }
+            throw new IllegalArgumentException("잘못된 권한 요청입니다.");
+        }
+
+        public static String findByRoleName(String roleNumber) {
+            for (ROLE role : ROLE.values()) {
+                if(role.roleNumber.equals(roleNumber)) {
+                    return role.roleName;
+                }
+            }
+            throw new IllegalArgumentException("잘못된 권한 요청입니다.");
+        }
     }
 
     public final void authorize(HttpSession session, String id, String password) {

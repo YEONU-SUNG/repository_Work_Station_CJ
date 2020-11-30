@@ -13,7 +13,7 @@ public enum PagenationType {
     VISITOR_APPROVE("/visitor/approve-list"),
     VISITOR_CONFIRM("/visitor/confirm-list"),
     VISITOR_STANDBY("/visitor/standby-list"),
-    AUTH("auth-list");
+    AUTH("/auth-list");
 
     private String value;
 

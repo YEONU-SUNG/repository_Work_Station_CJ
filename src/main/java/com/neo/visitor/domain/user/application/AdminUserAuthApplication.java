@@ -10,6 +10,7 @@ import com.neo.visitor.domain.PagenationResponse;
 import com.neo.visitor.domain.PagenationType;
 import com.neo.visitor.domain.user.entity.AdminUser;
 import com.neo.visitor.domain.user.service.AdminUserService;
+import com.neo.visitor.domain.user.service.HostService;
 import com.neo.visitor.domain.user.service.LoginService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AdminUserAuthApplication {
+    
+    @Autowired HostService hostService;
 
     @Autowired AdminUserService adminUserService;
     @Autowired LoginService loginService;
 
+    @Deprecated
     public PagenationResponse<AdminUser> getAdminUserAuthList(HttpServletRequest request, Pagenation pagenation) {
         PagenationResponse<AdminUser> pagenationResponse = new PagenationResponse<>();
         Map<String, Object> map = new HashMap<>();

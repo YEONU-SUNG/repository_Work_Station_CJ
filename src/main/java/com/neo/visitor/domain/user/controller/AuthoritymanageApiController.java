@@ -1,6 +1,7 @@
 package com.neo.visitor.domain.user.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.neo.visitor.domain.Pagenation;
 import com.neo.visitor.domain.PagenationResponse;
@@ -23,7 +24,7 @@ public class AuthoritymanageApiController {
     @Autowired HostService hostService;
 	
 	@GetMapping(path = "auth-list")
-    public PagenationResponse<AdminUser> getUserList(HttpServletRequest request
+    public PagenationResponse<Host> getUserList(HttpSession session
     , @RequestParam int page, @RequestParam int size
     , @RequestParam(defaultValue = "") String conditionKey
     , @RequestParam(defaultValue = "") String conditionValue) {
@@ -32,7 +33,9 @@ public class AuthoritymanageApiController {
             case "아이디" : conditionKey = "AdminID"; break;
             case "부서" : conditionKey = "DeptCD"; break;
         }
-        return adminUserAuthApplication.getAdminUserAuthList(request, new Pagenation(page, size, conditionKey, conditionValue));
+        
+        // return adminUserAuthApplication.getAdminUserAuthList(request, new Pagenation(page, size, conditionKey, conditionValue));
+        return hostService.findAll(session, new Pagenation(page, size, conditionKey, conditionValue));
     }
     
     @PostMapping(path = "auth-list/{hostID}")
