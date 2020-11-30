@@ -33,24 +33,25 @@
             return (_today>=_compareDate);
         }
     }
+
+    var approveProcessStatus = {
+        visitorApprove : function(row) {
+            if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
+                return '교육미수료';
+            }
+            if(row.rejectFlag==='Y'){
+                return '';
+            }
+            if(row.visitApprovalYN==='Y') {
+                return '승인완료';
+            } else {
+                return '승인대기';
+            }
+        }
+    };
 </script>
 <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1'}">
     <script>
-        var approveProcessStatus = {
-            visitorApprove : function(row) {
-                if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
-                    return '교육미수료';
-                }
-                if(row.rejectFlag==='Y'){
-                    return '';
-                }
-                if(row.visitApprovalYN==='Y') {
-                    return '승인완료';
-                } else {
-                    return '승인대기';
-                }
-            }
-        };
         var approveActionCommponet = {
             visitorButton : function(row) {
                 if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
@@ -83,10 +84,10 @@
                 } else {
                     if(row.visitorType == 1) {
                         return '<button type="button" class="nv_blue_button" value="approve">승인</button>' +
-                           '<button type="button" class="nv_red_button nv_modal5_open" onclick="$(\'.nv_modal5\').addClass(\'on\');" value="reject">반려</button>';
+                           '<button type="button" class="nv_red_button" value="reject">반려</button>';
                     } else {
                         return '<button type="button" class="nv_blue_button" value="approve2">승인</button>' +
-                           '<button type="button" class="nv_red_button nv_modal5_open" onclick="$(\'.nv_modal5\').addClass(\'on\');" value="reject">반려</button>';
+                           '<button type="button" class="nv_red_button" value="reject">반려</button>';
                     }
                 }
             }
@@ -95,21 +96,6 @@
 </c:if>
 <c:if test="${sessionScope.login.host.auth eq '2'}">
     <script>
-        var approveProcessStatus = {
-            visitorApprove : function(row) {
-                if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
-                    return '교육미수료';
-                }
-                if(row.rejectFlag==='Y'){
-                    return '';
-                }
-                if(row.visitApprovalYN==='Y') {
-                    return '승인완료';
-                } else {
-                    return '승인대기';
-                }
-            }
-        };
         var approveActionCommponet = {
             visitorButton : function(row) {
                 if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
@@ -140,21 +126,6 @@
 </c:if>
 <c:if test="${sessionScope.login.host.auth eq '3'}">
     <script>
-        var approveProcessStatus = {
-            visitorApprove : function(row) {
-                if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
-                    return '교육미수료';
-                }
-                if(row.rejectFlag==='Y'){
-                    return '';
-                }
-                if(row.visitApprovalYN==='Y') {
-                    return '승인완료';
-                } else {
-                    return '승인대기';
-                }
-            }
-        };
         var approveActionCommponet = {
             visitorButton : function(row) {
                 if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
@@ -178,7 +149,7 @@
                     return '승인완료';
                 } else {
                     return '<button type="button" class="nv_blue_button" value="approve">승인</button>' +
-                           '<button type="button" class="nv_red_button nv_modal5_open" onclick="$(\'.nv_modal5\').addClass(\'on\');" value="reject">반려</button>';
+                           '<button type="button" class="nv_red_button" value="reject">반려</button>';
                 }
             }
         };
@@ -186,43 +157,11 @@
 </c:if>
 <c:if test="${sessionScope.login.host.auth eq '4'}">
     <script>
-        var approveProcessStatus = {
-            visitorApprove : function(row) {
-                if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
-                    return '교육미수료';
-                }
-                if(row.rejectFlag==='Y'){
-                    return '';
-                }
-                if(row.visitApprovalYN==='Y') {
-                    return '승인완료';
-                } else {
-                    return '승인대기';
-                }
-            }
-        };
         var approveActionCommponet = {
             visitorButton : function(row) {
                 if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
                     return '미수료';
                 }
-                // if(row.visitApprovalYN==='Y') {
-                //     for(var i in row.visitorInoutTimes) {
-                //         //var visitDate = new Date(row.visitorInoutTimes[i].visitFromDateTime);
-                //         var ds = row.visitorInoutTimes[i].visitFromDateTime;
-                //             var arr = ds.split("-");  // 2018,01,01 00:10:11
-                //             var visitDate = new Date(arr[0] + "/" + arr[1] + "/" + arr[2]);
-                //         if(date.compare(visitDate)) {
-                //             if(row.visitorInoutTimes[i].visitToDateTime=='')
-                //                 // return '방문';
-                //                 return '입문';
-                //             else 
-                //                 $('#'+row.visitorHistorySeq).remove();
-                //         }
-                //     }
-                //     //return '방문';
-                //     return '승인완료';
-                // } 
                 if(row.visitApprovalYN==='Y') {
                     if(row.toDayYN==='Y')
                     {
@@ -348,17 +287,20 @@
                     var rejectName = '';
                     if(e.rejectFlag==='Y'){
                         switch (e.rejectType) {
-                            case '1' : rejectName = '보안위반'; break;
-                            case '2' : rejectName = '경쟁업체/직원'; break;
-                            case '3' : rejectName = '방문규정 위반'; break;
-                            case '4' : rejectName = '기타'; break;
+                            case 1 : rejectName = '보안위반'; break;
+                            case 2 : rejectName = '경쟁업체/직원'; break;
+                            case 3 : rejectName = '방문규정 위반'; break;
+                            case 4 : rejectName = '기타'; break;
                         }
                     }
 
+                    // 반려사유가있는 경우 클릭 시 상세보기 팝업 활성화
                     var rejectPopup = module.makeTd('tpc_skip m_skip', rejectName);
                     rejectPopup.on('click', function() {
-                        $('.nv_modal5_open').addClass('on');
-                        $('#visitRejectFormId').val(e.visitorHistorySeq);
+                        $('.nv_modal5').addClass('on');
+                        $('#rejectCmbBox > p').html(rejectName);
+                        $('#rejectComment').val(e.rejectComment);
+                        $('.nv_modal5 .btn_area').html('<button type="button" class="nv_red_button">닫기</button>');
                     })
                     tr.append(rejectPopup);
                     tr.append(approveManagerBtn);
@@ -367,6 +309,7 @@
         });
     }
 
+    // 반려 처리
     $(document).on('submit', '#visitRejectForm', function(e) {
         e.preventDefault();
         var formData = new FormData();
@@ -451,6 +394,8 @@
                 location.reload();
             })
         } else if(target.val()==='reject') {
+            $('.nv_modal5').addClass('on');
+            $('#visitRejectFormId').val(targetId);
             return;
         }
     });
@@ -571,6 +516,7 @@
     <div class="nv_table_pagenum" id="pagenation"></div>
 </div>
 <form id="visitRejectForm">
+    <input type="hidden" id="visitRejectFormId"/>
     <div class="nv_modal nv_modal5">
         <div class="nv_modal_container">
             <div class="nv_modal_header">
@@ -593,7 +539,7 @@
                     <textarea name="rejectComment" id="rejectComment" cols="30" rows="10" class="nv_textarea" placeholder="반려사유 입력"></textarea>
                 </div>
                 <div class="btn_area">
-                    <button type="button" class="nv_green_button">반려</button>
+                    <button type="submit" class="nv_green_button">반려</button>
                     <button type="button" class="nv_red_button">취소</button>
                 </div>
             </div>

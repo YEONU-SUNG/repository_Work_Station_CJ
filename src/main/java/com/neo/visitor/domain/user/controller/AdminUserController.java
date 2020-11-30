@@ -73,9 +73,9 @@ public class AdminUserController {
     , @RequestParam(defaultValue = "") String hostName) {
         if(hostName.length() < 2) throw new IllegalArgumentException("최소 2글자는 입력해주세요.");
         
-        return insaRepository.findByLikeName(hostName);
+        // return insaRepository.findByLikeName(hostName);
         
-        //return hostService.findByHostName(hostName);
+        return hostService.findByHostName(hostName);
     }
 	
     @GetMapping(path = "hostpartner-list")
@@ -86,7 +86,7 @@ public class AdminUserController {
         
         return insaRepository.findByLikeNameWithPartner(hostName);
         
-        //return hostService.findByHostName(hostName);
+        // return hostService.findByHostName(hostName);
     }
 
 }

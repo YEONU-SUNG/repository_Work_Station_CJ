@@ -250,7 +250,7 @@ public class VisitorService {
             case "방문규정 위반" : rejectType = "3"; break;
             case "기타" : rejectType = "4"; break;
         }
-        visitorHistory.updateReject(rejectComment, rejectType);
+        visitorHistory.updateReject(rejectType, rejectComment);
         visitorHistoryRepository.updateVisitorApprovalReject(visitorHistory);
         // visitorDashboardService.updateVisitStandbyCount(visitorHistory);
 

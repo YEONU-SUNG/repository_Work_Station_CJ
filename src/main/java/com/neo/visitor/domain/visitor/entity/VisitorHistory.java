@@ -64,7 +64,7 @@ public class VisitorHistory {
     private String visitPurposeDetail = "";
     private String toDayYN = ""; // 가상 컬럼- 방문일자가 오늘날짜에 포함되는지
     private String rejectFlag = "";
-    private String rejectType = "";
+    private int rejectType;
     private String rejectComment = "";
 
     private String visitorAccessBuilding = "";
@@ -96,7 +96,7 @@ public class VisitorHistory {
         if (this.rejectFlag == "Y")
             throw new IllegalArgumentException("잘못된 요청 값");
         this.rejectFlag = "Y";
-        this.rejectType = rejectType;
+        this.rejectType = Integer.parseInt(rejectType);
         this.rejectComment = rejectComment;
         // this.carryStuff = carryStuff;
     }
