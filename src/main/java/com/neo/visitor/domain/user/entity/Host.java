@@ -20,13 +20,13 @@ public class Host extends Visiter {
     private String gradeName;           //임직원 직급
     private String positionName;
     private String insertDate;          //임직원 등록 일자
-    private String deleteFlag;          //삭제여부
+    private String deleteFlag = "N";    //삭제여부
     private String adminID ;            //임직원 아이디
     private String email;               //임직원 이메일
     private String deptCD;              //임직원 부서
     private String auth;                //임직원 권한
     private String upperDeptCD;         //임직원 상위 부서
-    private String activeFlag;          //임직원 상위 부서
+    private String activeFlag = "Y";          //임직원 상위 부서
     private String siteCode;            //임직원 계열사 코드
 
     private List<Building> mappingBuildings;    // 접근 건물 및 층정보

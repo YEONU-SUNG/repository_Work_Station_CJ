@@ -10,5 +10,8 @@ public interface InsaRepository {
     List<Host> findAll();
     Host findByEmail(String email);
     List<Host> findByLikeName(String name);
+    List<Host> findByLikeNameWithPartner(String name);
     Host findByHostId(String hostId);
+    Host findByHostIdWithPartner(String hostId);
+    Host findByEmailWithPartner(String email);
 }   

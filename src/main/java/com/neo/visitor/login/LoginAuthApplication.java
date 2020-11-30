@@ -65,7 +65,9 @@ public abstract class LoginAuthApplication {
                 isEmptyOrganizationChart(
                     checkAuthorityAD(id, password)
                 );
-            checkAuthority();
+
+            //checkAuthority();
+            host.setAuth(checkAdminAuthority(host.getHostID()));
         }
         if(checkAuthority()!=ROLE.DESK) setMappingSite(this.host);
         setSession(session);
@@ -94,6 +96,12 @@ public abstract class LoginAuthApplication {
      * @return Host or null
      */
     public abstract Host isEmptyOrganizationChart(String id);
+
+    /**
+     * 관리자 권한 관리에 등록되어있는지 체크
+     * @return Host or null
+     */
+    public abstract String checkAdminAuthority(String id);
 
     /**
      * 

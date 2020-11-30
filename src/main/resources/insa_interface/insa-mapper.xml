@@ -44,7 +44,33 @@
         where EmployeeStatus = '3' and mail is not null AND D.RootOrgUnitID is not null
         ) AS A
         left outer join ViewGHRISDeptMaster2 D2 on A.SiteCode = D2.OrgUnitID
+    </sql>
 
+    <sql id="insaInfoPartner">
+        select 
+        D2.DeptName As SiteName,A.* 
+        from (SELECT 
+
+            D.RootOrgUnitID As SiteCode
+            ,D.DeptName as DeptCD
+            ,I.[UserID]
+            ,ISNULL(I.[EmployeeID], ISNULL(I.UserID, '')) AS HostID
+            ,I.[Name] AS HostName
+            ,I.[DisplayName]
+            ,I.[Mail] AS Email
+            ,ISNULL(REPLACE(I.[OfficePhoneNumber],'+82 ','0'), '') AS Tel
+            ,ISNULL(G.HRCodeName, '') AS GradeName
+            ,ISNULL(P.HRCodeName, '') AS PositionName
+            ,I.StartDate AS InsertDate
+            ,C.HRCodeName AS Company
+        FROM [ADMasterDB].[dbo].[ViewGHRISUserMaster2] I
+        left outer join [ADMasterDB].[dbo].[ViewGHRISDeptMaster2] D ON I.OrgUnitID = D.OrgUnitID
+        left outer join (SELECT * FROM ViewGHRISHRCodeMaster where Separator = 'CallingTitle' AND Language = 'KO') G ON I.CallingTitleCode = G.HRCode
+        left outer join (SELECT * FROM ViewGHRISHRCodeMaster where Separator = 'PositionGroup' AND Language = 'KO') P ON I.PositionGroupCode = P.HRCode
+        left outer join (SELECT * FROM ViewGHRISHRCodeMaster where Separator = 'PersonnelArea') C ON I.OriginPersonnelAreaCode = C.HRCode
+        where EmployeeStatus = '3' and mail is not null
+        ) AS A
+        left outer join ViewGHRISDeptMaster2 D2 on A.SiteCode = D2.OrgUnitID
     </sql>
 
     <select id="findAll" resultMap="Host">
@@ -59,9 +85,21 @@
         <include refid="insaInfo"></include>
         WHERE A.HostName LIKE '%'+#{name}+'%'
     </select>
+    <select id="findByLikeNameWithPartner" parameterType="java.lang.String" resultMap="Host">
+        <include refid="insaInfoPartner"></include>
+        WHERE A.HostName LIKE '%'+#{name}+'%'
+    </select>
     <select id="findByHostId" parameterType="java.lang.String" resultMap="Host">
         <include refid="insaInfo"></include>
         WHERE A.HostID = #{hostId}
+    </select>
+    <select id="findByHostIdWithPartner" parameterType="java.lang.String" resultMap="Host">
+        <include refid="insaInfoPartner"></include>
+        WHERE A.HostID = #{hostId}
+    </select>
+    <select id="findByEmailWithPartner" parameterType="java.lang.String" resultMap="Host">
+        <include refid="insaInfoPartner"></include>
+        WHERE A.Email = #{email}
     </select>
     
 </mapper>

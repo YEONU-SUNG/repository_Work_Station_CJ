@@ -58,11 +58,29 @@ public class HostService {
         Host host = findByHostID(hostID);
         if(host==null) {
             host = insaRepository.findByHostId(hostID);
+            if(host==null)
+            {
+                if(LoginAuthApplication.ROLE.findByRoleNumber(auth) != "4")
+                {
+                    throw new IllegalArgumentException("협력업체는 해당 권한을 부여할수 없습니다.");
+                }
+                host = insaRepository.findByHostIdWithPartner(hostID);
+            }
             host.setAuth(LoginAuthApplication.ROLE.findByRoleNumber(auth));
             hostRepository.insaSave(host);
         } else {
+            Host hostCheck = insaRepository.findByHostId(hostID);
+            if(hostCheck==null)
+            {
+                if(LoginAuthApplication.ROLE.findByRoleNumber(auth) != "4")
+                {
+                    throw new IllegalArgumentException("협력업체는 해당 권한을 부여할수 없습니다.");
+                }
+            }
             host.setAuth(LoginAuthApplication.ROLE.findByRoleNumber(auth));
             hostRepository.updateHostAuth(host);
+            host.setDeleteFlag("N");
+            hostRepository.updateDeleteFlag(host);
         }
         return host;
     }   
@@ -71,6 +89,13 @@ public class HostService {
         Host host = findByHostID(hostID);
         host.updateHostActiveFlag();
         hostRepository.updateActiveFlag(host);
+        return host;
+    }
+
+    public Host updateAuthDeleteFlag(String hostID) {
+        Host host = findByHostID(hostID);
+        host.setDeleteFlag("Y");
+        hostRepository.updateDeleteFlag(host);
         return host;
     }
 }

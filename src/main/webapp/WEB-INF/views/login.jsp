@@ -72,8 +72,8 @@
         var encryptedId = CryptoJS.AES.encrypt($('#AdminID').val(), "passwordQ1W2E3R!").toString();
         var encryptedPwd = CryptoJS.AES.encrypt($('#AdminPW').val(), "passwordQ1W2E3R!").toString();
         console.log(encryptedId, encryptedPwd);
-        var encryptedId = $('#AdminID').val();
-        var encryptedPwd = $('#AdminPW').val();
+        //var encryptedId = $('#AdminID').val();
+        //var encryptedPwd = $('#AdminPW').val();
         $.ajax({
             url: '/admin/login',
             type: 'POST',
@@ -87,7 +87,29 @@
                 if (result=='Y'){
                     location.href = '/admin/dashboard';
                 } else {
-                    alert("아이디/패스워드를 확인 하세요.")
+
+                    var encryptedId = $('#AdminID').val();
+                    var encryptedPwd = $('#AdminPW').val();
+
+                    $.ajax({
+                        url: '/admin/login',
+                        type: 'POST',
+                        //data: $(this).serialize(),
+                        data: {
+                            AdminID : encryptedId,
+                            AdminPW : encryptedPwd,
+                            LoginType : Type
+                        },
+                        success: function (result) {
+                            if (result=='Y'){
+                                location.href = '/admin/dashboard';
+                            } else {
+                                alert("아이디/패스워드를 확인 하세요.")
+                            }
+                        }
+                    });
+
+                    
                 }
             }
         });

@@ -18,4 +18,5 @@ public interface HostRepository {
     void updateHostAuth(Host host);
     void insaSave(Host host);
     void updateActiveFlag(Host host);
+    void updateDeleteFlag(Host host);
 }

@@ -47,5 +47,10 @@ public class AuthoritymanageApiController {
     public Host updateFaqActiveFlag(@PathVariable String hostID) {
         return hostService.updateActiveFlag(hostID);
     }
+
+    @PostMapping(path = "delete-list/{hostID}")
+    public Host updateAuthDeleteFlag(@PathVariable String hostID) {
+        return hostService.updateAuthDeleteFlag(hostID);
+    }
     
 }

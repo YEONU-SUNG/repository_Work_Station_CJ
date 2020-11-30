@@ -106,6 +106,15 @@
             HostID = #{hostID}
     </update>
 
+    <update id="updateDeleteFlag" parameterType="com.neo.visitor.domain.user.entity.Host">
+        UPDATE
+            Host
+        SET 
+        DeleteFlag = #{deleteFlag}
+        WHERE
+            HostID = #{hostID}
+    </update>
+
     <select id="findByHostDeptAndHostName" parameterType="com.neo.visitor.domain.user.entity.Host" resultType="com.neo.visitor.domain.user.entity.Host">
         SELECT 
             *

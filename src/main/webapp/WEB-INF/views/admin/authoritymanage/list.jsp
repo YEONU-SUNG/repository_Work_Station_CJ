@@ -75,7 +75,7 @@
                                         '<td>' + this.tableData[i].company + '</td>' +
                                         '<td>' + this.tableData[i].deptCD + '</td>' +
                                         '<td>' + authSelect(this.tableData[i].auth) + '</td>' +
-                                        '<td><button type="button" class="nv_blue_button" name="modify">변경</button> <button type="button" class="nv_red_button" name="active">삭제</button></td>' +
+                                        '<td><button type="button" class="nv_blue_button" name="modify">변경</button> <button type="button" class="nv_red_button" name="delete">삭제</button></td>' +
                                     '</tr>';
                 }
                 
@@ -110,7 +110,14 @@
                 alert('정상적으로 삭제되었습니다.');
                 init(module.pagenation.params);
             })
-        }else if(target.attr('name')=='modify') {
+        }
+        else if(target.attr('name')=='delete'){
+            callApi.setData("/delete-list/"+HostID, {}, function (result) {
+                alert('정상적으로 삭제되었습니다.');
+                init(module.pagenation.params);
+            })
+        }
+        else if(target.attr('name')=='modify') {
             callApi.setData("/auth-list/"+HostID, {auth: tr.find('.nv_select_box p').text()}, function (result) {
                 alert('정상적으로 변경되었습니다.');
                 init(module.pagenation.params);
@@ -144,7 +151,7 @@
         var targetId = target.next();
         var targetName = target.prev();
         var _targetName = targetName.val().split(']').length==3 ? targetName.val().split(']')[2] : targetName.val();
-        callApi.getData('/host-list?hostName=' + _targetName, function (result) {
+        callApi.getData('/hostpartner-list?hostName=' + _targetName, function (result) {
             if(result.length == 0 ) {
                 alert('이름을 정확히 입력해주세요.');
                 return;
