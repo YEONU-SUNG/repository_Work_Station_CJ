@@ -35,14 +35,25 @@ public class VisitorBlackListService {
 
     /**
      * 블랙리스트 여부
-     * @param visitor
-     * @return visitorBlackList
+     * 방문희망기간에 출입제안이 걸려있는지
+     * @param visitor 방문자정보
+     * @param planFromDate 방문시작일
+     * @param planToDate 방문종료일
      */
-    public VisitorBlackList isBlackList(Visitor visitor) {
+    public void isBlackList(Visitor visitor, String planFromDate, String planToDate) {
         Visitor _visitor = visitorRepository.findByVisitornameAndVisitorCompanyAndVisitorMobile(visitor);
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("visitorId", _visitor.getVisitorID());
-        map.put("date", LocalDate.now().toString());
-        return visitorBlackListRepository.findByVisitorIdAndDate(map);
+        map.put("planFromDate", planFromDate);
+        map.put("planToDate", planFromDate);
+        VisitorBlackList visitorBlackList = visitorBlackListRepository.findByVisitorIdAndDate(map);
+        if(visitorBlackList!=null && visitorBlackList.getBlacklistState().equals("출입제한")) {
+            throw new IllegalArgumentException(
+                "\r\n"+
+                visitorBlackList.getVisitor().getVisitorName()+"님은\r\n" +
+                "다음과 같은 사유로 인하여 방문 신청이 불가 합니다.\r\n"+
+                "기간 : "+visitorBlackList.getPlanFromDate()+" ~ "+visitorBlackList.getPlanToDate()+"\r\n" +
+                "사유 : "+visitorBlackList.getBlacklistReason()+"\r\n");
+        }
     }
 }

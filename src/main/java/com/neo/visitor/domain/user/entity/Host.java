@@ -1,8 +1,9 @@
 package com.neo.visitor.domain.user.entity;
 
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
+import com.neo.visitor.domain.buildingSiteMapping.entity.Building;
 import com.neo.visitor.domain.visitor.entity.Visiter;
 
 import lombok.Getter;
@@ -27,6 +28,8 @@ public class Host extends Visiter {
     private String auth;                //임직원 권한
     private String upperDeptCD;         //임직원 상위 부서
     private String activeFlag;          //임직원 상위 부서
+
+    private List<Building> mappingBuildings;    // 접근 건물 및 층정보
 
     public Host makeHost(String hostID) {
         this.hostID = hostID;

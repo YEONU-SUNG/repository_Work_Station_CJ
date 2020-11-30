@@ -42,6 +42,21 @@
                     }
                 });
             },
+            getFormData : function(url, params, callbackFunc) {
+                $.ajax({
+                    url: convertEncoding(url),
+                    type: 'get',
+                    cache: false,
+                    data: params,
+                    headers: { "cache-control": "no-cache", "custom": "1" },
+                    success: function (result) {
+                        callbackFunc(result);
+                    },
+                    error : function (err) {
+                        alert(err.responseText);
+                    }
+                });
+            },
             setData : function(url, params, callbackFunc) {
                 $.ajax({
                     url: convertEncoding(url),

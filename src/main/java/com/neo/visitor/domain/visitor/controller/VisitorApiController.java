@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.neo.visitor.domain.Pagenation;
 import com.neo.visitor.domain.PagenationResponse;
+import com.neo.visitor.domain.buildingSiteMapping.entity.Building;
 import com.neo.visitor.domain.user.entity.AdminUser;
 import com.neo.visitor.domain.user.service.LoginService;
 import com.neo.visitor.domain.visitor.application.VisitorApplication;
@@ -91,7 +92,7 @@ public class VisitorApiController {
     }
     @PostMapping(path = "visitor-inout/{visitorHistorySeq}/{cardID}")
 	public VisitorHistory updateVisitorInOutCard(@PathVariable int visitorHistorySeq, @PathVariable String cardID) {
-        //visitorService.updateCardNoOne(visitorHistorySeq, cardID);
+        //visitorService.updateCardNoOne(visitorHupdateVisitorInoutistorySeq, cardID);
 		return visitorInoutTimeService.updateVisitorInout(visitorHistorySeq, cardID);
     }
     @PostMapping(path = "visitor-cardid/{visitorHistorySeq}/{cardID}")
@@ -100,11 +101,30 @@ public class VisitorApiController {
 		return visitorInoutTimeService.updateVisitorCardID(visitorHistorySeq, cardID);
     }
 
+    @GetMapping(path = "visitor-approval/site")
+    public List<Building> getSiteVisitApproval(HttpSession session) {
+        AdminUser adminUser = (AdminUser) session.getAttribute("login");
+        return adminUser.getHost().getMappingBuildings();
+    }
+
+
+    // @PostMapping(path = "visitor-approval/{visitorHistorySeq}")
+    // public VisitorHistory updateVisitApproval(HttpServletRequest request
+    //     , @PathVariable int visitorHistorySeq
+    //     , @RequestParam(defaultValue = "") String visitApprovalComment
+    //     , @RequestParam(defaultValue = "") String carryStuff) {
+    //     return visitorService.updateVisitorApproval(request, visitorHistorySeq, visitApprovalComment, carryStuff);
+    // }
+
+    // 건물접근권한 부여로 버전업
     @PostMapping(path = "visitor-approval/{visitorHistorySeq}")
-    public VisitorHistory updateVisitApproval(HttpServletRequest request,@PathVariable int visitorHistorySeq
+    public VisitorHistory updateVisitApproval(HttpServletRequest request
+        , @PathVariable int visitorHistorySeq
+        , @RequestParam String buildingName
+        , @RequestParam("buildingFloor") String[] buildingFloor
         , @RequestParam(defaultValue = "") String visitApprovalComment
         , @RequestParam(defaultValue = "") String carryStuff) {
-        return visitorService.updateVisitorApproval(request, visitorHistorySeq, visitApprovalComment, carryStuff);
+        return visitorService.updateVisitorApproval(request, visitorHistorySeq, visitApprovalComment, carryStuff, buildingName, buildingFloor);
     }
 
     @PostMapping(path = "visitor-approval/all")

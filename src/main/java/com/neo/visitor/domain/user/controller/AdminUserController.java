@@ -71,13 +71,17 @@ public class AdminUserController {
 	@ResponseBody
     public List<Host> getHostList(HttpServletRequest request
     , @RequestParam(defaultValue = "") String hostName) {
-        List<Map<String, Object>> mapList = insaRepository.findByName(hostName);
-        List<Host> hostList = new ArrayList<Host>();
-        for (Map<String,Object> map : mapList) {
-            hostList.add(new Host().insaInterface(map));
-        }
-        //return hostService.findByHostName(hostName);
-        return hostList;
+        if(hostName.length() < 2) throw new IllegalArgumentException("최소 2글자는 입력해주세요.");
+        
+        // List<Map<String, Object>> mapList = insaRepository.findByName(hostName);
+        // List<Host> hostList = new ArrayList<Host>();
+        // for (Map<String,Object> map : mapList) {
+        //     hostList.add(new Host().insaInterface(map));
+        // }
+        // return hostList;
+        
+        return hostService.findByHostName(hostName);
+        
     }
 
 }

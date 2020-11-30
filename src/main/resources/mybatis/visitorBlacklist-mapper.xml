@@ -52,11 +52,19 @@
          vbl.VisitorID = #{visitorId}
         AND 
         <![CDATA[
-            (
-                CONVERT(varchar(50), vbl.planFromDate, 23) <= CONVERT(varchar(50), CONVERT(DATETIME, #{date}), 23)
-            AND
-                CONVERT(varchar(50), vbl.planToDate, 23) >= CONVERT(varchar(50), CONVERT(DATETIME, #{date}), 23)
-            )
+        (
+        (
+            (#{planFromDate} BETWEEN vbl.planFromDate and vbl.planToDate)
+            OR
+            (#{planToDate} BETWEEN vbl.planFromDate AND vbl.planToDate)
+        )
+        OR
+        (
+            (vbl.planFromDate BETWEEN #{planFromDate} AND #{planToDate})
+            OR
+            (vbl.planToDate BETWEEN #{planFromDate} AND #{planToDate})
+        )
+        )
         ]]>
     </select>
 </mapper>

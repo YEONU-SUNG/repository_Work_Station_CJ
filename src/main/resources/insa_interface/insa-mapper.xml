@@ -2,27 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.neo.visitor.insa.repository.InsaRepository">
-    <!-- <select id="getInsa" resultType="java.util.Map">
-        SELECT 
-        P.*, C.COM_NM,
-        RIGHT(SUBSTRING(DEPT_NM_PATH, 0, LEN(DEPT_NM_PATH)-CHARINDEX('\', REVERSE(DEPT_NM_PATH))+1),CHARINDEX('\', REVERSE(SUBSTRING(DEPT_NM_PATH, 0, LEN(DEPT_NM_PATH)-CHARINDEX('\', REVERSE(DEPT_NM_PATH))+1)))-1) AS DEPT_NM_PATH         
-        FROM GWUserInfo_ALL AS P 
-        LEFT OUTER JOIN GWDeptInfo O
-        ON P.DEPT_CD = O.DEPT_CD 
-        LEFT OUTER JOIN TB_BASE_COMPANY C 
-        ON P.COM_CD = C.COM_CD
-        WHERE (
-            P.COM_CD='KO031' 
-            OR P.COM_CD='KO439'
-            OR P.COM_CD='KO437'
-            OR P.COM_CD='KO514'
-        )
-        AND P.USE_FG='Y'
-    </select>
+    <resultMap id="Host" type="com.neo.visitor.domain.user.entity.Host">
+        <id column="HostID" property="hostID" />
+        <result column="HostName" property="hostName" />
+        <result column="Mobile" property="mobile" />
+        <result column="Tel" property="tel" />
+        <result column="Company" property="company" />
+        <result column="GradeName" property="gradeName" />
+        <result column="PositionName" property="positionName" />
+        <result column="InsertDate" property="insertDate" />
+        <result column="DeleteFlag" property="deleteFlag" />
+        <result column="AdminID" property="adminID" />
+        <result column="Email" property="email" />
+        <result column="DeptCD" property="deptCD" />
+        <result column="Auth" property="auth" />
+    </resultMap>
 
-    <select id="getAll" resultType="java.util.Map">
-        SELECT * FROM GWUserInfo_ALL
-    </select> -->
     <sql id="insaInfo">
         select 
         D2.DeptName As SiteName,A.* 
@@ -59,9 +54,13 @@
         <include refid="insaInfo"></include>
         WHERE A.Email = #{email}
     </select>
-    <select id="findByName" parameterType="java.lang.String" resultType="java.util.Map">
+    <select id="findByName" parameterType="java.lang.String" resultMap="Host">
         <include refid="insaInfo"></include>
-        WHERE A.HostName = #{name}
+        WHERE A.HostName LIKE '%'+#{name}
+    </select>
+    <select id="findByHostId" parameterType="java.lang.String" resultType="java.util.Map">
+        <include refid="insaInfo"></include>
+        WHERE A.HostID = #{hostId}
     </select>
     
 </mapper>

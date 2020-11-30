@@ -88,15 +88,16 @@ public class VisitorService {
         }
     }
     
-    public VisitorHistory updateVisitorApproval(HttpServletRequest request, int visitorHistorySeq, String visitApprovalComment, String carryStuff) {
+    public VisitorHistory updateVisitorApproval(HttpServletRequest request, int visitorHistorySeq, String visitApprovalComment, String carryStuff, String buildingName, String[] floors) {
         VisitorHistory visitorHistory = visitorHistoryService.findById(visitorHistorySeq);
         visitorHistory.updateApproval(visitApprovalComment, carryStuff);
+        visitorHistory.addAccessBuildingFloor(buildingName, floors);
         visitorHistoryRepository.updateVisitorApproval(visitorHistory);
         visitorDashboardService.updateVisitStandbyCount(visitorHistory);
 
-        String strVisitorSendText="SFA방문예약 - ";
-        //String strHostHeadSendText="SFA방문예약 - ";
-        String strHostHeadSendText="SFA방문예약이 승인되었습니다.";
+        // String strVisitorSendText="SFA방문예약 - ";
+        // String strHostHeadSendText="SFA방문예약 - ";
+        //String strHostHeadSendText="SFA방문예약이 승인되었습니다.";
         // SMSMsgQue smsMsgque = new SMSMsgQue();
         // //smsMsgque.setCallback("041-520-1004");
         // smsMsgque.setCallback("041-539-6741");

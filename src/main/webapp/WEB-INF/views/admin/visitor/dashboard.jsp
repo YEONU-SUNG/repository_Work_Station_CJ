@@ -30,7 +30,7 @@
                     dashboard.position2.visitCount = result[i].visitCount;   
                 }
             }
-            if( ${sessionScope.login.host.auth eq '1'} || ${sessionScope.login.host.auth eq '2'})
+            if( ${sessionScope.login.host.auth eq '0'} || ${sessionScope.login.host.auth eq '1'} || ${sessionScope.login.host.auth eq '2'})
             {
                 $('#visitorApplicationCount_position1').html(dashboard.position1.visitApplicationCount);
                 $('#visitorApplicationCount_position2').html(dashboard.position2.visitApplicationCount);

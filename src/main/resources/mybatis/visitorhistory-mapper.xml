@@ -48,7 +48,9 @@
         <result column="RejectFlag" property="rejectFlag" />
         <result column="RejectComment" property="rejectComment" />
         <result column="RejectType" property="rejectType" />
-
+        <result column="visitorAccessBuilding" property="visitorAccessBuilding" />
+        <result column="visitorAceessFloor" property="visitorAceessFloor" />
+        
         <!--
         <association property="visitor" column="VisitorID" javaType="Visitor">
             <result column="VisitorName" property="visitorName" />
@@ -115,8 +117,10 @@
               ,V.RejectFlag
               ,V.RejectComment
               ,V.RejectType
+              ,V.visitorAccessBuilding
+              ,V.visitorAceessFloor
           FROM visitorhistory AS V
-          JOIN visitor AS V1 ON V.VisitorID = V1.VisitorID
+          <!-- JOIN visitor AS V1 ON V.VisitorID = V1.VisitorID -->
           <!-- JOIN host AS H ON V.HostID = H.HostID -->
          WHERE 1=1
          AND V.DeleteFlag = 'N'
@@ -349,6 +353,8 @@
             ,RejectFlag
             ,RejectComment
             ,RejectType
+            ,visitorAccessBuilding
+            ,visitorAceessFloor
         FROM VisitorHistory
         WHERE visitApprovalYN = 'N'
         AND REJECTFLAG IS NULL
@@ -384,7 +390,7 @@
         vseq, V.visitorhistoryseq, visitfromdatetime, visittodatetime, visitorreservationnumber, visitorid, visitorname, visitorbirth, visitormobile, visitorcompany, visitorposition1, visitorposition2, visitorposition3, visitapprovalyn, visitapprovalcomment
         , visitdate, agreefirst, agreesecond, vit.cardid, carno, hostid, hostname, hostmobile, hosttel, hostdept, hostcompany, hostgradename, hostpositionname
         , CONVERT(varchar(10), planfromdatetime, 23) AS planfromdatetime, CONVERT(varchar(10), plantodatetime, 23) AS plantodatetime, approval, visitapprovaldatetime, educompletedatetime, carrystuff, carrystuffserialno, carrystuffused, carrystuffpurpose, deleteflag, visitpurpose
-        , rejectFlag, rejectComment, rejectType
+        , rejectFlag, rejectComment, rejectType, visitorAccessBuilding, visitorAceessFloor
         , <![CDATA[ (CASE WHEN (CONVERT(varchar(10), V.PlanFromDateTime, 23) <= CONVERT(varchar(10), GETDATE(), 23) AND CONVERT(varchar(10), V.PlanToDateTime, 23) >= CONVERT(varchar(10), GETDATE(), 23)) THEN 'Y' ELSE 'N' END) AS ToDayYN ]]>
         FROM visitorhistory AS V
             <!-- LEFT JOIN (SELECT * FROM visitinouttime where CONVERT(VisitFromDateTime, DATE) = curdate()) vit ON V.VisitorHistorySeq = vit.VisitorHistorySeq -->
@@ -476,20 +482,26 @@
             </when>
         </choose>
         ORDER BY
-        <if test='host.host.auth == "1"'>
+        <!-- 마스터, 계열사관리자 -->
+        <if test='host.host.auth == "0" or host.host.auth == "1"'>
             <!-- V.VisitApprovalYN DESC, ToDayYN DESC, V.EduCompleteDateTime DESC, V.VisitorHistorySeq DESC -->
             <!-- ToDayYN DESC, V.VisitApprovalYN DESC, V.EduCompleteDateTime DESC, V.VisitorHistorySeq DESC -->
             V.VisitApprovalYN DESC, V.EduCompleteDateTime DESC, V.VisitorHistorySeq DESC
         </if>
+        <!-- 보안관리자 -->
         <if test='host.host.auth == "2"'>
             <!-- V.VisitApprovalYN DESC, ToDayYN DESC, V.EduCompleteDateTime DESC, V.VisitorHistorySeq DESC -->
             <!-- ToDayYN DESC, V.VisitApprovalYN DESC, V.EduCompleteDateTime DESC, V.VisitorHistorySeq DESC -->
             V.VisitApprovalYN DESC, V.EduCompleteDateTime DESC, V.VisitorHistorySeq DESC
         </if>
+        <!-- 임직원 -->
         <if test='host.host.auth == "3"'>
             V.VisitApprovalYN ASC, V.EduCompleteDateTime DESC, V.VisitorHistorySeq DESC
         </if>
-            <!-- V.VisitorHistorySeq DESC -->
+        <!-- 안내데스크 -->
+        <if test='host.host.auth == "4"'>
+            V.VisitApprovalYN ASC, V.EduCompleteDateTime DESC, V.VisitorHistorySeq DESC
+        </if>
         <!-- LIMIT
             #{pagenation.startPage}, #{pagenation.size} -->
         offset #{pagenation.startPage} rows fetch next #{pagenation.size} rows only
@@ -529,6 +541,8 @@
             , V.Approval = 'Y'
             , V.VisitApprovalDateTime = #{visitApprovalDateTime}
             , V.VisitApprovalComment = #{visitApprovalComment}
+            , V.visitorAccessBuilding = #{visitorAccessBuilding}
+            , V.visitorAceessFloor = #{visitorAceessFloor}
             <!-- , V.CarryStuff = #{carryStuff} -->
         FROM
             VisitorHistory AS V

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.buildingSiteMapping.repository.BuildingSiteMappingRepository">
+    <resultMap id="buildingSiteMapping" type="com.neo.visitor.domain.buildingSiteMapping.entity.BuildingSiteMapping">
+        <result column="siteCode" property="siteCode" />
+        <result column="siteName" property="siteName" />
+        <result column="buildingName" property="buildingName" />
+        <result column="buildingFloor" property="buildingFloor" />
+    </resultMap>
+    <sql id="buildingSiteMapping">
+        SELECT
+            siteCode, 
+            siteName, 
+            buildingName, 
+            buildingFloor
+        FROM
+            building_site_mapping
+		WHERE 1=1
+    </sql>
+    <insert id="save" parameterType="com.neo.visitor.domain.buildingSiteMapping.entity.BuildingSiteMapping">
+        INSERT INTO
+            building_site_mapping (siteCode, siteName, buildingName, buildingFloor)
+        VALUES
+            (#{siteCode}, #{siteName}, #{buildingName}, #{buildingFloor})
+
+    </insert>
+    <select id="findBySiteCode" parameterType="java.lang.String" resultMap="buildingSiteMapping">
+        <include refid="buildingSiteMapping"></include>
+        AND siteCode = #{siteCode}
+        ORDER BY buildingName, buildingFloor
+    </select>
+
+    <delete id="delete" parameterType="com.neo.visitor.domain.buildingSiteMapping.entity.BuildingSiteMapping">
+        DELETE FROM building_site_mapping WHERE siteCode = #{siteCode} AND buildingName = #{buildingName}
+    </delete>
+</mapper>

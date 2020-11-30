@@ -19,30 +19,30 @@ public abstract class LoginAuthApplication {
      * 마스터 0
      * 계열사관리자 1
      * 보안관리자 2
-     * 안내데스크 3
-     * 임직원 4
+     * 임직원 3
+     * 안내데스크 4
      */
     private enum ROLE {
         MASTER,         // 마스터
         BRANCH_ADMIN,   // 계열사관리자
         SECURITY_ADMIN, // 보안관리자
-        DESK,           // 안내데스크
-        NONE;           // 임직원
+        NONE,           // 임직원
+        DESK;           // 안내데스크
     }
 
     public final void authorize(HttpSession session, String id, String password) {
         if(isMaster(id, password)) {
             this.host.setHostName("MASTER");
             this.host.setAuth("0");
-            setSession(session);    
         } else {
             this.host =
                 isEmptyOrganizationChart(
                     checkAuthorityAD(id, password)
                 );
             checkAuthority();
-            setSession(session);
         }
+        if(checkAuthority()!=ROLE.DESK) setMappingSite(this.host);
+        setSession(session);
     }
 
     /**
@@ -76,6 +76,7 @@ public abstract class LoginAuthApplication {
     private ROLE checkAuthority() {
         try {
             switch(this.host.getAuth()) {
+                case "0" : return ROLE.MASTER;
                 case "1" : return ROLE.BRANCH_ADMIN;
                 case "2" : return ROLE.SECURITY_ADMIN;
                 case "4" : return ROLE.DESK;
@@ -94,9 +95,16 @@ public abstract class LoginAuthApplication {
      */
     private void setSession(HttpSession session) {
         AdminUser adminUser = new AdminUser();
+        adminUser.setAdminID(MASTER_ID);
         adminUser.setHost(this.host);
         session.setAttribute("login", adminUser);
         session.setMaxInactiveInterval(60*60*12);
     }
+
+    /**
+     * 건물 및 층별 권한 셋팅
+     * @param host
+     */
+    public abstract void setMappingSite(Host host);
 
 }

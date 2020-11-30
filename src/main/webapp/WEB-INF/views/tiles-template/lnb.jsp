@@ -20,6 +20,7 @@
                 <li data-lnb="visitor-history" data-url="/admin/visitor/history" data-name="방문 이력 조회"><a id="visitor-history" href="/admin/visitor/history">방문 이력 조회</a></li>
                 <li data-lnb="visitor-blacklist" data-url="/admin/visitor/blacklist" data-name="방문 제한자 관리"><a id="visitor-blacklist" href="/admin/visitor/blacklist">방문 제한자 관리</a></li>
                 <li data-lnb="authoritymanage" data-url="/admin/authoritymanage" data-name="관리자 권한관리"><a id="authoritymanage" href="/admin/authoritymanage">관리자 권한관리</a></li>
+                <li data-lnb="building-site-mapping" data-url="/admin/building/site/mapping/list" data-name="건물관리"><a id="building-site-mapping" href="/admin/building/site/mapping/list">건물관리</a></li>
             </c:if>
             <c:if test="${sessionScope.login.host.auth eq '2'}">
                 <li data-lnb="visitor" data-url="/admin/visitor" data-name="방문 승인 관리"><a id="visitor" href="/admin/visitor">방문 승인 관리 </a></li>

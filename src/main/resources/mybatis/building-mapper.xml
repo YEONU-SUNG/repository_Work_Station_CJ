@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.visitor.domain.buildingSiteMapping.repository.BuildingRepository">
+    <resultMap id="building" type="com.neo.visitor.domain.buildingSiteMapping.entity.Building">
+        <result column="name" property="name" />
+        <result column="floor" property="floor" />
+    </resultMap>
+    <sql id="building">
+        SELECT
+            name, 
+            floor
+        FROM
+            building
+		WHERE 1=1
+    </sql>
+    <select id="findAll" resultMap="building">
+        <include refid="building"></include>
+        ORDER BY name, floor
+    </select>
+
+    <select id="findByName" parameterType="java.lang.String" resultMap="building">
+        <include refid="building"></include>
+        AND name = #{name}
+        ORDER BY name, floor
+    </select>
+</mapper>

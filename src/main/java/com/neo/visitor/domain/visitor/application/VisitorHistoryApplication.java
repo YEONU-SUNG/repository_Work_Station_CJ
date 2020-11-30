@@ -9,6 +9,7 @@ import com.neo.visitor.domain.visitor.repository.VisitorHistoryRepository;
 import com.neo.visitor.domain.visitor.service.VisitorBlackListService;
 import com.neo.visitor.domain.visitor.service.VisitorDashboardService;
 import com.neo.visitor.domain.visitor.service.VisitorService;
+import com.neo.visitor.insa.repository.InsaRepository;
 import com.neo.visitor.sms.entity.SMSMsgQue;
 import com.neo.visitor.sms.repository.SMSRepository;
 
@@ -32,7 +33,7 @@ public class VisitorHistoryApplication {
     @Autowired SMSRepository smsRepository;
     @Autowired MailSenderUtil mailSenderUtil;
     @Autowired VisitorBlackListService visitorBlackListService;
-    
+    @Autowired InsaRepository insaRepository;
 
     /*
     @Transactional
@@ -224,23 +225,18 @@ public class VisitorHistoryApplication {
     @Transactional
     public void saveHistoryVisit(VisitorHistory visitorHistory, List<Visiter> visiters) {
         Host host = hostService.findByHostID(visitorHistory.getHostID());
+        //Host host = new Host().insaInterface(insaRepository.findByHostId(visitorHistory.getHostID()));
         visitorHistory.addHost(host);
         
         for (Visiter _visiter : visiters) {
             if(_visiter instanceof Visitor) {
                 Visitor visitor = (Visitor) _visiter;
-                VisitorBlackList visitorBlackList = visitorBlackListService.isBlackList(visitor);
-                if(visitorBlackList!=null && visitorBlackList.getBlacklistState().equals("출입제한"))
-                     throw new IllegalArgumentException(
-                         "\r\n"+
-                         visitorBlackList.getVisitor().getVisitorName()+"님은\r\n" +
-                         "다음과 같은 사유로 인하여 방문 신청이 불가 합니다.\r\n"+
-                         "기간 : "+visitorBlackList.getPlanFromDate()+" ~ "+visitorBlackList.getPlanToDate()+"\r\n" +
-                         "사유 : "+visitorBlackList.getBlacklistReason()+"\r\n");
+                visitorBlackListService.isBlackList(visitor, visitorHistory.getPlanFromDateTime(), visitorHistory.getPlanToDateTime());
                 visitorHistory.setVisitorByVisiter(visitorService.save(visitor));
             } else {
                 Host _host = (Host) _visiter;
                 _host = hostService.findByHostID(_host.getHostID());
+                // _host = new Host().insaInterface(insaRepository.findByHostId(visitorHistory.getHostID()));
                 if(_host==null) 
                     throw new IllegalArgumentException("임직원정보가 존재하지 않습니다.");
                 visitorHistory.setHostByVisiter(_host);

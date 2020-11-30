@@ -66,8 +66,11 @@ public class VisitorHistory {
     private String rejectType = "";
     private String rejectComment = "";
 
+    private String visitorAccessBuilding = "";
+    private String visitorAceessFloor = "";
+
     private Host host;
-    private Visitor visitor;
+    // private Visitor visitor;
     private List<VisitorInoutTime> visitorInoutTimes = new ArrayList<>();
 
     public VisitorHistory updateCardID(int visitorHistorySeq, String cardID) {
@@ -194,7 +197,8 @@ public class VisitorHistory {
         this.visitorDept = _host.getDeptCD();
         try {
             this.visitorName = AES256Util.encrypt(_host.getHostName());
-            this.visitorMobile = AES256Util.encrypt(_host.getMobile());
+            this.visitorMobile = _host.getMobile()!=null ? AES256Util.encrypt(_host.getMobile()) : _host.getMobile();
+            this.hostTel = _host.getTel()!=null ? AES256Util.encrypt(_host.getTel()) : _host.getTel();
         } catch (UnsupportedEncodingException | GeneralSecurityException e) {
             e.printStackTrace();
         }
@@ -237,6 +241,18 @@ public class VisitorHistory {
         strReserveNo += LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
         strReserveNo += String.format("%04d", (this.visitorHistorySeq)%10000);
         this.visitorReservationNumber = strReserveNo;
+    }
+
+    /**
+     * 건물 내 층에 대한 접근권한 부여
+     * @param buildingName
+     * @param floor
+     */
+    public void addAccessBuildingFloor(String buildingName, String[] floor) {
+        this.visitorAccessBuilding = buildingName;
+        for (String _floor : floor) {
+            this.visitorAceessFloor += _floor+" ,";
+        }
     }
 
     public void addVisitorInout(VisitorInoutTime visitorInoutTime) {

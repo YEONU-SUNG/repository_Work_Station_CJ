@@ -102,7 +102,7 @@ public class VisitorApplication {
             try{
                 findByPlanDateTimeList.get(i).setVisitorName(AES256Util.decrypt(visitorName));
                 findByPlanDateTimeList.get(i).setVisitorMobile(AES256Util.decrypt(visitorMobile));
-            }catch(Exception e){
+            } catch(Exception e){
                 continue;
             }
         }

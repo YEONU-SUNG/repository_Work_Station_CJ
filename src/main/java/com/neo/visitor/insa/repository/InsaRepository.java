@@ -7,7 +7,8 @@ import com.neo.visitor.config.SecondaryMapperScan;
 
 @SecondaryMapperScan
 public interface InsaRepository {
-    public List<Map<String, Object>> findAll();
-    public Map<String, Object> findByEmail(String email);
-    public List<Map<String, Object>> findByName(String name);
+    List<Map<String, Object>> findAll();
+    Map<String, Object> findByEmail(String email);
+    List<Map<String, Object>> findByName(String name);
+    Map<String, Object> findByHostId(String hostId);
 }   

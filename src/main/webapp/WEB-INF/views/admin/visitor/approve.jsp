@@ -34,7 +34,7 @@
         }
     }
 </script>
-<c:if test="${sessionScope.login.host.auth eq '1'}">
+<c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1'}">
     <script>
         var approveProcessStatus = {
             visitorApprove : function(row) {
@@ -81,7 +81,8 @@
                     else if(row.toDayYN==='N')
                         return '';
                 } else {
-                    return '<button type="button" class="nv_blue_button" value="approve">승인</button> <button type="button" class="nv_red_button nv_modal5_open" onclick="$(\'.nv_modal5\').addClass(\'on\');" value="reject">반려</button>';
+                    return '<button type="button" class="nv_blue_button" value="approve">승인</button>' +
+                           '<button type="button" class="nv_red_button nv_modal5_open" onclick="$(\'.nv_modal5\').addClass(\'on\');" value="reject">반려</button>';
                 }
             }
         };
@@ -279,7 +280,7 @@
                                         '<td class="tpc_skip m_skip">' +this.tableData[i].hostName+ '</td>' +
                                         '<td class="tpc_skip m_skip">' +this.tableData[i].hostCompany+ '</td>' +
                                         '<td class="tpc_skip m_skip">' +this.tableData[i].hostDept+ '</td>';
-                                        if( ${sessionScope.login.host.auth eq '1'} || ${sessionScope.login.host.auth eq '2'})
+                                        if(${sessionScope.login.host.auth eq '0'} || ${sessionScope.login.host.auth eq '1'} || ${sessionScope.login.host.auth eq '2'})
                                         {
                                             // if((approveActionCommponet.visitorButton(this.tableData[i]).indexOf("방문") != -1 || approveActionCommponet.visitorButton(this.tableData[i]).indexOf("퇴실") != -1 )
                                             if((approveActionCommponet.visitorButton(this.tableData[i]).indexOf("입문") != -1 || approveActionCommponet.visitorButton(this.tableData[i]).indexOf("출문") != -1 )
@@ -475,19 +476,74 @@
             })
         }
     }); */
+
+    function getFloorCheckBox(checked, floor) {
+        return '<input type="checkbox" name="floor" id="'+floor+'" value="'+floor+'" '+checked+'/><label style="padding-right:2%;" for="'+floor+'">'+floor+'</label>';
+    }
+    function getBuildingSelectBox() {
+        return '<h4 class="textarea_name" style="padding-bottom: 10px;">건물명' +
+                    '<div class="nv_select_box" id="accessBox" style="float:right; margin:10px 0;">' +
+                        '<p>건물선택</p>' +
+                        '</div>' +
+                '</h4>' +
+                '<div id="floorBox"></div>';
+    }
+
+    // 승인 시 접근권한 층 선택
+    $(document).on('submit', '#buildingSiteMapping', function(event) {
+        event.preventDefault();
+
+        var form = new FormData();
+        form.append('buildingName', $('#buildingInfo > h4 p').text());
+
+        var buildingFloors = $('input[name="floor"]');
+        $.each(buildingFloors, function(i, e) {
+            if(e.checked) form.append('buildingFloor', e.value);
+        })
+        if(form.get('buildingFloor')==null || form.get('buildingFloor')== undefined) { alert('한개 층 이상 선택해주세요.'); return;}
+
+        callApi.setFormData($(this).attr('action'), form, function(result) {
+            // $('.nv_modal4').removeClass('on');
+            // target.parent().html(approveActionCommponet.visitorButton(result));
+            // init(module.pagenation.params);     // 금일방문객 리랜더링
+            // dashBoardInit();
+            location.reload();
+        })
+    });
+
     // 수정본
     $(document).on('click', '#approveTable button', function() {
         var target = $(this);
         var targetId = target.parent().parent().attr('id');
         if(target.val()==='approve') {
-            //$('#visitApprovalForm').attr('action', '/visitor-approval/'+targetId);
-            callApi.setData('/visitor-approval/'+targetId, {}, function (result) {
-                target.parent().html(approveActionCommponet.visitorButton(result));
-                init(module.pagenation.params);     // 금일방문객 리랜더링
-                dashBoardInit();
-            })
-        }
-         else {
+            $('.nv_modal4').addClass('on');
+            $('#buildingInfo').html(getBuildingSelectBox());
+            $('#buildingSiteMapping').attr('action', '/visitor-approval/'+targetId);
+            callApi.getData('/visitor-approval/site', function (result) {
+                var ul = $('<ul>');
+                $.each(result, function(i, e) {
+                    // 계열사에 맵핑 된 건물 및 층 정보에 대한 li 생성
+                    var li = $('<li>'+e.name+'</li>');
+                    li.on('click', function() {
+                        var tmpHtml = '';
+                        if(e.floor.indexOf(',')!=-1) {
+                            var _floorArr = e.floor.split(',');
+                            for(var i=0; i<_floorArr.length; i++) {
+                                var _floor = _floorArr[i].trim();
+                                tmpHtml += getFloorCheckBox('', _floor);
+                            }
+                        } else {
+                            tmpHtml += getFloorCheckBox('', e.floor);
+                        }
+                        $('#buildingInfo #floorBox').html(tmpHtml);
+                    });
+                    ul.append(li);
+                });
+                $('#accessBox').append(ul);
+            });
+        } else if(target.val()==='reject') {
+            return;
+        } else {
             ////////////////////
             // var formData = new FormData();
             // formData.append('visitorHistorySeq[]', targetId);
@@ -540,43 +596,44 @@
         // }
     });
 
-    $(document).on('submit', '#visitApprovalForm', function(event) {
-        event.preventDefault();
-        var form = $(this);
-        var formData = new FormData();
-        formData.append('carryStuff', $('#carryStuff').val());
-        formData.append('visitApprovalComment', $('#visitApprovalComment').val());
-        callApi.setFormData(form.attr('action'), formData, function(result) {
-            alert('승인처리되었습니다.');
-            form.children().removeClass('on');
-            init(module.pagenation.params);     // 금일방문객 리랜더링
-            dashBoardInit();                    // 대시보드 리렌더링
-        });
-    });
+    // $(document).on('submit', '#visitApprovalForm', function(event) {
+    //     event.preventDefault();
+    //     var form = $(this);
+    //     var formData = new FormData();
+    //     formData.append('carryStuff', $('#carryStuff').val());
+    //     formData.append('visitApprovalComment', $('#visitApprovalComment').val());
+    //     callApi.setFormData(form.attr('action'), formData, function(result) {
+    //         alert('승인처리되었습니다.');
+    //         form.children().removeClass('on');
+    //         init(module.pagenation.params);     // 금일방문객 리랜더링
+    //         dashBoardInit();                    // 대시보드 리렌더링
+    //     });
+    // });
 
-    $(document).on('submit', '#visitApprovalFormChecked', function(event) {
-        if(_varApprovalchecked.length > 0)
-        {
-            event.preventDefault();
-            var form = $(this);
-            var formData = new FormData();
-            formData.append('carryStuff', "");
-            formData.append('visitApprovalComment', $('#visitApprovalCheckedComment').val());
-            _varApprovalchecked.forEach(function(currentValue, index, array){
-                formData.append('visitorHistorySeq[]', currentValue);
-            });
-            // _varApprovalchecked.forEach(element => {
-            //     formData.append('visitorHistorySeq[]', element);    
-            // });
+    // 일괄승인기능
+    // $(document).on('submit', '#visitApprovalFormChecked', function(event) {
+    //     if(_varApprovalchecked.length > 0)
+    //     {
+    //         event.preventDefault();
+    //         var form = $(this);
+    //         var formData = new FormData();
+    //         formData.append('carryStuff', "");
+    //         formData.append('visitApprovalComment', $('#visitApprovalCheckedComment').val());
+    //         _varApprovalchecked.forEach(function(currentValue, index, array){
+    //             formData.append('visitorHistorySeq[]', currentValue);
+    //         });
+    //         // _varApprovalchecked.forEach(element => {
+    //         //     formData.append('visitorHistorySeq[]', element);    
+    //         // });
             
-            callApi.setFormData(form.attr('action'), formData, function(result) {
-                alert('승인처리되었습니다.');
-                form.children().removeClass('on');
-                init(module.pagenation.params);     // 금일방문객 리랜더링
-                dashBoardInit();                    // 대시보드 리렌더링
-            });
-        }
-    });
+    //         callApi.setFormData(form.attr('action'), formData, function(result) {
+    //             alert('승인처리되었습니다.');
+    //             form.children().removeClass('on');
+    //             init(module.pagenation.params);     // 금일방문객 리랜더링
+    //             dashBoardInit();                    // 대시보드 리렌더링
+    //         });
+    //     }
+    // });
 
     $(document).on('click', '.nv_modal2 button.nv_green_button', function() {
         var form = $(this).parents().parents().parents().parents().parents();
@@ -593,30 +650,26 @@
         });
     });
 
-    // 원본
-    /* $(document).on('click', '.nv_modal4 button.nv_green_button', function() { */
-    // 수정본
-
-    $(document).on('click', '.nv_modal4 button.nv_green_button', function() {
-        if(_varApprovalchecked.length > 0)
-        {
-            var form = $('#visitRejectForm');
-            var url =  form.attr('action');
-            url = url.replace(/approval/,"reject");
-            var formData = new FormData();
-            formData.append('carryStuff', $('#carryStuff').val());
-            formData.append('visitApprovalComment', $('#visitApprovalComment').val());
-            _varApprovalchecked.forEach(function(currentValue, index, array){
-                formData.append('visitorHistorySeq[]', currentValue);
-            });
-            callApi.setFormData(url, formData, function(result) {
-                alert('반려처리되었습니다.');
-                form.children().removeClass('on');
-                init(module.pagenation.params);     // 금일방문객 리랜더링
-                dashBoardInit();                    // 대시보드 리렌더링
-            });
-        }
-    });
+    // $(document).on('click', '.nv_modal4 button.nv_green_button', function() {
+    //     if(_varApprovalchecked.length > 0)
+    //     {
+    //         var form = $('#visitRejectForm');
+    //         var url =  form.attr('action');
+    //         url = url.replace(/approval/,"reject");
+    //         var formData = new FormData();
+    //         formData.append('carryStuff', $('#carryStuff').val());
+    //         formData.append('visitApprovalComment', $('#visitApprovalComment').val());
+    //         _varApprovalchecked.forEach(function(currentValue, index, array){
+    //             formData.append('visitorHistorySeq[]', currentValue);
+    //         });
+    //         callApi.setFormData(url, formData, function(result) {
+    //             alert('반려처리되었습니다.');
+    //             form.children().removeClass('on');
+    //             init(module.pagenation.params);     // 금일방문객 리랜더링
+    //             dashBoardInit();                    // 대시보드 리렌더링
+    //         });
+    //     }
+    // });
     
     $(document).on('click', '#selectorModify', function() {
         checkedEach(function(targetParentTrId, target) {
@@ -789,7 +842,7 @@
                 <th class="tpc_skip m_skip">방문시작일</th>
                 <th class="tpc_skip m_skip">방문종료일</th>
                 <th class="tpc_skip m_skip">차량번호</th>
-                <c:if test="${sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2'}">
+                <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2'}">
                     <th class="tpc_skip m_skip">접견인</th>
                     <th class="tpc_skip m_skip">접견인 회사</th>
                     <th class="tpc_skip m_skip">접견인 팀</th>
@@ -808,7 +861,7 @@
     </div>
     <div class="nv_table_pagenum" id="pagenation"></div>
 </div>
-<form id="visitApprovalForm">
+<!-- <form id="visitApprovalForm">
     <div class="nv_modal nv_modal2" id="nv_modal_2">
         <div class="nv_modal_container">
             <div class="nv_modal_header">
@@ -845,8 +898,8 @@
             </div>
         </div>
     </div>
-</form>
-<form id="visitApprovalFormChecked">
+</form> -->
+<!-- <form id="visitApprovalFormChecked">
     <div class="nv_modal nv_modal4">
         <div class="nv_modal_container">
             <div class="nv_modal_header">
@@ -866,7 +919,7 @@
             </div>
         </div>
     </div>
-</form>
+</form> -->
 <form id="visitRejectForm">
     <div class="nv_modal nv_modal5">
         <div class="nv_modal_container">
@@ -891,6 +944,24 @@
                 <div class="btn_area">
                     <button type="button" class="nv_green_button">반려</button>
                     <button type="button" class="nv_red_button">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form id="buildingSiteMapping" action="" method="POST">
+    <input type="hidden" name="targetId" value="" />
+    <div class="nv_modal nv_modal4">
+        <div class="nv_modal_container">
+            <div class="nv_modal_header">
+                <h2>건물접근권한</h2>
+                <p class="nv_modal_close">닫기</p>
+            </div>
+            <div class="nv_modal_contents">
+                <div id="buildingInfo"></div>
+                <div class="btn_area">
+                    <button type="button" class="nv_red_button">취소</button>
+                    <button type="submit" class="nv_green_button">승인</button>
                 </div>
             </div>
         </div>
