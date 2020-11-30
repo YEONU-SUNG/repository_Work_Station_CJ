@@ -2,6 +2,9 @@ package com.neo.visitor.config;
 
 import javax.sql.DataSource;
 
+import com.neo.visitor.domain.buildingSiteMapping.repository.BuildingRepository;
+import com.neo.visitor.domain.buildingSiteMapping.repository.BuildingSiteMappingRepository;
+import com.neo.visitor.domain.buildingSiteMapping.repository.SiteRepository;
 import com.neo.visitor.domain.education.repository.ContentsRepository;
 import com.neo.visitor.domain.faq.repository.FaqRepository;
 import com.neo.visitor.domain.file.repository.FileRepository;
@@ -42,6 +45,9 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
     , VisitorHistoryRepository.class
     , VisitorInoutTimeRepository.class
     , VisitorRepository.class
+    , BuildingRepository.class
+    , BuildingSiteMappingRepository.class
+    , SiteRepository.class
 } )
 public class PrimaryDatasource {
     
