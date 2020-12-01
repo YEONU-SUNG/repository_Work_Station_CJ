@@ -2,6 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+    .rejectColor {
+        color: red;
+    }
+</style>
 <script>
     $(function() {
         $.datepicker.setDefaults({
@@ -295,7 +300,7 @@
                     }
 
                     // 반려사유가있는 경우 클릭 시 상세보기 팝업 활성화
-                    var rejectPopup = module.makeTd('tpc_skip m_skip', rejectName);
+                    var rejectPopup = module.makeTd('tpc_skip m_skip rejectColor', rejectName);
                     rejectPopup.on('click', function() {
                         $('.nv_modal5').addClass('on');
                         $('#rejectCmbBox > p').html(rejectName);

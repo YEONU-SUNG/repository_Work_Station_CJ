@@ -25,157 +25,354 @@
         $('#searchFromDateTime').datepicker('setDate', 'today');
         $('#searchToDateTime').datepicker('setDate', '+1D');
     });
+    </script>
+    <script>
+var approveProcessStatus = {
+    visitorApprove : function(row) {
+        if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
+            return '교육미수료';
+        }
+        if(row.rejectFlag==='Y'){
+            return '';
+        }
+        if(row.visitApprovalYN==='Y') {
+            return '승인완료';
+        } else {
+            return '승인대기';
+        }
+    }
+};
+</script>
+<c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1'}">
+<script>
+    var approveActionCommponet = {
+        visitorButton : function(row) {
+            if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
+                return '';
+            }
+            if(row.rejectFlag==='Y'){
+                return '';
+            }
+            if(row.visitApprovalYN==='Y') {
+                if(row.toDayYN==='Y')
+                {
+                    for(var i in row.visitorInoutTimes) {
+                        //var visitDate = new Date(row.visitorInoutTimes[i].visitFromDateTime);
+                        var ds = row.visitorInoutTimes[i].visitFromDateTime;
+                        var arr = ds.split("-");  // 2018,01,01 00:10:11
+                        var visitDate = new Date(arr[0] + "/" + arr[1] + "/" + arr[2]);
+                        if(date.compare(visitDate)) {
+                            if(row.visitorInoutTimes[i].visitToDateTime=='')
+                                // return '<button type="button" class="nv_red_button">퇴실</button>';
+                                return '<button type="button" class="nv_red_button">출문</button>';
+                            else 
+                                $('#'+row.visitorHistorySeq).remove();
+                        }
+                    }
+                    // return '<button type="button" class="nv_blue_button">방문</button>';
+                    return '<button type="button" class="nv_blue_button nv_green_button">입문</button>';
+                }
+                else if(row.toDayYN==='N')
+                    return '';
+            } else {
+                if(row.visitorType == 1) {
+                    return '<button type="button" class="nv_blue_button" value="approve">승인</button>' +
+                       '<button type="button" class="nv_red_button" value="reject">반려</button>';
+                } else {
+                    return '<button type="button" class="nv_blue_button" value="approve2">승인</button>' +
+                       '<button type="button" class="nv_red_button" value="reject">반려</button>';
+                }
+            }
+        }
+    };
+</script>
+</c:if>
+<c:if test="${sessionScope.login.host.auth eq '2'}">
+<script>
+    var approveActionCommponet = {
+        visitorButton : function(row) {
+            if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
+                return '미수료';
+            }
+            if(row.visitApprovalYN==='Y') {
+                if(row.toDayYN==='Y') {
+                    for(var i in row.visitorInoutTimes) {
+                        var ds = row.visitorInoutTimes[i].visitFromDateTime;
+                        var arr = ds.split("-");  // 2018,01,01 00:10:11
+                        var visitDate = new Date(arr[0] + "/" + arr[1] + "/" + arr[2]);
+                        if(date.compare(visitDate)) {
+                            if(row.visitorInoutTimes[i].visitToDateTime=='')
+                                return '<button type="button" class="nv_red_button">출문</button>';
+                            else 
+                                $('#'+row.visitorHistorySeq).remove();
+                        }
+                    }
+                    return '<button type="button" class="nv_blue_button nv_green_button">입문</button>';
+                }
+                else if(row.toDayYN==='N') return '승인완료';
+            } else {
+                return '승인대기';
+            }
+        }
+    };
+</script>
+</c:if>
+<c:if test="${sessionScope.login.host.auth eq '3'}">
+<script>
+    var approveActionCommponet = {
+        visitorButton : function(row) {
+            if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
+                return '미수료';
+            }
+            if(row.visitApprovalYN==='Y') {
+                for(var i in row.visitorInoutTimes) {
+                    //var visitDate = new Date(row.visitorInoutTimes[i].visitFromDateTime);
+                    var ds = row.visitorInoutTimes[i].visitFromDateTime;
+                        var arr = ds.split("-");  // 2018,01,01 00:10:11
+                        var visitDate = new Date(arr[0] + "/" + arr[1] + "/" + arr[2]);
+                    if(date.compare(visitDate)) {
+                        if(row.visitorInoutTimes[i].visitToDateTime=='')
+                            // return '방문';
+                            return '입문';
+                        else 
+                            $('#'+row.visitorHistorySeq).remove();
+                    }
+                }
+                //return '방문';
+                return '승인완료';
+            } else {
+                return '<button type="button" class="nv_blue_button" value="approve">승인</button>' +
+                       '<button type="button" class="nv_red_button" value="reject">반려</button>';
+            }
+        }
+    };
+</script>
+</c:if>
+<c:if test="${sessionScope.login.host.auth eq '4'}">
+<script>
+    var approveActionCommponet = {
+        visitorButton : function(row) {
+            if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
+                return '미수료';
+            }
+            if(row.visitApprovalYN==='Y') {
+                if(row.toDayYN==='Y')
+                {
+                    for(var i in row.visitorInoutTimes) {
+                        //var visitDate = new Date(row.visitorInoutTimes[i].visitFromDateTime);
+                        var ds = row.visitorInoutTimes[i].visitFromDateTime;
+                        var arr = ds.split("-");  // 2018,01,01 00:10:11
+                        var visitDate = new Date(arr[0] + "/" + arr[1] + "/" + arr[2]);
+                        if(date.compare(visitDate)) {
+                            if(row.visitorInoutTimes[i].visitToDateTime=='')
+                                // return '<button type="button" class="nv_red_button">퇴실</button>';
+                                return '<button type="button" class="nv_red_button">출문</button>';
+                            else 
+                                $('#'+row.visitorHistorySeq).remove();
+                        }
+                    }
+                    // return '<button type="button" class="nv_blue_button">방문</button>';
+                    return '<button type="button" class="nv_blue_button nv_green_button">입문</button>';
+                }
+                else if(row.toDayYN==='N')
+                    return '';
+            }
+            else {
+                return '';
+            }
+        }
+    };
+</script>
+</c:if>
+<script>
+    var inoutMode = false;
     var module = {
         tableData : [],
         pagenation : {},
         pagenationHTML : '',
         tableHTML : '',
-        auth : [],
-        authSelectBox : function(auth) {
-            var str = auth ? auth : '관리자';
-
-            return '<div class="nv_select_box">' +
-                        '<p>' + str + '</p>' +
-                        '<ul>' + 
-                            '<li>관리자</li>' +
-                            '<li>보안실</li>' + 
-                            '<li>임직원</li>' + 
-                        '</ul>' +
-                    '</div>';
-					
+        search : function() {
+            var searchFromDateTime = $('input[name="searchFromDateTime"]').val();
+            var searchToDateTime = $('input[name="searchToDateTime"]').val();
+            var conditionKey = $('#conditionKey').html();
+            var conditionValue = $('#conditionValue').val();
+            init('/visitor/confirm-list?page=1&size=10&conditionKey='+conditionKey+"&conditionValue="+conditionValue+"&searchFromDateTime"+searchFromDateTime+"&searchToDateTime"+searchToDateTime);
         },
-        makeTable : function(pagenation, type) {
-            if(this.tableData.length==0 && type) {
+        makeTd : function(className, innerHTML) {
+            return $('<td class="'+className+'">'+innerHTML+'</td>');
+        },
+        makeTable : function(pagenation) {
+            if(this.tableData.length==0 && this.pagenation.conditionKey!='' && !inoutMode) {
                 alert('조회결과가 없습니다.');
                 return this.tableHTML;
-            } else {
-                this.tableHTML = '';
-                var oData;
-                for(var i = 0, len = this.tableData.length; i < len; i++){
-                    oData = this.tableData[i];
-                    this.tableHTML += 
-                                    '<tr class="nv_view_nexttable" id="' + oData.visitorHistorySeq + '">' +
-                                        '<td>' + oData.visitorName + '</td>' +
-                                        '<td>' + oData.visitorCompany + '</td>' +
-                                        '<td class="tpc_skip m_skip">' + oData.visitorMobile + '</td>' + 
-                                        '<td class="tpc_skip m_skip">' + oData.visitPurpose + '</td>' +
-                                        '<td>' + oData.visitorPosition1 + ' ' + oData.visitorPosition2 + ' ' + oData.visitorPosition3 + '</td>' +
-                                        '<td class="tpc_skip m_skip">' + oData.planFromDateTime + '</td>' +
-                                        '<td class="tpc_skip m_skip">' + oData.planToDateTime + '</td>' +
-                                        '<td class="tpc_skip m_skip">' + oData.carNo + '</td>' +
-                                        '<td class="tpc_skip m_skip">' + oData.hostName + '</td>' +
-                                        '<td class="tpc_skip m_skip">' + oData.hostCompany + '</td>' +
-                                        '<td class="tpc_skip m_skip">' + oData.hostDept + '</td>' +
-                                        '<td>' +
-                                            '<button type="button" class="nv_blue_button" name="approve">승인</button>' +
-                                            '<button type="button" class="nv_red_button width_50 nv_modal5_open" name="reject">반려</button>' +
-                                        '</td>' +
-                                    '</tr>'
-                }
-                
-                pagenation.html(makePagenationCustom(module.pagenation));
-                return this.tableHTML;
             }
+        },
+        getFloorCheckBox : function(checked, floor) {
+            return '<input type="checkbox" name="floor" id="'+floor+'" value="'+floor+'" '+checked+'/><label style="padding-right:2%;" for="'+floor+'">'+floor+'</label>';
+        },
+        getBuildingSelectBox : function() {
+            return '<h4 class="textarea_name" style="padding-bottom: 10px;">건물명' +
+                    '<div class="nv_select_box" id="accessBox" style="float:right; margin:10px 0;">' +
+                        '<p>건물선택</p>' +
+                        '</div>' +
+                '</h4>' +
+                '<div id="floorBox"></div>';
         }
     }
 
-    function makePagenationCustom(result){
-        var searchFromDateTime = $('#searchFromDateTime').val();
-        var searchToDateTime = $('#searchToDateTime').val();
-
-        let init = 'init';
-        let limitIndex = 0, breakIndex =0;
-        if(result.url==='/visitor/standby-list') init = 'standby_init';
-        let pagenationHTML = '';
-        pagenationHTML =   '<ul>' +
-                                '<li class="first" onclick="javascript:'+init+'(\''+result.firstURL + '&searchFromDateTime='+searchFromDateTime+'&searchToDateTime='+searchToDateTime+'\')">처음으로</li>' +
-                                '<li class="prev" onclick="javascript:'+init+'(\''+result.prevURL + '&searchFromDateTime='+searchFromDateTime+'&searchToDateTime='+searchToDateTime+'\')">이전으로</li>';
-        
-        if(result.page <= 5) {
-            breakIndex = 1;
-        } else if (result.page > 5) {
-            breakIndex = result.page-5;
-        }
-        limitIndex = breakIndex + 9;
-        for(var i=1; i<=result.totalPage; i++) {
-            if(breakIndex <= i && limitIndex>= i) 
-                pagenationHTML += (result.page===i)
-                                ? '<li class="on" onclick="javascript:'+init+'(\''+(result.url+'?page='+result.page+'&size='+result.size + '&searchFromDateTime='+searchFromDateTime+'&searchToDateTime='+searchToDateTime)+result.conditionURL+'\')">'+(i)+'</li>'
-                                : '<li onclick="javascript:'+init+'(\''+(result.url+'?page='+i+'&size='+result.size + '&searchFromDateTime='+searchFromDateTime+'&searchToDateTime='+searchToDateTime)+result.conditionURL+'\')">'+(i)+'</li>';
-        }
-        pagenationHTML += 	    '<li class="next" onclick="javascript:'+init+'(\''+result.nextURL + '&searchFromDateTime='+searchFromDateTime+'&searchToDateTime='+searchToDateTime+'\')">다음으로</li>' +
-                                '<li class="last" onclick="javascript:'+init+'(\''+result.lastURL + '&searchFromDateTime='+searchFromDateTime+'&searchToDateTime='+searchToDateTime+'\')">마지막으로</li>' +
-                            '</ul>';
-        return pagenationHTML;
+    function buttonTypeChange(buttonType) {
+        buttonType.removeClass('on');
+        if(buttonType.attr('id')=='selectorModify') buttonType.next().addClass('on');
+        else buttonType.prev().addClass('on');
     }
-    
-    function init(url, type) {
-        type = type || false;
+
+    function init(url) {
         callApi.getData(url, function (result) {
-            module.tableData = result.response;
+                
             module.pagenation = result.pagenation;
-            $('table > tbody').html(module.makeTable($('#pagenation'), type));
+            module.tableData = result.response;
+            var auth = '${sessionScope.login.host.auth}';
+            $('#pagenation').html(page.makePagenation(module.pagenation));
+            $.each(result.response, function(i, e) {
+                var tr = $('<tr class="nv_view_next table" id="'+e.visitorHistorySeq+'">');
+                    tr.append(module.makeTd('', e.visitorName));
+                    tr.append(module.makeTd('', e.visitorCompany));
+                    tr.append(module.makeTd('tpc_skip m_skip', e.visitorMobile));
+                    tr.append(module.makeTd('tpc_skip m_skip', e.visitPurpose));
+                    tr.append(module.makeTd('tpc_skip m_skip', e.visitorPosition1+','+e.visitorPosition2+','+e.visitorPosition3));
+                    tr.append(module.makeTd('tpc_skip m_skip', e.planFromDateTime));
+                    tr.append(module.makeTd('tpc_skip m_skip', e.planToDateTime));
+                    tr.append(module.makeTd('tpc_skip m_skip', e.carNo));
+                    tr.append(module.makeTd('tpc_skip m_skip', e.hostName));
+                    tr.append(module.makeTd('tpc_skip m_skip', e.hostCompany));
+                    tr.append(module.makeTd('tpc_skip m_skip', e.hostDept));
+
+                    // 방문증번호 로직
+                    var innerHTML_CardID = module.makeTd('card', e.cardID);
+                    var visitorStatus = approveActionCommponet.visitorButton(e);
+                    // 임직원인 경우 승인되었을때 승인관리 비활성화
+                    if(e.visitorType == 1 && e.visitApprovalYN == 'Y') visitorStatus = '';
+
+                    var approveManagerBtn = module.makeTd('approvechidren', visitorStatus);
+                
+                    tr.append(approveManagerBtn);
+                    $('#approveTable tbody').append(tr);
+            });
         });
     }
 
-    function search() {
+    // 반려 처리
+    $(document).on('submit', '#visitRejectForm', function(e) {
+        e.preventDefault();
+        var formData = new FormData();
+        formData.append('visitRejectType', $('#rejectCmbBox > p').text());
+        formData.append('visitRejectComment', $('#rejectComment').val());
+        callApi.setFormData('/visitor-reject/'+$('#visitRejectFormId').val(), formData, function(result) {
+            alert('반려처리되었습니다.');
+            location.reload();
+            // form.children().removeClass('on');
+            // init(module.pagenation.params);     // 금일방문객 리랜더링
+            // dashBoardInit();                    // 대시보드 리렌더링
+        });
+    });
 
-        var searchFromDateTime = $('#searchFromDateTime').val();
-        var searchToDateTime = $('#searchToDateTime').val();
-        var conditionKey = $('#conditionKey').html();
-        var conditionValue = $('#conditionValue').val();
-        init('/visitor/confirm-list?page=1&size=10&conditionKey='+conditionKey+"&conditionValue="+conditionValue+"&searchFromDateTime="+searchFromDateTime+"&searchToDateTime="+searchToDateTime);
+    function excel() {
+        location.href = convertEncoding(module.pagenation.excelParams);
     }
 
     $(document).ready(function() {
-        var searchFromDateTime = $('#searchFromDateTime').val();
-        var searchToDateTime = $('#searchToDateTime').val();
-
+        var searchFromDateTime = $('input[name="searchFromDateTime"]').val();
+        var searchToDateTime = $('input[name="searchToDateTime"]').val();
         init('/visitor/confirm-list?page=1&size=10&searchFromDateTime='+searchFromDateTime+'&searchToDateTime='+searchToDateTime);
-        
+        $("#conditionValue").focus();
         $('#conditionValue').keydown(function(event) {
-			if (event.keyCode == 13) {
-				search();
-			}
+			if (event.keyCode == 13) module.search();
         });
     });
 
-    $(document).on('click', 'table tbody tr button', function() {
+    $(document).on('click', '.nv_modal2_open', function() {
+        $('.nv_modal2 #carryStuff').html($(this).parent().parent().find('.nv_modal1_open > span').html());
+    });
+    
+    // 승인 시 접근권한 층 선택
+    $(document).on('submit', '#buildingSiteMapping', function(event) {
+        event.preventDefault();
+
+        var form = new FormData();
+        form.append('buildingName', $('#buildingInfo > h4 p').text());
+
+        var buildingFloors = $('input[name="floor"]');
+        $.each(buildingFloors, function(i, e) {
+            if(e.checked) form.append('buildingFloor', e.value);
+        })
+        if(form.get('buildingFloor')==null || form.get('buildingFloor')== undefined) { alert('한개 층 이상 선택해주세요.'); return;}
+
+        callApi.setFormData($(this).attr('action'), form, function(result) {
+            location.reload();
+        })
+    });
+
+    $(document).on('click', '#approveTable button', function() {
         var target = $(this);
-        var targetId = target.parents('tr').attr('id');
-        //target.parent().prev().prev().html(module.authSelectBox());
-        //target.parent().prev().html(module.authSelectBox());
-
-        if(target.attr('name')=='approve'){
-            var searchFromDateTime = $('#searchFromDateTime').val();
-            var searchToDateTime = $('#searchToDateTime').val();
-
-            callApi.setData('/visitor-approval/'+targetId, {}, function (result) {
-                init(module.pagenation.params + '&searchFromDateTime='+searchFromDateTime+'&searchToDateTime='+searchToDateTime);     // 금일방문객 리랜더링
-                dashBoardInit();
+        var targetId = target.parent().parent().attr('id');
+        if(target.val()==='approve') {
+            $('.nv_modal4').addClass('on');
+            $('#buildingInfo').html(module.getBuildingSelectBox());
+            $('#buildingSiteMapping').attr('action', '/visitor-approval/staffe/'+targetId);
+            callApi.getData('/visitor-approval/site', function (result) {
+                var ul = $('<ul>');
+                $.each(result, function(i, e) {
+                    // 계열사에 맵핑 된 건물 및 층 정보에 대한 li 생성
+                    var li = $('<li>'+e.name+'</li>');
+                    li.on('click', function() {
+                        var tmpHtml = '';
+                        if(e.floor.indexOf(',')!=-1) {
+                            var _floorArr = e.floor.split(',');
+                            for(var i=0; i<_floorArr.length; i++) {
+                                var _floor = _floorArr[i].trim();
+                                tmpHtml += module.getFloorCheckBox('', _floor);
+                            }
+                        } else {
+                            tmpHtml += module.getFloorCheckBox('', e.floor);
+                        }
+                        $('#buildingInfo #floorBox').html(tmpHtml);
+                    });
+                    ul.append(li);
+                });
+                $('#accessBox').append(ul);
+            });
+        } else if (target.val()==='approve2') {
+            callApi.setFormData('/visitor-approval/'+targetId, {}, function(result) {
+                location.reload();
             })
-        }else if(target.attr('name')=='reject') {
-            $('#visitRejectForm').attr('action', '/visitor-reject/'+targetId);
+        } else if(target.val()==='reject') {
+            $('.nv_modal5').addClass('on');
+            $('#visitRejectFormId').val(targetId);
+            return;
         }
     });
 
-    $(document).on('click', '.nv_modal5 button.nv_green_button', function() {
-        var form = $('#visitRejectForm');
-        var url =  form.attr('action');
-        var targetId = url.replace('/visitor-reject/', '');
-        var formData = new FormData();
-        formData.append('visitRejectType', $('#nv5_rejectCmbBox').find('p').text().trim());
-        formData.append('visitRejectComment', $('#nv5_rejectComment').val());
-        formData.append('visitorHistorySeq', targetId);
-        callApi.setFormData(url, formData, function(result) {
-            alert('승인거부처리되었습니다.');
-            form.children().removeClass('on');
-            init(module.pagenation.params);     // 금일방문객 리랜더링
-            dashBoardInit();                    // 대시보드 리렌더링
-        });
+    $(document).on('keypress', '#approveTable input', function(e) {
+        var target = $(this);
+        var targetId = target.parent().parent().attr('id');
+
+        if(e.keyCode == 13)
+        {
+            if($(this).parent().hasClass('card'))
+            {
+                if($(this).val() !="")
+                {
+                    callApi.setData("/visitor-cardid/"+targetId+"/" +$(this).val(), {}, function (result) {
+                        alert('변경되었습니다.');
+                        init(module.pagenation.params);     // 금일방문객 리랜더링
+                        dashBoardInit();
+                    })
+                } 
+            }
+        }
+        
     });
 </script>
-
 <div class="nv_contents_wrap">
 	<div class="nv_contents">
 		<div class="nv_contents_main_header">
@@ -185,9 +382,9 @@
 			<p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
 			<div class="nv_date_box">
                 <span class="icon_date">달력 아이콘</span> 
-                <input type="text" class="nv_input" id="searchFromDateTime"> 
+                <input type="text" class="nv_input" name="searchFromDateTime" id="searchFromDateTime"> 
                 <span>~</span> 
-                <input type="text" class="nv_input" id="searchToDateTime">
+                <input type="text" class="nv_input" name="searchToDateTime" id="searchToDateTime">
 			</div>
 			<p class="m_tit nv_bold pc_skip tpc_skip">검색 조건</p>
 			<div class="nv_select_box">
@@ -204,7 +401,7 @@
 			</div>
 		</div>
 		<div class="nv_table_box">
-			<table class="nv_table textcenter" cellspacing="0" cellpadding="0">
+			<table class="nv_table textcenter" cellspacing="0" cellpadding="0" id="approveTable">
 				<thead>
 					<tr>
 						<th>방문자</th>
@@ -229,6 +426,7 @@
 	</div>
 </div>
 <form id="visitRejectForm">
+    <input type="hidden" id="visitRejectFormId"/>
     <div class="nv_modal nv_modal5">
         <div class="nv_modal_container">
             <div class="nv_modal_header">
@@ -238,20 +436,39 @@
             <div class="nv_modal_contents">
                 <div>
                     <h4 class="textarea_name">반려사유
-                        <div class="nv_select_box" id="nv5_rejectCmbBox" style="float:right; margin:10px 0;">
+                        <div class="nv_select_box" id="rejectCmbBox" style="float:right; margin:10px 0;">
                             <p>선택</p>
                             <ul> 
-                                <li>규칙위반</li>
                                 <li>보안위반</li>
+                                <li>경쟁업체/직원</li>
+                                <li>방문규정 위반</li>
                                 <li>기타</li>
                             </ul>
                         </div>
                     </h4>
-                    <textarea name="rejectComment" id="nv5_rejectComment" cols="30" rows="10" class="nv_textarea" placeholder="반려사유 입력"></textarea>
+                    <textarea name="rejectComment" id="rejectComment" cols="30" rows="10" class="nv_textarea" placeholder="반려사유 입력"></textarea>
                 </div>
                 <div class="btn_area">
-                    <button type="button" class="nv_green_button">반려</button>
+                    <button type="submit" class="nv_green_button">반려</button>
                     <button type="button" class="nv_red_button">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form id="buildingSiteMapping" action="" method="POST">
+    <input type="hidden" name="targetId" value="" />
+    <div class="nv_modal nv_modal4">
+        <div class="nv_modal_container">
+            <div class="nv_modal_header">
+                <h2>건물접근권한</h2>
+                <p class="nv_modal_close">닫기</p>
+            </div>
+            <div class="nv_modal_contents">
+                <div id="buildingInfo"></div>
+                <div class="btn_area">
+                    <button type="button" class="nv_red_button">취소</button>
+                    <button type="submit" class="nv_green_button">승인</button>
                 </div>
             </div>
         </div>
