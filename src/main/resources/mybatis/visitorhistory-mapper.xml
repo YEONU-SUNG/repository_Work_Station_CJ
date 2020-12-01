@@ -203,7 +203,8 @@
             <if test='host.host.auth == "3"'>
                 AND V.HostID = #{host.host.hostID}
             </if>
-            <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'>
+            <!-- <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'> -->
+            <if test='host.host.auth == "1" or host.host.auth == "2"'>
                 AND V.HostSiteCode = #{host.host.siteCode}
             </if>
             <!--
@@ -299,7 +300,8 @@
         <if test='host.host.auth == "3"'>
             AND HostID = #{host.host.hostID}
         </if>
-        <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'>
+        <!-- <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'> -->
+        <if test='host.host.auth == "1" or host.host.auth == "2"'>
             AND HostSiteCode = #{host.host.siteCode}
         </if>
         <choose>
@@ -374,7 +376,8 @@
         <if test='host.host.auth == "3"'>
             AND HostID = #{host.host.hostID}
         </if>
-        <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'>
+        <!-- <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'> -->
+        <if test='host.host.auth == "1" or host.host.auth == "2"'>
             AND HostSiteCode = #{host.host.siteCode}
         </if>
         <choose>
@@ -459,7 +462,8 @@
             AND V.HostID = #{host.host.hostID}
         </if>
 
-        <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'>
+        <!-- <if test='host.host.auth == "1" or host.host.auth == "2" or host.host.auth == "4"'> -->
+        <if test='host.host.auth == "1" or host.host.auth == "2"'>
             AND V.HostSiteCode = #{host.host.siteCode}
         </if>
         <!--
