@@ -234,8 +234,8 @@ public class VisitorHistoryApplication {
                 visitorHistory.setVisitorByVisiter(visitorService.save(visitor));
             } else {
                 Host _host = (Host) _visiter;
-                _host = hostService.findByHostID(_host.getHostID());
-                //_host = insaRepository.findByHostId(visitorHistory.getHostID());
+                //_host = hostService.findByHostID(_host.getHostID());
+                _host = insaRepository.findByHostId(_host.getHostID());
                 if(_host==null) 
                     throw new IllegalArgumentException("임직원정보가 존재하지 않습니다.");
                 visitorHistory.setHostByVisiter(_host);

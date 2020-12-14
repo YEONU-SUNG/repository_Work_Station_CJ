@@ -144,7 +144,7 @@
                             '<th colspan="6" style="text-align: left;">' +
                                 '<span style="padding-left: 13px;">방문자</span>' +
                             '</th>' +
-                            '<th>반입물품</th>' +
+                            '<th style="display: none;">반입물품</th>' +
                             '<th>삭제</th>' +
                         '</tr>';
             }
@@ -156,7 +156,7 @@
                             '<input type="hidden" class="nv_input max_100" name="guest_serial" value="'+carray.serial+'" />' +
                             '<input type="hidden" class="nv_input max_100" name="guest_purpose" value="'+carray.purpose+'"/>' +
                             '<input type="hidden" class="nv_input max_100" name="guest_used" value="'+carray.used+'" />' +
-                            '<button type="button" class="nv_blue_button nv_modal2_open" name="guest_carry">'+(carray.type ? '수정' : '등록')+'</button>';
+                            '<button type="button" class="nv_blue_button nv_modal2_open" name="guest_carry" style="display: none;">'+(carray.type ? '수정' : '등록')+'</button>';
                 },
                 // car : function(car) {
                 //     return  '<input type="checkbox" id="guest_car_type1'+car.id+'" name="guest_car_type" '+(car.carNo=='' && 'checked')+' /><label for="guest_car_type1'+car.id+'">도보</label>' +
@@ -185,11 +185,11 @@
                                 // '<input type="hidden" id="guest_company'+visitInfo.id+'" name="guest_company" value="'+visitInfo.visitor.company+'">' +
                                 // '<input type="hidden" id="guest_dept'+visitInfo.id+'" name="guest_dept" value="'+visitInfo.visitor.dept+'">' +
                                 // '<input type="hidden" class="nv_input" id="guest_name'+visitInfo.id+'" name="guest_name'+visitInfo.id+'" value="'+visitInfo.visitor.name+'"/>' +
-                                '<input type="text" class="nv_input" id="guest_name'+visitInfo.id+'" name="guest_name" placeholder="검색 할 방문자 입력"/>' +
-                                '<button type="button" class="nv_blue_button find_modal">찾기</button>' +
+                                '<input type="text" class="nv_input" id="guest_name'+visitInfo.id+'" name="guest_name" placeholder="검색 할 방문자 입력" style="width: 30%; float: left;"/>' +
+                                '<button type="button" class="nv_blue_button find_modal" style="float: left;">찾기</button>' +
                                 '<input type="hidden" id="guest_id'+visitInfo.id+'" name="guest_id" value="'+visitInfo.visitor.id+'">' +
                             '</td>' +
-                            '<td>'+(module_html.tbody.component.carray(visitInfo.carray))+'</td>'+
+                            '<td style="display: none;">'+(module_html.tbody.component.carray(visitInfo.carray))+'</td>'+
                             '<td><button type="button" class="nv_red_button" onclick="removeThisRow(this);">삭제</button></td>' +
                         '</tr>';
                 } else {
@@ -434,7 +434,7 @@
                             '</td>' +
                             '<td><input type="text" class="nv_input pone phone" name="guest_phone" placeholder="연락처를 입력해주세요." value="'+visitInfo.visitor.phone+'"/></td>' +
                             '<td><input type="text" class="nv_input" name="guest_company" placeholder="회사명을 입력해주세요." value="'+visitInfo.visitor.company+'" /></td>' +
-                            '<td>'+(module_html.tbody.component.carray(visitInfo.carray))+'</td>'+
+                            '<td style="display: none;">'+(module_html.tbody.component.carray(visitInfo.carray))+'</td>'+
                             '<td><button type="button" class="nv_red_button" onclick="removeThisRow(this);">삭제</button></td>' +
                         '</tr>';
                 }

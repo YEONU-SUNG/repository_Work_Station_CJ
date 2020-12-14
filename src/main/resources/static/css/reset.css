@@ -12,7 +12,8 @@ a{text-decoration: none; color: #333;}
 a:hover{color: #333;}
 ul, li{list-style: none;}
 .skip, .blind{display: none;}
-.nv_blue{color: #3280ff;}
+/* .nv_blue{color: #3280ff;} */
+.nv_blue{color: #3e5aff;}
 .nv_red{color: #d24621;}
 .nv_bold{font-weight: 700;}
 .textcenter{text-align: center;}
@@ -59,9 +60,11 @@ ul, li{list-style: none;}
     box-sizing: border-box;
     cursor: pointer;
 }
-.nv_blue_button{background: #3280ff;}
+/* .nv_blue_button{background: #3280ff;} */
+.nv_blue_button{background: #3e5aff;}
 .nv_red_button{background: #e52250;}
-.nv_green_button{background: #00a99d;}
+/* .nv_green_button{background: #00a99d;} */
+.nv_green_button{background: #009e77;}
 
 @media screen and (max-width:1280px){
     .nv_blue_button,
