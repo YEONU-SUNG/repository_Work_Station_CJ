@@ -441,85 +441,88 @@
         });
     });
 </script>
-<div class="nv_contents_header"><h4>방문현황</h4></div>
-<div class="nv_contents_search">
-    <p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
-        <div class="nv_date_box">
-            <span class="icon_date">달력 아이콘</span>
-            <input type="text" class="nv_input" id="datepicker" name="searchFromDateTime">
-            <span>~</span>
-            <input type="text" class="nv_input" id="datepicker2" name="searchToDateTime">
+<div class="nv_contents">
+    <div class="nv_contents_main_header"><h4>방문현황</h4></div>
+    <div class="nv_contents_search">
+        <p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
+            <div class="nv_date_box">
+                <span class="icon_date">달력 아이콘</span>
+                <input type="text" class="nv_input" id="datepicker" name="searchFromDateTime">
+                <span>~</span>
+                <input type="text" class="nv_input" id="datepicker2" name="searchToDateTime">
+            </div>
+        <p class="m_tit nv_bold pc_skip tpc_skip">검색 설정</p>
+        <div class="nv_select_box">
+            <p id="conditionKey">성명</p>
+            <ul>
+                <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1'}">
+                <li>성명</li>
+                <li>연락처</li>
+                <li>회사</li>
+                <li>차량번호</li>
+                <li>임직원</li>
+                <li>방문목적</li>
+                <li>방문증번호</li>
+                </c:if>
+
+                <c:if test="${sessionScope.login.host.auth eq '2'}">
+                <li>성명</li>
+                <li>방문증번호</li>
+                <li>차량번호</li>
+                <li>연락처</li>
+                <li>회사</li>
+                <li>임직원</li>
+                <li>방문목적</li>
+                </c:if>
+
+                <c:if test="${sessionScope.login.host.auth eq '3' or sessionScope.login.host.auth eq '4'}">
+                <li>성명</li>
+                <li>연락처</li>
+                <li>회사</li>
+                <li>차량번호</li>
+                <li>임직원</li>
+                <li>방문목적</li>
+                </c:if>
+            </ul>
         </div>
-    <p class="m_tit nv_bold pc_skip tpc_skip">검색 설정</p>
-    <div class="nv_select_box">
-        <p id="conditionKey">성명</p>
-        <ul>
-            <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1'}">
-            <li>성명</li>
-            <li>연락처</li>
-            <li>회사</li>
-            <li>차량번호</li>
-            <li>임직원</li>
-            <li>방문목적</li>
-            <li>방문증번호</li>
-            </c:if>
-
-            <c:if test="${sessionScope.login.host.auth eq '2'}">
-            <li>성명</li>
-            <li>방문증번호</li>
-            <li>차량번호</li>
-            <li>연락처</li>
-            <li>회사</li>
-            <li>임직원</li>
-            <li>방문목적</li>
-            </c:if>
-
-            <c:if test="${sessionScope.login.host.auth eq '3' or sessionScope.login.host.auth eq '4'}">
-            <li>성명</li>
-            <li>연락처</li>
-            <li>회사</li>
-            <li>차량번호</li>
-            <li>임직원</li>
-            <li>방문목적</li>
-            </c:if>
-        </ul>
+        <div class="nv_search_box">
+            <input type="text" class="nv_input" id="conditionValue">
+            <input type="submit" class="nv_search_icon" onclick="javascript:module.search();">
+        </div>
     </div>
-    <div class="nv_search_box">
-        <input type="text" class="nv_input" id="conditionValue">
-        <input type="submit" class="nv_search_icon" onclick="javascript:module.search();">
+    <div class="nv_table_box">
+        <table class="nv_table textcenter" cellspacing="0" cellpadding="0" id="approveTable">
+            <thead>
+                <tr>
+                    <th>방문자</th>
+                    <th>업체명</th>
+                    <th class="tpc_skip m_skip">연락처</th>
+                    <th class="tpc_skip m_skip">방문목적</th>
+                    <th class="tpc_skip m_skip">방문위치</th>
+                    <th class="tpc_skip m_skip">방문시작일</th>
+                    <th class="tpc_skip m_skip">방문종료일</th>
+                    <th class="tpc_skip m_skip">차량번호</th>
+                    <%-- <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2'}"> --%>
+                        <th class="tpc_skip m_skip">접견인</th>
+                        <th class="tpc_skip m_skip">접견인 회사</th>
+                        <th class="tpc_skip m_skip">접견인 팀</th>
+                    <%-- </c:if> --%>
+                    <th class="tpc_skip m_skip">방문증번호</th>
+                    <th class="tpc_skip m_skip">승인여부</th>
+                    <th class="tpc_skip m_skip">반려사유</th>
+                    <th>승인관리</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div class="btn_right">
+            <p class="m_tit nv_bold pc_skip tpc_skip m_skip" onclick="javascript:excel();">엑셀 다운로드</p>
+            <button type="button" class="nv_green_button down_icon_btn m_skip" onclick="javascript:excel();">엑셀 다운로드</button>
+        </div>
+        <div class="nv_table_pagenum" id="pagenation"></div>
     </div>
 </div>
-<div class="nv_table_box">
-    <table class="nv_table textcenter" cellspacing="0" cellpadding="0" id="approveTable">
-        <thead>
-            <tr>
-                <th>방문자</th>
-                <th>업체명</th>
-                <th class="tpc_skip m_skip">연락처</th>
-                <th class="tpc_skip m_skip">방문목적</th>
-                <th class="tpc_skip m_skip">방문위치</th>
-                <th class="tpc_skip m_skip">방문시작일</th>
-                <th class="tpc_skip m_skip">방문종료일</th>
-                <th class="tpc_skip m_skip">차량번호</th>
-                <%-- <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2'}"> --%>
-                    <th class="tpc_skip m_skip">접견인</th>
-                    <th class="tpc_skip m_skip">접견인 회사</th>
-                    <th class="tpc_skip m_skip">접견인 팀</th>
-                <%-- </c:if> --%>
-                <th class="tpc_skip m_skip">방문증번호</th>
-                <th class="tpc_skip m_skip">승인여부</th>
-                <th class="tpc_skip m_skip">반려사유</th>
-                <th>승인관리</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <div class="btn_right">
-        <p class="m_tit nv_bold pc_skip tpc_skip m_skip" onclick="javascript:excel();">엑셀 다운로드</p>
-        <button type="button" class="nv_green_button down_icon_btn m_skip" onclick="javascript:excel();">엑셀 다운로드</button>
-    </div>
-    <div class="nv_table_pagenum" id="pagenation"></div>
-</div>
+
 <form id="visitRejectForm">
     <input type="hidden" id="visitRejectFormId"/>
     <div class="nv_modal nv_modal5">

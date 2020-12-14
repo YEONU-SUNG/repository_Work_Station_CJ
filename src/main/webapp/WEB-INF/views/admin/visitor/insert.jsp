@@ -141,8 +141,8 @@
             tr : function() {
                 // 임직원 방문객 정보 입력 폼
                 return '<tr>' +
-                            '<th colspan="6" style="text-align: left;">' +
-                                '<span style="padding-left: 13px;">방문자</span>' +
+                            '<th colspan="6">' +
+                                '<span style="padding-left: 13px;">방문자 정보</span>' +
                             '</th>' +
                             '<th style="display: none;">반입물품</th>' +
                             '<th>삭제</th>' +
@@ -185,8 +185,8 @@
                                 // '<input type="hidden" id="guest_company'+visitInfo.id+'" name="guest_company" value="'+visitInfo.visitor.company+'">' +
                                 // '<input type="hidden" id="guest_dept'+visitInfo.id+'" name="guest_dept" value="'+visitInfo.visitor.dept+'">' +
                                 // '<input type="hidden" class="nv_input" id="guest_name'+visitInfo.id+'" name="guest_name'+visitInfo.id+'" value="'+visitInfo.visitor.name+'"/>' +
-                                '<input type="text" class="nv_input" id="guest_name'+visitInfo.id+'" name="guest_name" placeholder="검색 할 방문자 입력" style="width: 30%; float: left;"/>' +
-                                '<button type="button" class="nv_blue_button find_modal" style="float: left;">찾기</button>' +
+                                '<input type="text" class="nv_input" id="guest_name'+visitInfo.id+'" name="guest_name" style="float:left; width:90%;" placeholder="검색 할 방문자 입력"/>' +
+                                '<button type="button" class="nv_blue_button find_modal">찾기</button>' +
                                 '<input type="hidden" id="guest_id'+visitInfo.id+'" name="guest_id" value="'+visitInfo.visitor.id+'">' +
                             '</td>' +
                             '<td style="display: none;">'+(module_html.tbody.component.carray(visitInfo.carray))+'</td>'+
@@ -751,8 +751,8 @@
         <div class="nv_table_box">
             <dl class="nv_dl_table">
                 <dt>접견인</dt>
-                <dd>
-                    <input type="text" class="nv_input" style="width: 85%;" id="host_name" name="host_name" placeholder="검색 할 접견인 입력">
+                <dd class="nv_dd_full">
+                    <input type="text" class="nv_input max_200" id="host_name" name="host_name" placeholder="검색 할 접견인 입력">
                     <button type="button" class="nv_blue_button find_modal">찾기</button>
                     <input type="hidden" id="find_id" name="host_id" />
                 </dd>

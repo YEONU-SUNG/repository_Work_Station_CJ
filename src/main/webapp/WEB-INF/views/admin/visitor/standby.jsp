@@ -387,21 +387,6 @@ var approveProcessStatus = {
         }
         
     });
-
-    $(document).on('click', '.nv_modal2 button.nv_green_button', function() {
-        var form = $(this).parents().parents().parents().parents().parents();
-        var url =  form.attr('action');
-        url = url.replace(/approval/,"reject");
-        var formData = new FormData();
-        formData.append('carryStuff', $('#carryStuff').val());
-        formData.append('visitApprovalComment', $('#visitApprovalComment').val());
-        callApi.setFormData(url, formData, function(result) {
-            alert('반려처리되었습니다.');
-            form.children().removeClass('on');
-            init(module.pagenation.params);     // 금일방문객 리랜더링
-            dashBoardInit();                    // 대시보드 리렌더링
-        });
-    });
 </script>
 <div class="nv_contents_header">
     <h4>금일 승인 대기 목록</h4>
@@ -441,25 +426,50 @@ var approveProcessStatus = {
     </table>
     <div class="nv_table_pagenum" id="standbyTable_pagenation"></div>
 </div>
-<form id="visitApprovalForm">
-    <div class="nv_modal nv_modal2">
+<form id="visitRejectForm">
+    <input type="hidden" id="visitRejectFormId"/>
+    <div class="nv_modal nv_modal5">
         <div class="nv_modal_container">
             <div class="nv_modal_header">
-                <h2>방문 승인</h2>
+                <h2>방문 반려사유</h2>
                 <p class="nv_modal_close">닫기</p>
             </div>
             <div class="nv_modal_contents">
                 <div>
-                    <h4 class="textarea_name">반입물품</h4>
-                    <textarea name="carryStuff" id="carryStuff" cols="30" rows="10" class="nv_textarea" placeholder="반입물품 표시"></textarea>
-                </div>
-                <div>
-                    <h4 class="textarea_name">승인 코멘트</h4>
-                    <textarea name="visitApprovalComment" id="visitApprovalComment" cols="30" rows="10" class="nv_textarea" placeholder="승인전달사항 입력"></textarea>
+                    <h4 class="textarea_name">반려사유
+                        <div class="nv_select_box" id="rejectCmbBox" style="float:right; margin:10px 0;">
+                            <p>선택</p>
+                            <ul> 
+                                <li>보안위반</li>
+                                <li>경쟁업체/직원</li>
+                                <li>방문규정 위반</li>
+                                <li>기타</li>
+                            </ul>
+                        </div>
+                    </h4>
+                    <textarea name="rejectComment" id="rejectComment" cols="30" rows="10" class="nv_textarea" placeholder="반려사유 입력"></textarea>
                 </div>
                 <div class="btn_area">
+                    <button type="submit" class="nv_green_button">반려</button>
                     <button type="button" class="nv_red_button">취소</button>
-                    <button type="submit" class="nv_blue_button">승인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form id="buildingSiteMapping" action="" method="POST">
+    <input type="hidden" name="targetId" value="" />
+    <div class="nv_modal nv_modal4">
+        <div class="nv_modal_container">
+            <div class="nv_modal_header">
+                <h2>건물접근권한</h2>
+                <p class="nv_modal_close">닫기</p>
+            </div>
+            <div class="nv_modal_contents">
+                <div id="buildingInfo"></div>
+                <div class="btn_area">
+                    <button type="button" class="nv_red_button">취소</button>
+                    <button type="submit" class="nv_green_button">승인</button>
                 </div>
             </div>
         </div>
