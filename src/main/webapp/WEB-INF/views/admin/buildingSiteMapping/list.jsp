@@ -171,7 +171,7 @@
 	</div>
 </div>
 
-<form id="buildingSiteMapping" action="" method="POST">
+<form id="buildingSiteMapping" method="POST">
     <div class="nv_modal nv_modal5">
         <div class="nv_modal_container">
             <div class="nv_modal_header">

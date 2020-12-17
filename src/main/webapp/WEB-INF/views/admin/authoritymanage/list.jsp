@@ -215,7 +215,7 @@
                 <dl class="nv_dl_table">
                     <dt>성명</dt>
                     <dd class="nv_dd_full">
-                        <input type="text" class="nv_input" style="width: 80%;"id="host_name" name="host_name" placeholder="임직원 검색">
+                        <input type="text" class="nv_input" style="width: 80%;" id="host_name" name="host_name" placeholder="임직원 검색">
                         <button type="button" class="nv_blue_button find_modal">찾기</button>
                         <input type="hidden" id="find_id" name="host_id" />
                     </dd>
