@@ -2,11 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<style>
-    .rejectColor {
-        color: red;
-    }
-</style>
 <script>
     $(function() {
         $.datepicker.setDefaults({
@@ -494,7 +489,7 @@
 		</div>
     </div>
     <div class="nv_table_box">
-        <table class="nv_table textcenter" cellspacing="0" cellpadding="0" id="approveTable">
+        <table class="nv_table textcenter" id="approveTable">
             <thead>
                 <tr>
                     <th>방문자</th>
@@ -557,7 +552,7 @@
         </div>
     </div>
 </form>
-<form id="buildingSiteMapping" action="" method="POST">
+<form id="buildingSiteMapping" method="POST">
     <input type="hidden" name="targetId" value="" />
     <div class="nv_modal nv_modal4">
         <div class="nv_modal_container">

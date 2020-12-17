@@ -114,7 +114,7 @@
         <div class="nv_modal_contents">
             <div>
                 <h4 class="textarea_name">반입물품</h4>
-                <textarea name="" id="" cols="30" rows="10" class="nv_textarea" readonly></textarea>
+                <textarea cols="30" rows="10" class="nv_textarea" readonly></textarea>
             </div>
             <div class="btn_area">
                 <button type="button" class="nv_blue_button" onclick="javascript:$('.nv_modal_close').click();">확인</button>

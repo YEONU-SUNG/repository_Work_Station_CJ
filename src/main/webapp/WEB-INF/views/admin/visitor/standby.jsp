@@ -406,7 +406,7 @@ var approveProcessStatus = {
     </div>
 </div>
 <div class="nv_table_box">
-    <table class="nv_table textcenter" cellspacing="0" cellpadding="0" id="standbyTable">
+    <table class="nv_table textcenter" id="standbyTable">
         <thead>
             <tr>
                 <th>예약번호</th>
@@ -457,7 +457,7 @@ var approveProcessStatus = {
         </div>
     </div>
 </form>
-<form id="buildingSiteMapping" action="" method="POST">
+<form id="buildingSiteMapping" method="POST">
     <input type="hidden" name="targetId" value="" />
     <div class="nv_modal nv_modal4">
         <div class="nv_modal_container">

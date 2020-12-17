@@ -5,15 +5,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
-<html lang="utf-8">
-<head>
+<html>
+<head lang="ko">
 	<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
-    <meta http-equiv='cache-control' content='no-cache'/>
-    <meta http-equiv='expires' content='0'/>
+    <!-- <meta http-equiv='Expires' content='-1'/>
     <meta http-equiv='pragma' content='no-cache'/>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/> -->
     <%-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> --%>
     <script src="/admin/static/js/jquery.min.js"></script>
     <script src="/admin/static/js/jquery.mCustomScrollbar.js"></script>
@@ -150,14 +149,13 @@
 			<tiles:insertAttribute name="body" />
 		</div>
 		<tiles:insertAttribute name="footer" />
-	</div>
+    </div>
+    <script>
+        $(function(){
+            $(window).on("load",function(){
+                $(".nv_lnb").mCustomScrollbar();
+            });
+        });
+    </script>
 </body>
-<script>
-    
-$(function(){
-    $(window).on("load",function(){
-        $(".nv_lnb").mCustomScrollbar();
-    });
-});
-</script>
 </html>
