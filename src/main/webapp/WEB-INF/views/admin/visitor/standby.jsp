@@ -201,6 +201,7 @@ var approveProcessStatus = {
     }
 
     function init(url) {
+        $('#approveTable tbody').empty();
         callApi.getData(url, function (result) {
                 
             module.pagenation = result.pagenation;

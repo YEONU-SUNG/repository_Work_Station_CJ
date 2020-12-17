@@ -27,6 +27,7 @@
     
     function init(url, type) {
         type = type || false;
+        $('#contentsmanageList').empty();
         callApi.getData(url, function (result) {
             module.tableData = result;
             $('#contentsmanageList').html(module.makeTable(type));

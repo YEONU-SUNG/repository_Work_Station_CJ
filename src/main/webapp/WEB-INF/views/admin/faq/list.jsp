@@ -34,6 +34,7 @@
     }
     
     function init(url, type) {
+        $('#faqTable > tbody').empty();
         type = type || false;
         callApi.getData(url, function (result) {
             module.tableData = result.response;

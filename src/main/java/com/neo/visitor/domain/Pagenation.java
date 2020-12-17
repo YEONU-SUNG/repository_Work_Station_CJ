@@ -78,7 +78,8 @@ public class Pagenation {
     }
 
     private String lastURL() {
-        return this.URL+"?page="+this.totalPage+"&size="+this.size+this.conditionURL;   
+        if(this.totalPage>0) return this.URL+"?page="+this.totalPage+"&size="+this.size+this.conditionURL;   
+        return "";   
     }
 
     private String conditionURL() {

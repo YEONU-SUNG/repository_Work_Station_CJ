@@ -234,8 +234,8 @@
     }
 
     function init(url) {
+        $('#approveTable tbody').empty();
         callApi.getData(url, function (result) {
-                
             module.pagenation = result.pagenation;
             module.tableData = result.response;
             var auth = '${sessionScope.login.host.auth}';

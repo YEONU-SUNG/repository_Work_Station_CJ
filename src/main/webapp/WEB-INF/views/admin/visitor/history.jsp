@@ -67,6 +67,7 @@
     }
 
     function init(url) {
+        $('#historyTable > tbody')
         callApi.getData(url, function (result) {
             module.pagenation = result.pagenation;
             module.tableData = result.response;

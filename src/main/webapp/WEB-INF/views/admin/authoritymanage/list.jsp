@@ -87,6 +87,7 @@
     
     function init(url, type) {
         type = type || false;
+        $('#authTable > tbody').empty();
         callApi.getData(url, function (result) {
             module.tableData = result.response;
             module.pagenation = result.pagenation;

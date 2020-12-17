@@ -45,6 +45,7 @@
     }
 
     function init(url) {
+        $('#historyTable > tbody').empty();
         callApi.getData(url, function (result) {
             module.pagenation = result.pagenation;
             module.tableData = result.response;

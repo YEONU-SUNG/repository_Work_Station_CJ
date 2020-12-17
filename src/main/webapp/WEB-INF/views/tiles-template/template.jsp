@@ -110,10 +110,16 @@
                 let init = 'init';
                 let limitIndex = 0, breakIndex =0;
                 if(result.url==='/visitor/standby-list') init = 'standby_init';
+
+                var firstURL = result.firstURL=='' ? '<li class="first">처음으로</li>' : '<li class="first" onclick="javascript:'+init+'(\''+result.firstURL+'\')">처음으로</li>'; 
+                var prevURL = result.prevURL=='' ? '<li class="prev">이전으로</li>' : '<li class="prev" onclick="javascript:'+init+'(\''+result.prevURL+'\')">이전으로</li>';
+                var nextURL = result.nextURL=='' ? '<li class="next">다음으로</li>' : '<li class="next" onclick="javascript:'+init+'(\''+result.nextURL+'\')">다음으로</li>';
+                var lastURL = result.lastURL=='' ? '<li class="last">마지막으로</li>' : '<li class="last" onclick="javascript:'+init+'(\''+result.lastURL+'\')">마지막으로</li>';
+
                 let pagenationHTML = '';
-                pagenationHTML =   '<ul>' +
-                                        '<li class="first" onclick="javascript:'+init+'(\''+result.firstURL+'\')">처음으로</li>' +
-                                        '<li class="prev" onclick="javascript:'+init+'(\''+result.prevURL+'\')">이전으로</li>';
+                pagenationHTML =    '<ul>' +
+                                        firstURL +
+                                        prevURL;
                 
                 if(result.page <= 5) {
                     breakIndex = 1;
@@ -127,8 +133,8 @@
                                         ? '<li class="on" onclick="javascript:'+init+'(\''+(result.url+'?page='+result.page+'&size='+result.size)+result.conditionURL+'\')">'+(i)+'</li>'
                                         : '<li onclick="javascript:'+init+'(\''+(result.url+'?page='+i+'&size='+result.size)+result.conditionURL+'\')">'+(i)+'</li>';
                 }
-                pagenationHTML += 	    '<li class="next" onclick="javascript:'+init+'(\''+result.nextURL+'\')">다음으로</li>' +
-                                        '<li class="last" onclick="javascript:'+init+'(\''+result.lastURL+'\')">마지막으로</li>' +
+                pagenationHTML += 	    nextURL +
+                                        lastURL +
                                     '</ul>';
                 return pagenationHTML;
             }

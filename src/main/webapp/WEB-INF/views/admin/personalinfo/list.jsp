@@ -33,6 +33,7 @@
     }
     
     function init(url, type) {
+        $('#personalinfoTable > tbody').empty();
         type = type || false;
         callApi.getData(url, function (result) {
             module.tableData = result.response;
