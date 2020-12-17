@@ -51,13 +51,13 @@
             module.tableData = result.response;
             $('#historyTable > tbody').html(module.makeTable($('#pagenation')));
             $.each(result.response, function(i, e) {
-                var tr = $('<tr>');
+                var tr = $('<tr class="nv_view_nexttable">');
                 tr.append('<input type="hidden" name="visitorId" value="'+e.visitorId+'"></input>');
                 tr.append('<td>'+e.visitor.visitorName+'</td>');
-                tr.append('<td>'+e.visitor.company+'</td>');
-                tr.append('<td>'+e.visitor.mobile+'</td>');
-                tr.append('<td>'+e.planFromDate+'</td>');
-                tr.append('<td>'+e.planToDate+'</td>');
+                tr.append('<td class="tpc_skip m_skip">'+e.visitor.company+'</td>');
+                tr.append('<td class="tpc_skip m_skip">'+e.visitor.mobile+'</td>');
+                tr.append('<td class="tpc_skip m_skip">'+e.planFromDate+'</td>');
+                tr.append('<td class="tpc_skip m_skip">'+e.planToDate+'</td>');
                 tr.append('<td>'+e.blacklistState+'</td>');
                 tr.append('<td>'+e.blacklistReason+'</td>');
                 var btn = $('<td><button class="nv_blue_button nv_modal2_open">편집</button></td>');
@@ -78,7 +78,32 @@
                     $('#blacklistReasonComment').val(e.comment);
                 })
                 tr.append(btn);
-                $('#historyTable > tbody').append(tr);
+                $('#historyTable > tbody:eq(0)').append(tr);
+
+                //모바일 상세
+                var mtr = $('<tr class="pc_skip"></tr>');
+                var mtd = $('<td colspan="4" class="nv_hidden_table_area"></td>');
+                var mtable = $('<table class="nv_hidden_table" id="detail_"'+i+'></table>');
+                var mcolgroup = $('<colgroup><col width="20%"><col width="30%"><col width="20%"><col width="30%"></colgroup>');
+                var mtbody = $('<tbody></tbody>');
+
+                mtable.append(mcolgroup);
+                mtable.append(mtbody);
+                mtd.append(mtable);
+                mtr.append(mtd);
+                $('#historyTable tbody:eq(0)').append(mtr);
+
+                var msubtr1 = $('<tr></tr>'); mtbody.append(msubtr1);
+                var msubtr2 = $('<tr></tr>'); mtbody.append(msubtr2);
+
+                msubtr1.append('<td class="nv_bold">업체명</td>');
+                msubtr1.append('<td>'+e.visitor.company+'</td>');
+                msubtr1.append('<td class="nv_bold">연락처</td>');
+                msubtr1.append('<td>'+e.visitor.mobile+'</td>');
+                msubtr2.append('<td class="nv_bold">시작일</td>');
+                msubtr2.append('<td>'+e.planFromDate+'</td>');
+                msubtr2.append('<td class="nv_bold">종료일</td>');
+                msubtr2.append('<td>'+e.planToDate+'</td>');
             });
         });
     }
@@ -199,13 +224,13 @@
 				<thead>
 					<tr>
                         <th>성명</th>
-                        <th>업체명</th>
-						<th>연락처</th>
+                        <th class="tpc_skip m_skip">업체명</th>
+						<th class="tpc_skip m_skip">연락처</th>
 						<th class="tpc_skip m_skip">시작일</th>
                         <th class="tpc_skip m_skip">종료일</th>
-                        <th class="tpc_skip m_skip">상태</th>
-                        <th class="tpc_skip m_skip">제한사유</th>
-                        <th class="tpc_skip m_skip">제한 관리</th>
+                        <th>상태</th>
+                        <th>제한사유</th>
+                        <th>제한 관리</th>
 					</tr>
 				</thead>
 				<tbody>

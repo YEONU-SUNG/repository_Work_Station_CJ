@@ -529,19 +529,19 @@
     }
     $(function() {
         //방문객 회사정보 가져오기 및 자동완성
-        callApi.getData('/visitor/company', function (result) {            
-            $(document).on('focus', 'input[name="guest_company"]' , function() {
-                $(this).autocomplete({
-                    source : result.map(x=> x.company),
-                    messages: {
-                        noResults: '',
-                        results: function() {
-                            $("ul.ui-autocomplete li").css("background", "white");
-                        }
-                    }
-                });
-            });
-        });
+        // callApi.getData('/visitor/company', function (result) {            
+        //     $(document).on('focus', 'input[name="guest_company"]' , function() {
+        //         $(this).autocomplete({
+        //             source : result.map(x=> x.company),
+        //             messages: {
+        //                 noResults: '',
+        //                 results: function() {
+        //                     $("ul.ui-autocomplete li").css("background", "white");
+        //                 }
+        //             }
+        //         });
+        //     });
+        // });
         
         init();
         

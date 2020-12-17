@@ -68,6 +68,7 @@
             Host H
         WHERE
             HostID = #{hostId}
+            AND DeleteFlag = 'N'
     </select>
     
     <select id="findByHostName" parameterType="java.lang.String" resultType="com.neo.visitor.domain.user.entity.Host">

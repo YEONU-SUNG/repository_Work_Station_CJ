@@ -235,13 +235,13 @@ var approveProcessStatus = {
             var auth = '${sessionScope.login.host.auth}';
             $('#pagenation').html(page.makePagenation(module.pagenation));
             $.each(result.response, function(i, e) {
-                var tr = $('<tr class="nv_view_next table" id="'+e.visitorHistorySeq+'">');
+                var tr = $('<tr class="nv_view_nexttable" id="'+e.visitorHistorySeq+'">');
                     tr.append(module.makeTd('', e.visitorName));
-                    tr.append(module.makeTd('', e.visitorCompany));
+                    tr.append(module.makeTd('tpc_skip m_skip', e.visitorCompany));
                     tr.append(module.makeTd('tpc_skip m_skip', e.visitorMobile));
                     tr.append(module.makeTd('tpc_skip m_skip', e.visitPurpose));
                     tr.append(module.makeTd('tpc_skip m_skip', e.visitorPosition1+','+e.visitorPosition2+','+e.visitorPosition3));
-                    tr.append(module.makeTd('tpc_skip m_skip', e.planFromDateTime));
+                    tr.append(module.makeTd('', e.planFromDateTime));
                     tr.append(module.makeTd('tpc_skip m_skip', e.planToDateTime));
                     tr.append(module.makeTd('tpc_skip m_skip', e.carNo));
                     tr.append(module.makeTd('tpc_skip m_skip', e.hostName));
@@ -257,7 +257,41 @@ var approveProcessStatus = {
                     var approveManagerBtn = module.makeTd('approvechidren', visitorStatus);
                 
                     tr.append(approveManagerBtn);
-                    $('#approveTable tbody').append(tr);
+                    $('#approveTable tbody:eq(0)').append(tr);
+
+                    //모바일 상세
+                    var mtr = $('<tr class="pc_skip"></tr>');
+                    var mtd = $('<td colspan="3" class="nv_hidden_table_area"></td>');
+                    var mtable = $('<table class="nv_hidden_table"></table>');
+                    var mcolgroup = $('<colgroup><col width="13%"><col width="20%"><col width="13%"><col width="20%"><col width="13%"><col width="20%"></colgroup>');
+                    var mtbody = $('<tbody></tbody>');
+
+                    mtable.append(mcolgroup);
+                    mtable.append(mtbody);
+                    mtd.append(mtable);
+                    mtr.append(mtd);
+                    $('#approveTable tbody:eq(0)').append(mtr);
+
+                    var msubtr1 = $('<tr></tr>'); mtbody.append(msubtr1);
+                    var msubtr2 = $('<tr></tr>'); mtbody.append(msubtr2);
+                    var msubtr3 = $('<tr></tr>'); mtbody.append(msubtr3);
+
+                    msubtr1.append(module.makeTd('nv_bold', "업체명"));
+                    msubtr1.append(module.makeTd('', e.visitorCompany));
+                    msubtr1.append(module.makeTd('nv_bold', "연락처"));
+                    msubtr1.append(module.makeTd('', e.visitorMobile));
+                    msubtr1.append(module.makeTd('nv_bold', "방문목적"));
+                    msubtr1.append(module.makeTd('', e.visitPurpose));
+                    msubtr2.append(module.makeTd('nv_bold', "방문위치"));
+                    msubtr2.append(module.makeTd('', e.visitorPosition1+','+e.visitorPosition2+','+e.visitorPosition3));
+                    msubtr2.append(module.makeTd('nv_bold', "차량번호"));
+                    msubtr2.append(module.makeTd('', e.carNo));
+                    msubtr2.append(module.makeTd('nv_bold', "접견인"));
+                    msubtr2.append(module.makeTd('', e.hostName));
+                    msubtr3.append(module.makeTd('nv_bold', "접견인 회사"));
+                    msubtr3.append(module.makeTd('', e.hostCompany));
+                    msubtr3.append(module.makeTd('nv_bold', "접견인 팀"));
+                    msubtr3.append(module.makeTd('', e.hostDept));
             });
         });
     }
@@ -303,10 +337,17 @@ var approveProcessStatus = {
         form.append('buildingName', $('#buildingInfo > div p').text());
 
         var buildingFloors = $('input[name="floor"]');
+        var floorCnt=0;
         $.each(buildingFloors, function(i, e) {
-            if(e.checked) form.append('buildingFloor', e.value);
+            //if(e.checked) form.append('buildingFloor', e.value);
+            if(e.checked) 
+            {
+                form.append('buildingFloor', e.value);
+                floorCnt++;
+            }
         })
-        if(form.get('buildingFloor')==null || form.get('buildingFloor')== undefined) { alert('한개 층 이상 선택해주세요.'); return;}
+        //if(form.get('buildingFloor')==null || form.get('buildingFloor')== undefined) { alert('한개 층 이상 선택해주세요.'); return;}
+        if(floorCnt <= 0) { alert('한개 층 이상 선택해주세요.'); return;}
 
         callApi.setFormData($(this).attr('action'), form, function(result) {
             location.reload();
@@ -409,11 +450,11 @@ var approveProcessStatus = {
 				<thead>
 					<tr>
 						<th>방문자</th>
-						<th>업체명</th>
+						<th class="tpc_skip m_skip">업체명</th>
 						<th class="tpc_skip m_skip">연락처</th>
 						<th class="tpc_skip m_skip">방문목적</th>
-						<th>방문위치</th>
-						<th class="tpc_skip m_skip">방문시작일</th>
+						<th class="tpc_skip m_skip">방문위치</th>
+						<th>방문시작일</th>
 						<th class="tpc_skip m_skip">방문종료일</th>
 						<th class="tpc_skip m_skip">차량번호</th>
 						<th class="tpc_skip m_skip">접견인</th>

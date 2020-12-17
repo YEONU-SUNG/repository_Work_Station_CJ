@@ -72,11 +72,32 @@
                     this.tableHTML += 
                                     '<tr class="nv_view_nexttable" id="'+ this.tableData[i].hostID + '">' +
                                         '<td>' + this.tableData[i].hostName + '</td>' +
-                                        '<td>' + this.tableData[i].company + '</td>' +
-                                        '<td>' + this.tableData[i].deptCD + '</td>' +
+                                        '<td >' + this.tableData[i].company + '</td>' +
+                                        '<td >' + this.tableData[i].deptCD + '</td>' +
                                         '<td>' + authSelect(this.tableData[i].auth) + '</td>' +
                                         '<td><button type="button" class="nv_blue_button" name="modify">변경</button> <button type="button" class="nv_red_button" name="delete">삭제</button></td>' +
                                     '</tr>';
+                    // this.tableHTML +=   
+                    //                 '<tr class="pc_skip">' +
+                    //                     '<td colspan="3" class="nv_hidden_table_area">' +
+                    //                         '<table class="nv_hidden_table">' +
+                    //                             '<colgroup>' +
+                    //                                 '<col width="20%">' +
+                    //                                 '<col width="30%">' +
+                    //                                 '<col width="20%">' +
+                    //                                 '<col width="30%">' +
+                    //                             '</colgroup>' +
+                    //                             '<tbody>' +
+                    //                                 '<tr>' +
+                    //                                     '<td class="nv_bold">회사명</td>' +
+                    //                                     '<td>'+this.tableData[i].company+'</td>' +
+                    //                                     '<td class="nv_bold">팀명</td>' +
+                    //                                     '<td>' +this.tableData[i].deptCD+ '</td>' +
+                    //                                 '</tr>' +
+                    //                             '</tbody>' +
+                    //                         '</table>' +
+                    //                     '</td>' +
+                    //                 '</tr>';
                 }
                 
                 pagenation.html(page.makePagenation(module.pagenation));
@@ -193,8 +214,8 @@
 				<thead>
 					<tr>
 						<th>성명</th>
-						<th>회사명</th>
-						<th>팀명</th>
+						<th >회사명</th>
+						<th >팀명</th>
 						<th>권한</th>
 						<th>관리</th>
 					</tr>

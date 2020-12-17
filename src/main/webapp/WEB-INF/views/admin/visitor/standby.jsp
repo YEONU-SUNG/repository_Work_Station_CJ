@@ -318,10 +318,17 @@ var approveProcessStatus = {
         form.append('buildingName', $('#buildingInfo > div p').text());
 
         var buildingFloors = $('input[name="floor"]');
+        var floorCnt=0;
         $.each(buildingFloors, function(i, e) {
-            if(e.checked) form.append('buildingFloor', e.value);
+            //if(e.checked) form.append('buildingFloor', e.value);
+            if(e.checked) 
+            {
+                form.append('buildingFloor', e.value);
+                floorCnt++;
+            }
         })
         if(form.get('buildingFloor')==null || form.get('buildingFloor')== undefined) { alert('한개 층 이상 선택해주세요.'); return;}
+        if(floorCnt <= 0) { alert('한개 층 이상 선택해주세요.'); return;}
 
         callApi.setFormData($(this).attr('action'), form, function(result) {
             location.reload();

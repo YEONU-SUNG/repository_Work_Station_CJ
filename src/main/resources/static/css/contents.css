@@ -440,7 +440,7 @@
                     .nv_edu_container ul li:hover span{color: #fff;}
             @media screen and (max-width:1280px){
                 .nv_edu_container{
-                    width: 49%; max-height: calc(100vh - 200px);
+                    width: 49%; max-height: calc(100vh - 400px);
                 }
             }
             @media screen and (max-width:767px){

@@ -40,20 +40,61 @@
                 for(var i = 0, len = this.tableData.length; i < len; i++){
                     oData = this.tableData[i];
                     this.tableHTML +=
-                                '<tr>' +
+                                '<tr class="nv_view_nexttable">' +
                                     '<td>' + oData.visitorHistory.visitorName + '</td>' + 
                                     '<td>' + oData.visitorHistory.visitorCompany + '</td>' + 
                                     '<td>' + oData.visitorHistory.visitorMobile + '</td>' + 
-                                    '<td>' + oData.visitorHistory.visitDate.toString().substring(0, 10) + '</td>' + 
-                                    '<td>' + oData.visitorHistory.cardID + '</td>' + 
-                                    '<td>' + oData.visitorHistory.visitPurpose + '</td>' + 
-                                    '<td>' + oData.visitorHistory.visitorPosition1 + ', ' + oData.visitorHistory.visitorPosition2 + ', ' + oData.visitorHistory.visitorPosition3 + '</td>' + 
-                                    '<td>' + oData.visitorHistory.planFromDateTime + '~' + oData.visitorHistory.planToDateTime + '</td>' + 
-                                    '<td>' + oData.visitFromDateTime.toString().substring(10) + '</td>' + 
-                                    '<td>' + oData.visitToDateTime.toString().substring(10) + '</td>' + 
-                                    '<td>' + oData.visitorHistory.hostName + '</td>' + 
-                                    '<td>' + oData.visitorHistory.hostCompany + '</td>' + 
-                                    '<td>' + oData.visitorHistory.hostDept + '</td>' + 
+                                    '<td class="tpc_skip m_skip">' + oData.visitorHistory.visitDate.toString().substring(0, 10) + '</td>' + 
+                                    '<td class="tpc_skip m_skip">' + oData.visitorHistory.cardID + '</td>' + 
+                                    '<td class="tpc_skip m_skip">' + oData.visitorHistory.visitPurpose + '</td>' + 
+                                    '<td class="tpc_skip m_skip">' + oData.visitorHistory.visitorPosition1 + ', ' + oData.visitorHistory.visitorPosition2 + ', ' + oData.visitorHistory.visitorPosition3 + '</td>' + 
+                                    '<td class="tpc_skip m_skip">' + oData.visitorHistory.planFromDateTime + '~' + oData.visitorHistory.planToDateTime + '</td>' + 
+                                    '<td class="tpc_skip m_skip">' + oData.visitFromDateTime.toString().substring(10) + '</td>' + 
+                                    '<td class="tpc_skip m_skip">' + oData.visitToDateTime.toString().substring(10) + '</td>' + 
+                                    '<td class="tpc_skip m_skip">' + oData.visitorHistory.hostName + '</td>' + 
+                                    '<td class="tpc_skip m_skip">' + oData.visitorHistory.hostCompany + '</td>' + 
+                                    '<td class="tpc_skip m_skip">' + oData.visitorHistory.hostDept + '</td>' + 
+                                '</tr>';
+                    this.tableHTML +=   
+                                '<tr class="pc_skip">' +
+                                    '<td colspan="3" class="nv_hidden_table_area">' +
+                                        '<table class="nv_hidden_table">' +
+                                            '<colgroup>' +
+                                                '<col width="13%">' +
+                                                '<col width="20%">' +
+                                                '<col width="13%">' +
+                                                '<col width="20%">' +
+                                                '<col width="13%">' +
+                                                '<col width="20%">' +
+                                            '</colgroup>' +
+                                            '<tbody>' +
+                                                '<tr>' +
+                                                    '<td class="nv_bold">방문증번호</td>' +
+                                                    '<td>'+oData.visitorHistory.cardID+'</td>' +
+                                                    '<td class="nv_bold">방문목적</td>' +
+                                                    '<td>' +oData.visitorHistory.visitPurpose+ '</td>' +
+                                                    '<td class="nv_bold">방문위치</td>' +
+                                                    '<td>' +oData.visitorHistory.visitorPosition1 + ', ' + oData.visitorHistory.visitorPosition2 + ', ' + oData.visitorHistory.visitorPosition3+ '</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td class="nv_bold">방문일자</td>' +
+                                                    '<td>'+oData.visitorHistory.planFromDateTime + '~' + oData.visitorHistory.planToDateTime+'</td>' +
+                                                    '<td class="nv_bold">방문일시</td>' +
+                                                    '<td>' +oData.visitFromDateTime.toString().substring(10)+ '</td>' +
+                                                    '<td class="nv_bold">퇴실일시</td>' +
+                                                    '<td>' +oData.visitToDateTime.toString().substring(10)+ '</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td class="nv_bold">접견인</td>' +
+                                                    '<td>'+oData.visitorHistory.hostName+'</td>' +
+                                                    '<td class="nv_bold">접견인 회사</td>' +
+                                                    '<td>' +oData.visitorHistory.hostCompany+ '</td>' +
+                                                    '<td class="nv_bold">접견인 팀</td>' +
+                                                    '<td>' +oData.visitorHistory.hostDept+ '</td>' +
+                                                '</tr>' +
+                                            '</tbody>' +
+                                        '</table>' +
+                                    '</td>' +
                                 '</tr>';
                 }
                 // for(var i=0; i<this.tableData.length;i++) {

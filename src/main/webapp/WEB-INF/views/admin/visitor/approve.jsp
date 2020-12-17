@@ -241,13 +241,13 @@
             var auth = '${sessionScope.login.host.auth}';
             $('#pagenation').html(page.makePagenation(module.pagenation));
             $.each(result.response, function(i, e) {
-                var tr = $('<tr class="nv_view_next table" id="'+e.visitorHistorySeq+'">');
+                var tr = $('<tr class="nv_view_nexttable" id="'+e.visitorHistorySeq+'">');
                     tr.append(module.makeTd('', e.visitorName));
-                    tr.append(module.makeTd('', e.visitorCompany));
+                    tr.append(module.makeTd('tpc_skip m_skip', e.visitorCompany));
                     tr.append(module.makeTd('tpc_skip m_skip', e.visitorMobile));
                     tr.append(module.makeTd('tpc_skip m_skip', e.visitPurpose));
                     tr.append(module.makeTd('tpc_skip m_skip', e.visitorPosition1+','+e.visitorPosition2+','+e.visitorPosition3));
-                    tr.append(module.makeTd('tpc_skip m_skip', e.planFromDateTime));
+                    tr.append(module.makeTd('', e.planFromDateTime));
                     tr.append(module.makeTd('tpc_skip m_skip', e.planToDateTime));
                     tr.append(module.makeTd('tpc_skip m_skip', e.carNo));
                     tr.append(module.makeTd('tpc_skip m_skip', e.hostName));
@@ -277,12 +277,12 @@
 
                             }
                             tr.append(innerHTML_CardID);
-                        } else tr.append(module.makeTd('tpc_skip m_skip', ''));
+                        } else tr.append(module.makeTd('', ''));
                     } else if (auth == '4') {
                         tr.append(module.makeTd('tpc_skip m_skip', innerHTML_CardID));
                     }
 
-                    tr.append(module.makeTd('approvechidren', approveProcessStatus.visitorApprove(e)));
+                    tr.append(module.makeTd('tpc_skip m_skip approvechidren', approveProcessStatus.visitorApprove(e)));
 
                     var rejectName = '';
                     if(e.rejectFlag==='Y'){
@@ -304,7 +304,55 @@
                     })
                     tr.append(rejectPopup);
                     tr.append(approveManagerBtn);
-                    $('#approveTable tbody').append(tr);
+                    $('#approveTable tbody:eq(0)').append(tr);
+
+
+                    //모바일 상세
+                    var mtr = $('<tr class="pc_skip"></tr>');
+                    var mtd = $('<td colspan="4" class="nv_hidden_table_area"></td>');
+                    var mtable = $('<table class="nv_hidden_table"></table>');
+                    var mcolgroup = $('<colgroup><col width="13%"><col width="20%"><col width="13%"><col width="20%"><col width="13%"><col width="20%"></colgroup>');
+                    var mtbody = $('<tbody></tbody>');
+
+                    mtable.append(mcolgroup);
+                    mtable.append(mtbody);
+                    mtd.append(mtable);
+                    mtr.append(mtd);
+                    $('#approveTable tbody:eq(0)').append(mtr);
+
+                    var msubtr1 = $('<tr></tr>'); mtbody.append(msubtr1);
+                    var msubtr2 = $('<tr></tr>'); mtbody.append(msubtr2);
+                    var msubtr3 = $('<tr></tr>'); mtbody.append(msubtr3);
+                    var msubtr4 = $('<tr></tr>'); mtbody.append(msubtr4);
+
+                    msubtr1.append(module.makeTd('nv_bold', "업체명"));
+                    msubtr1.append(module.makeTd('', e.visitorCompany));
+                    msubtr1.append(module.makeTd('nv_bold', "연락처"));
+                    msubtr1.append(module.makeTd('', e.visitorMobile));
+                    msubtr1.append(module.makeTd('nv_bold', "방문목적"));
+                    msubtr1.append(module.makeTd('', e.visitPurpose));
+                    msubtr2.append(module.makeTd('nv_bold', "방문위치"));
+                    msubtr2.append(module.makeTd('', e.visitorPosition1+','+e.visitorPosition2+','+e.visitorPosition3));
+                    msubtr2.append(module.makeTd('nv_bold', "차량번호"));
+                    msubtr2.append(module.makeTd('', e.carNo));
+                    msubtr2.append(module.makeTd('nv_bold', "접견인"));
+                    msubtr2.append(module.makeTd('', e.hostName));
+                    msubtr3.append(module.makeTd('nv_bold', "접견인 회사"));
+                    msubtr3.append(module.makeTd('', e.hostCompany));
+                    msubtr3.append(module.makeTd('nv_bold', "접견인 팀"));
+                    msubtr3.append(module.makeTd('', e.hostDept));
+                    msubtr3.append(module.makeTd('nv_bold', "반려사유"));
+                    //msubtr3.append(rejectPopup);                    
+                    // 반려사유가있는 경우 클릭 시 상세보기 팝업 활성화
+                    var mobilerejectPopup = module.makeTd('rejectColor', rejectName);
+                    mobilerejectPopup.on('click', function() {
+                        $('.nv_modal5').addClass('on');
+                        $('#rejectCmbBox > p').html(rejectName);
+                        $('#rejectComment').val(e.rejectComment);
+                        $('.nv_modal5 .btn_area').html('<button type="button" class="nv_red_button">닫기</button>');
+                    })
+
+                    msubtr3.append(mobilerejectPopup);
             });
         });
     }
@@ -350,10 +398,17 @@
         form.append('buildingName', $('#buildingInfo > div p').text());
 
         var buildingFloors = $('input[name="floor"]');
+        var floorCnt=0;
         $.each(buildingFloors, function(i, e) {
-            if(e.checked) form.append('buildingFloor', e.value);
+            //if(e.checked) form.append('buildingFloor', e.value);
+            if(e.checked) 
+            {
+                form.append('buildingFloor', e.value);
+                floorCnt++;
+            }
         })
-        if(form.get('buildingFloor')==null || form.get('buildingFloor')== undefined) { alert('한개 층 이상 선택해주세요.'); return;}
+        //if(form.get('buildingFloor')==null || form.get('buildingFloor')== undefined) { alert('한개 층 이상 선택해주세요.'); return;}
+        if(floorCnt <= 0) { alert('한개 층 이상 선택해주세요.'); return;}
 
         callApi.setFormData($(this).attr('action'), form, function(result) {
             location.reload();
@@ -437,7 +492,12 @@
     });
 </script>
 <div class="nv_contents">
+    <c:if test="${sessionScope.login.host.auth eq '3'}">
+    <div class="nv_contents_main_header"><h4>방문 승인 관리</h4></div>
+    </c:if>
+    <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2' or sessionScope.login.host.auth eq '4'}">
     <div class="nv_contents_main_header"><h4>방문현황</h4></div>
+    </c:if>
     <div class="nv_contents_search nv_contents_search_type2">
         <p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
             <div class="nv_date_box">
@@ -493,11 +553,11 @@
             <thead>
                 <tr>
                     <th>방문자</th>
-                    <th>업체명</th>
+                    <th class="tpc_skip m_skip">업체명</th>
                     <th class="tpc_skip m_skip">연락처</th>
                     <th class="tpc_skip m_skip">방문목적</th>
                     <th class="tpc_skip m_skip">방문위치</th>
-                    <th class="tpc_skip m_skip">방문시작일</th>
+                    <th>방문시작일</th>
                     <th class="tpc_skip m_skip">방문종료일</th>
                     <th class="tpc_skip m_skip">차량번호</th>
                     <%-- <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2'}"> --%>
@@ -505,7 +565,9 @@
                         <th class="tpc_skip m_skip">접견인 회사</th>
                         <th class="tpc_skip m_skip">접견인 팀</th>
                     <%-- </c:if> --%>
-                    <th class="tpc_skip m_skip">방문증번호</th>
+                    <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2'}">
+                    <th>방문증번호</th>
+                    </c:if>
                     <th class="tpc_skip m_skip">승인여부</th>
                     <th class="tpc_skip m_skip">반려사유</th>
                     <th>승인관리</th>
