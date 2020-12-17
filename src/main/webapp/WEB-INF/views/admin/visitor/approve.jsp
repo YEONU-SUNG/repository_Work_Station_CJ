@@ -218,11 +218,11 @@
             return '<input type="checkbox" name="floor" id="'+floor+'" value="'+floor+'" '+checked+'/><label style="padding-right:2%;" for="'+floor+'">'+floor+'</label>';
         },
         getBuildingSelectBox : function() {
-            return '<h4 class="textarea_name" style="padding-bottom: 10px;">건물명' +
+            return '<div class="textarea_name" style="padding-bottom: 10px;">건물명' +
                     '<div class="nv_select_box" id="accessBox" style="float:right; margin:10px 0;">' +
                         '<p>건물선택</p>' +
                         '</div>' +
-                '</h4>' +
+                '</div>' +
                 '<div id="floorBox"></div>';
         }
     }
@@ -347,7 +347,7 @@
         event.preventDefault();
 
         var form = new FormData();
-        form.append('buildingName', $('#buildingInfo > h4 p').text());
+        form.append('buildingName', $('#buildingInfo > div p').text());
 
         var buildingFloors = $('input[name="floor"]');
         $.each(buildingFloors, function(i, e) {
