@@ -123,7 +123,7 @@
                 })
                 ul.append(li);
             });
-            $('#buildingInfo > h4 > div').append(ul);
+            $('#buildingInfo > div > div').append(ul);
         }); 
     });
 
@@ -132,7 +132,7 @@
         event.preventDefault();
 
         var form = new FormData();
-        form.append('buildingName', $('#buildingInfo > h4 p').text());
+        form.append('buildingName', $('#buildingInfo > div p').text());
 
         var buildingFloors = $('input[name="floor"]');
         $.each(buildingFloors, function(i, e) {
