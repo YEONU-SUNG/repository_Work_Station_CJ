@@ -443,7 +443,7 @@
 </script>
 <div class="nv_contents">
     <div class="nv_contents_main_header"><h4>방문현황</h4></div>
-    <div class="nv_contents_search">
+    <div class="nv_contents_search nv_contents_search_type2">
         <p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
             <div class="nv_date_box">
                 <span class="icon_date">달력 아이콘</span>
@@ -487,8 +487,11 @@
         </div>
         <div class="nv_search_box">
             <input type="text" class="nv_input" id="conditionValue">
-            <input type="submit" class="nv_search_icon" onclick="javascript:module.search();">
+            <input type="submit" class="nv_search_icon tpc_skip m_skip" onclick="javascript:module.search();">
         </div>
+        <div class="nv_search_box pc_skip tpc_skip" style="width: 32px;">
+				<input type="submit" class="nv_search_icon" onclick="javascript:search();">
+		</div>
     </div>
     <div class="nv_table_box">
         <table class="nv_table textcenter" cellspacing="0" cellpadding="0" id="approveTable">

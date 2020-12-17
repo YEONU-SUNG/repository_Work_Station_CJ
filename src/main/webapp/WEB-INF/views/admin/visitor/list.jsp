@@ -397,7 +397,10 @@ var approveProcessStatus = {
             </div>
 			<div class="nv_search_box">
 				<input type="text" class="nv_input" id="conditionValue">
-                <input type="submit" class="nv_search_icon" onclick="search();">
+                <input type="submit" class="nv_search_icon tpc_skip m_skip" onclick="search();">
+			</div>
+            <div class="nv_search_box pc_skip tpc_skip" style="width: 32px;">
+				<input type="submit" class="nv_search_icon" onclick="javascript:search();">
 			</div>
 		</div>
 		<div class="nv_table_box">

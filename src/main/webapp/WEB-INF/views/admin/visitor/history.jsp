@@ -45,7 +45,7 @@
                                     '<td>' + oData.visitorHistory.visitorCompany + '</td>' + 
                                     '<td>' + oData.visitorHistory.visitorMobile + '</td>' + 
                                     '<td>' + oData.visitorHistory.visitDate.toString().substring(0, 10) + '</td>' + 
-                                    '<td>' + oData.visitorHistory.visitorID + '</td>' + 
+                                    '<td>' + oData.visitorHistory.cardID + '</td>' + 
                                     '<td>' + oData.visitorHistory.visitPurpose + '</td>' + 
                                     '<td>' + oData.visitorHistory.visitorPosition1 + ', ' + oData.visitorHistory.visitorPosition2 + ', ' + oData.visitorHistory.visitorPosition3 + '</td>' + 
                                     '<td>' + oData.visitorHistory.planFromDateTime + '~' + oData.visitorHistory.planToDateTime + '</td>' + 

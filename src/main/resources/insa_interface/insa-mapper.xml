@@ -32,6 +32,7 @@
             ,I.[DisplayName]
             ,I.[Mail] AS Email
             ,ISNULL(REPLACE(I.[OfficePhoneNumber],'+82 ','0'), '') AS Tel
+            ,ISNULL(REPLACE(I.MobileNumber,'+82 ','0'), '') AS Mobile
             ,ISNULL(G.HRCodeName, '') AS GradeName
             ,ISNULL(P.HRCodeName, '') AS PositionName
             ,I.StartDate AS InsertDate
@@ -59,6 +60,7 @@
             ,I.[DisplayName]
             ,I.[Mail] AS Email
             ,ISNULL(REPLACE(I.[OfficePhoneNumber],'+82 ','0'), '') AS Tel
+            ,ISNULL(REPLACE(I.MobileNumber,'+82 ','0'), '') AS Mobile
             ,ISNULL(G.HRCodeName, '') AS GradeName
             ,ISNULL(P.HRCodeName, '') AS PositionName
             ,I.StartDate AS InsertDate
