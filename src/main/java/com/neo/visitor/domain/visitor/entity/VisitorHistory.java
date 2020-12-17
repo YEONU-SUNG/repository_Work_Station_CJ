@@ -175,13 +175,16 @@ public class VisitorHistory {
         this.visitorCompany = _visitor.getCompany();
         this.visitorGender = _visitor.getVisitorGender();
         this.visitorLocation = _visitor.getVisitorLocation();
-        try {
-            this.visitorName = AES256Util.encrypt(_visitor.getVisitorName());
-            this.visitorBirth = AES256Util.encrypt(_visitor.getVisitorBirth());
-            this.visitorMobile = AES256Util.encrypt(_visitor.getMobile());
-        } catch (UnsupportedEncodingException | GeneralSecurityException e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     this.visitorName = AES256Util.encrypt(_visitor.getVisitorName());
+        //     this.visitorBirth = AES256Util.encrypt(_visitor.getVisitorBirth());
+        //     this.visitorMobile = AES256Util.encrypt(_visitor.getMobile());
+        // } catch (UnsupportedEncodingException | GeneralSecurityException e) {
+        //     e.printStackTrace();
+        // }
+        this.visitorName = _visitor.getVisitorName();
+        this.visitorBirth = _visitor.getVisitorBirth();
+        this.visitorMobile = _visitor.getMobile();
     }
 
     /**
