@@ -240,7 +240,7 @@
                 <input type="text" class="nv_input max_200 birth" id="plan_to_date" name="plan_to_date" />
             </div>
             <div>
-                <h4 class="textarea_name">제한상태
+                <!-- <h4 class="textarea_name">제한상태
                     <div class="nv_select_box" id="blacklistState" style="float:right; margin:10px 0;">
                         <p>선택</p>
                         <ul> 
@@ -248,10 +248,19 @@
                             <li>출입허용</li>
                         </ul>
                     </div>
-                </h4>
+                </h4> -->
+                <div class="textarea_name">제한상태
+                    <div class="nv_select_box" id="blacklistState" style="float:right; margin:10px 0;">
+                        <p>선택</p>
+                        <ul> 
+                            <li>출입제한</li>
+                            <li>출입허용</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div>
-                <h4 class="textarea_name">제한사유
+                <!-- <h4 class="textarea_name">제한사유
                     <div class="nv_select_box" id="blacklistReason" style="float:right; margin:10px 0;">
                         <p>선택</p>
                         <ul> 
@@ -261,7 +270,18 @@
                             <li>기타</li>
                         </ul>
                     </div>
-                </h4>
+                </h4> -->
+                <div class="textarea_name">제한사유
+                    <div class="nv_select_box" id="blacklistReason" style="float:right; margin:10px 0;">
+                        <p>선택</p>
+                        <ul> 
+                            <li>보안위반</li>
+                            <li>경쟁업체/직원</li>
+                            <li>방문규정 위반</li>
+                            <li>기타</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div>
                 <h4 class="textarea_name">상세내용</h4>
