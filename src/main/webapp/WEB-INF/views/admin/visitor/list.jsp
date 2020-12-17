@@ -459,7 +459,7 @@ var approveProcessStatus = {
         </div>
     </div>
 </form>
-<form id="buildingSiteMapping" action="" method="POST">
+<form id="buildingSiteMapping" method="POST">
     <input type="hidden" name="targetId" value="" />
     <div class="nv_modal nv_modal4">
         <div class="nv_modal_container">
