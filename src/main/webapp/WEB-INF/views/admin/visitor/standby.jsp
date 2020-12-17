@@ -185,11 +185,11 @@ var approveProcessStatus = {
             return '<input type="checkbox" name="floor" id="'+floor+'" value="'+floor+'" '+checked+'/><label style="padding-right:2%;" for="'+floor+'">'+floor+'</label>';
         },
         getBuildingSelectBox : function() {
-            return '<h4 class="textarea_name" style="padding-bottom: 10px;">건물명' +
+            return '<div class="textarea_name" style="padding-bottom: 10px;">건물명' +
                     '<div class="nv_select_box" id="accessBox" style="float:right; margin:10px 0;">' +
                         '<p>건물선택</p>' +
                         '</div>' +
-                '</h4>' +
+                '</div>' +
                 '<div id="floorBox"></div>';
         }
     }
@@ -436,7 +436,7 @@ var approveProcessStatus = {
             </div>
             <div class="nv_modal_contents">
                 <div>
-                    <h4 class="textarea_name">반려사유
+                    <div class="textarea_name">반려사유
                         <div class="nv_select_box" id="rejectCmbBox" style="float:right; margin:10px 0;">
                             <p>선택</p>
                             <ul> 
@@ -446,7 +446,7 @@ var approveProcessStatus = {
                                 <li>기타</li>
                             </ul>
                         </div>
-                    </h4>
+                    </div>
                     <textarea name="rejectComment" id="rejectComment" cols="30" rows="10" class="nv_textarea" placeholder="반려사유 입력"></textarea>
                 </div>
                 <div class="btn_area">

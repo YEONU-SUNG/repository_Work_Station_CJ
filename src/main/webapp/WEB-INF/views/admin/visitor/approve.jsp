@@ -531,7 +531,7 @@
             </div>
             <div class="nv_modal_contents">
                 <div>
-                    <h4 class="textarea_name">반려사유
+                    <div class="textarea_name">반려사유
                         <div class="nv_select_box" id="rejectCmbBox" style="float:right; margin:10px 0;">
                             <p>선택</p>
                             <ul> 
@@ -541,7 +541,7 @@
                                 <li>기타</li>
                             </ul>
                         </div>
-                    </h4>
+                    </div>
                     <textarea name="rejectComment" id="rejectComment" cols="30" rows="10" class="nv_textarea" placeholder="반려사유 입력"></textarea>
                 </div>
                 <div class="btn_area">

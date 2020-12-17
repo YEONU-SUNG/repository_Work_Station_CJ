@@ -5,11 +5,11 @@
         return '<input type="checkbox" name="floor" id="'+floor+'" value="'+floor+'" '+checked+'/><label style="padding-right:2%;" for="'+floor+'">'+floor+'</label>';
     }
     function getBuildingSelectBox(name) {
-        return '<h4 class="textarea_name" style="padding-bottom: 10px;">건물명' +
+        return '<div class="textarea_name" style="padding-bottom: 10px;">건물명' +
                     '<div class="nv_select_box" id="rejectCmbBox" style="float:right; margin:10px 0;">' +
                         '<p>'+name+'</p>' +
                     '</div>' +
-                '</h4>' +
+                '</div>' +
                 '<div id="floorBox"></div>';
     }
     
