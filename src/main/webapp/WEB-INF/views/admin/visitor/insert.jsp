@@ -816,8 +816,8 @@
             </div>
         </div>
         <div class="nv_table_box">
-            <%-- <table class="nv_table textcenter tpc_skip m_skip" cellspacing="0" cellpadding="0"> --%>
-            <table class="nv_table textcenter" cellspacing="0" cellpadding="0">
+            <%-- <table class="nv_table textcenter tpc_skip m_skip"> --%>
+            <table class="nv_table textcenter">
                 <thead id="visitorThead"></thead>
                 <tbody id="visitorTbody"></tbody>
             </table>

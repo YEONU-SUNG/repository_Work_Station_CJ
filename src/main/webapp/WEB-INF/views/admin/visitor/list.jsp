@@ -404,7 +404,7 @@ var approveProcessStatus = {
 			</div>
 		</div>
 		<div class="nv_table_box">
-			<table class="nv_table textcenter" cellspacing="0" cellpadding="0" id="approveTable">
+			<table class="nv_table textcenter" id="approveTable">
 				<thead>
 					<tr>
 						<th>방문자</th>

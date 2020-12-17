@@ -543,8 +543,11 @@
 
 ********************************/
 table {
-    cell-spacing: 0;
-    cell-padding: 0;
+    border-collapse:collapse;
+    border-spacing:0;
+}
+table th, table td{
+    padding:0;
 }
 .rejectColor {
     color: red;

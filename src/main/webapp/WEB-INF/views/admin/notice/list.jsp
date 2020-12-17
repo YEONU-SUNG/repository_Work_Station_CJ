@@ -98,7 +98,7 @@
 			</div>
 		</div>
 		<div class="nv_table_box">
-			<table class="nv_table textcenter nv_board_table" cellspacing="0" cellpadding="0" id="noticeTable">
+			<table class="nv_table textcenter nv_board_table" id="noticeTable">
 				<colgroup>
 					<col width="50">
 					<col width="90">

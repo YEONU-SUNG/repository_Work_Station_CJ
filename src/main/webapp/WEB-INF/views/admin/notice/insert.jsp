@@ -66,7 +66,7 @@
 			<p><span class="nv_red">*</span> 는 필수 입력 사항입니다.</p>
 		</div>
         <form id="noticeForm">
-            <table class="nv_table nv_write_table" cellpadding="0" cellspacing="0">
+            <table class="nv_table nv_write_table">
                 <colgroup><col width="20%"><col></colgroup>
                 <tbody>
                     <tr>

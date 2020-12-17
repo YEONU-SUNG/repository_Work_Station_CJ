@@ -188,7 +188,7 @@
             <button type="button" class="nv_blue_button add_icon_btn right" style="margin-right: 30px;" onclick="javascript:$('.nv_modal2').addClass('on')">관리자 추가</button>
         </div>
 		<div class="nv_table_box">
-			<table class="nv_table textcenter" cellspacing="0" cellpadding="0" id="authTable">
+			<table class="nv_table textcenter" id="authTable">
 				<thead>
 					<tr>
 						<th>성명</th>

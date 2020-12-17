@@ -194,7 +194,7 @@
             <div class="nv_m_btn_area nv_bord_btn_area">
                 <button type="button" class="nv_blue_button add_icon_btn right" onclick="javascript:location.href='add-blacklist'" style="margin-right: 30px;">출입 제한 추가</button>
             </div>
-			<table class="nv_table textcenter" cellspacing="0" cellpadding="0" id="historyTable">
+			<table class="nv_table textcenter" id="historyTable">
 				<thead>
 					<tr>
                         <th>성명</th>

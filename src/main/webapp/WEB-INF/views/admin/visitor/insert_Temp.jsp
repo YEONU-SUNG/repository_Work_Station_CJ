@@ -178,8 +178,7 @@
 			</div>
 		</div>
 		<div class="nv_table_box">
-			<table class="nv_table textcenter tpc_skip m_skip" cellspacing="0"
-				cellpadding="0">
+			<table class="nv_table textcenter tpc_skip m_skip">
 				<thead>
 					<tr>
 						<th>내/외국인</th>
@@ -229,8 +228,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<table class="nv_table nv_hidden_table_type2 nv_m_table pc_skip"
-				cellspacing="0" cellpadding="0">
+			<table class="nv_table nv_hidden_table_type2 nv_m_table pc_skip">
 				<colgorup>
 				<col width="25%">
 				<col width="25%">

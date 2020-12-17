@@ -12,7 +12,7 @@ function download(url , param) {
             <div class="nv_table_tit nv_wirte_tit">
                 <h4>공지사항</h4>
             </div>
-            <table class="nv_table nv_write_table" cellpadding="0" cellspacing="0">
+            <table class="nv_table nv_write_table">
                 <colgroup>
                     <col width="20%">
                     <col>
