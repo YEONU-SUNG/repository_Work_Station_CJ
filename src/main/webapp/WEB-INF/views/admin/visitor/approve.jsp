@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="/admin/static/js/jquery-ui-1.12.1.js"></script>
+<link rel="stylesheet" href="/admin/static/css/jquery-ui-1.12.1.css">
 <script>
     $(function() {
         $.datepicker.setDefaults({
@@ -545,7 +545,7 @@
             <input type="submit" class="nv_search_icon tpc_skip m_skip" onclick="javascript:module.search();">
         </div>
         <div class="nv_search_box pc_skip tpc_skip" style="width: 32px;">
-				<input type="submit" class="nv_search_icon" onclick="javascript:search();">
+				<input type="submit" class="nv_search_icon" onclick="javascript:module.search();">
 		</div>
     </div>
     <div class="nv_table_box">
