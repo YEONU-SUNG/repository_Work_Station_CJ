@@ -13,4 +13,5 @@ public interface VisitorBlackListRepository {
     void update(VisitorBlackList visitorBlackList);
     VisitorBlackList findByVisitorIdAndDate(Map<String, Object> map);
     List<VisitorBlackList> findAll();
+    List<VisitorBlackList> findSearch(Map<String, Object> map);
 }

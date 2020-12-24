@@ -189,13 +189,13 @@
 			<button type="button" class="nv_green_button down_icon_btn m_skip" onclick="javascript:excel();">엑셀 다운로드</button>
 		</div>
 		<div class="nv_contents_search nv_contents_search_type2">
-			<p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
+			<%-- <p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
 			<div class="nv_date_box">
 				<span class="icon_date">달력 아이콘</span>
                 <input type="text" class="nv_input" id="datepicker" name="visitorFromDateTime">
                 <span>~</span>
                 <input type="text" class="nv_input" id="datepicker2" name="visitorToDateTime">
-			</div>
+			</div> --%>
 			<p class="m_tit nv_bold pc_skip tpc_skip">검색 설정</p>
 			<div class="nv_select_box">
 				<%-- <p id="conditionKey">선택</p> --%>
@@ -204,8 +204,8 @@
 					<%-- <li>예약번호</li> --%>
                     <li>이름</li>
                     <li>회사명</li>
-                    <li>방문목적</li>
-                    <li>방문증번호</li>
+                    <%-- <li>방문목적</li>
+                    <li>방문증번호</li> --%>
 				</ul>
 			</div>
 			<div class="nv_search_box">
@@ -218,7 +218,7 @@
 		</div>
 		<div class="nv_table_box">
             <div class="nv_m_btn_area nv_bord_btn_area">
-                <button type="button" class="nv_blue_button add_icon_btn right" onclick="javascript:location.href='add-blacklist'" style="margin-right: 30px;">출입 제한 추가</button>
+                <button type="button" class="nv_blue_button add_icon_btn right" onclick="javascript:location.href='add-blacklist'" style="margin-right: 30px;">방문 제한자 추가</button>
             </div>
 			<table class="nv_table textcenter" id="historyTable">
 				<thead>

@@ -19,15 +19,23 @@
     </insert>
 
     <select id="findByVisitorNameAndVisitorBirthAndVisitorMobile" parameterType="com.neo.visitor.domain.visitor.entity.Visitor" resultType="com.neo.visitor.domain.visitor.entity.Visitor">
-        SELECT * FROM visitor
+        SELECT TOP 1 * FROM visitor
         WHERE VisitorName = #{visitorName}
             AND VisitorBirth = #{visitorBirth}
             AND Mobile = #{mobile}
     </select>
 
     <select id="findByVisitornameAndVisitorCompanyAndVisitorMobile" parameterType="com.neo.visitor.domain.visitor.entity.Visitor" resultType="com.neo.visitor.domain.visitor.entity.Visitor">
-        SELECT * FROM visitor
+        SELECT TOP 1 * FROM visitor
         WHERE VisitorName = #{visitorName}
+            AND Company = #{company}
+            AND Mobile = #{mobile}
+    </select>
+
+    <select id="findByVisitornameAndVisitorBirthAndVisitorCompanyAndVisitorMobile" parameterType="com.neo.visitor.domain.visitor.entity.Visitor" resultType="com.neo.visitor.domain.visitor.entity.Visitor">
+        SELECT TOP 1 * FROM visitor
+        WHERE VisitorName = #{visitorName}
+            AND VisitorBirth = #{visitorBirth}
             AND Company = #{company}
             AND Mobile = #{mobile}
     </select>

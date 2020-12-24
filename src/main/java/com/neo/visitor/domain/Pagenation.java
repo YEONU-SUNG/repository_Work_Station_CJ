@@ -1,5 +1,7 @@
 package com.neo.visitor.domain;
 
+import com.neo.visitor.config.AES256Util;
+
 import lombok.Getter;
 import lombok.ToString;
 
@@ -29,6 +31,17 @@ public class Pagenation {
         this.page = page;
         this.startPage = page == 1 ? 0 : (page-1)*size;
         this.size = size;
+
+        if(conditionValue.equals("")) conditionKey = "";
+
+        if(conditionKey == "VisitorName" || conditionKey == "VisitorMobile")
+        {
+            try{
+                conditionValue = AES256Util.encrypt(conditionValue);
+            }catch(Exception e){
+            }
+        }
+
         this.conditionKey = conditionKey;
         this.conditionValue = conditionValue;
     }

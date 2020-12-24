@@ -53,6 +53,8 @@
                 <li data-lnb="faq" data-url="/admin/faq" data-name="FAQ"><a id="faq" href="/admin/faq">FAQ</a></li> -->
                 <!-- <li data-lnb="personalinfo" data-url="/admin/personalinfo" data-name="개인정보처리방침"><a id="personalinfo" href="/admin/personalinfo">개인정보처리방침</a></li> -->
             </c:if>
+
+            <li><a href="javascript:void(0);" onclick="javascript:location.href='/upload/sample/방문예약시스템 사용자가이드-임직원.pdf'">운영가이드 다운로드</a></li>
         </ul>
     </nav>
 </div>

@@ -22,5 +22,6 @@ public interface VisitorRepository {
 
     Visitor findByVisitorNameAndVisitorBirthAndVisitorMobile(Visitor visitor);
     Visitor findByVisitornameAndVisitorCompanyAndVisitorMobile(Visitor visitor);
+    Visitor findByVisitornameAndVisitorBirthAndVisitorCompanyAndVisitorMobile(Visitor visitor);
     void save(Visitor visitor);
 }

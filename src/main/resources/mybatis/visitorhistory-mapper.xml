@@ -148,7 +148,7 @@
             AND CONVERT(varchar(50), V.PlanFromDateTime, 23) <= CONVERT(varchar(50), #{date}, 23)
             AND CONVERT(varchar(50), V.PlanToDateTime, 23) >= CONVERT(varchar(50), #{date}, 23)
             ]]>
-            AND V.VisitorPosition1 = '두산'
+            AND V.VisitorPosition1 = '분당두산센터'
             AND V.DeleteFlag = 'N'
 
     </select>
@@ -187,9 +187,9 @@
             OR (CONVERT(V.PlanToDateTime, DATE) >= CONVERT(#{date}, DATE) AND (vit.VisitToDateTime = '' OR vit.VisitToDateTime IS NULL)))
             ]]> -->
             <![CDATA[
-                AND (CONVERT(varchar(50), V.PlanFromDateTime, 23) <= CONVERT(varchar(50), #{date}, 23)
-                AND CONVERT(varchar(50), V.PlanToDateTime, 23) >= CONVERT(varchar(50), #{date}, 23)
-                OR (CONVERT(varchar(50), V.PlanToDateTime, 23) >= CONVERT(varchar(50), #{date}, 23) AND (vit.VisitToDateTime = '' OR vit.VisitToDateTime IS NULL)))
+                AND (CONVERT(varchar(50), V.PlanFromDateTime, 23) <= CONVERT(varchar(50), CONVERT(DATETIME, #{date}), 23)
+                AND CONVERT(varchar(50), V.PlanToDateTime, 23) >= CONVERT(varchar(50), CONVERT(DATETIME, #{date}), 23)
+                OR (CONVERT(varchar(50), V.PlanToDateTime, 23) >= CONVERT(varchar(50), CONVERT(DATETIME, #{date}), 23) AND (vit.VisitToDateTime = '' OR vit.VisitToDateTime IS NULL)))
             ]]>
 
             AND (vit.VisitToDateTime = '' OR vit.VisitToDateTime IS NULL)
@@ -198,7 +198,8 @@
                 AND V.VisitApprovalYN = #{VisitApprovalYN}
             -->
             <if test='host.host.auth == "2"'>
-                AND V.VisitorPosition1 = #{siteCode}
+                <!-- AND V.VisitorPosition1 = #{siteCode} -->
+                AND V.VisitorPosition1 = '분당두산센터'
             </if>
             <if test='host.host.auth == "3"'>
                 AND V.HostID = #{host.host.hostID}

@@ -95,7 +95,7 @@
     </script>
 </c:if>
 <c:if test="${sessionScope.login.host.auth eq '2'}">
-    <script>
+    <%-- <script>
         var approveActionCommponet = {
             visitorButton : function(row) {
                 if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
@@ -119,6 +119,48 @@
                     else if(row.toDayYN==='N') return '승인완료';
                 } else {
                     return '승인대기';
+                }
+            }
+        };
+    </script> --%>
+    <script>
+        var approveActionCommponet = {
+            visitorButton : function(row) {
+                if(row.eduCompleteDateTime==null || row.eduCompleteDateTime.length==0) {
+                    return '';
+                }
+                if(row.rejectFlag==='Y'){
+                    return '';
+                }
+                if(row.visitApprovalYN==='Y') {
+                    if(row.toDayYN==='Y')
+                    {
+                        for(var i in row.visitorInoutTimes) {
+                            //var visitDate = new Date(row.visitorInoutTimes[i].visitFromDateTime);
+                            var ds = row.visitorInoutTimes[i].visitFromDateTime;
+                            var arr = ds.split("-");  // 2018,01,01 00:10:11
+                            var visitDate = new Date(arr[0] + "/" + arr[1] + "/" + arr[2]);
+                            if(date.compare(visitDate)) {
+                                if(row.visitorInoutTimes[i].visitToDateTime=='')
+                                    // return '<button type="button" class="nv_red_button">퇴실</button>';
+                                    return '<button type="button" class="nv_red_button">출문</button>';
+                                else 
+                                    $('#'+row.visitorHistorySeq).remove();
+                            }
+                        }
+                        // return '<button type="button" class="nv_blue_button">방문</button>';
+                        return '<button type="button" class="nv_blue_button nv_green_button">입문</button>';
+                    }
+                    else if(row.toDayYN==='N')
+                        return '';
+                } else {
+                    if(row.visitorType == 1) {
+                        return '<button type="button" class="nv_blue_button" value="approve">승인</button>' +
+                           '<button type="button" class="nv_red_button" value="reject">반려</button>';
+                    } else {
+                        return '<button type="button" class="nv_blue_button" value="approve2">승인</button>' +
+                           '<button type="button" class="nv_red_button" value="reject">반려</button>';
+                    }
                 }
             }
         };
@@ -148,8 +190,15 @@
                     //return '방문';
                     return '승인완료';
                 } else {
-                    return '<button type="button" class="nv_blue_button" value="approve">승인</button>' +
+                    //return '<button type="button" class="nv_blue_button" value="approve">승인</button>' +
+                    //       '<button type="button" class="nv_red_button" value="reject">반려</button>';
+                    if(row.visitorType == 1) {
+                        return '<button type="button" class="nv_blue_button" value="approve">승인</button>' +
                            '<button type="button" class="nv_red_button" value="reject">반려</button>';
+                    } else {
+                        return '<button type="button" class="nv_blue_button" value="approve2">승인</button>' +
+                           '<button type="button" class="nv_red_button" value="reject">반려</button>';
+                    }
                 }
             }
         };
@@ -246,7 +295,8 @@
                     tr.append(module.makeTd('tpc_skip m_skip', e.visitorCompany));
                     tr.append(module.makeTd('tpc_skip m_skip', e.visitorMobile));
                     tr.append(module.makeTd('tpc_skip m_skip', e.visitPurpose));
-                    tr.append(module.makeTd('tpc_skip m_skip', e.visitorPosition1+','+e.visitorPosition2+','+e.visitorPosition3));
+                    //tr.append(module.makeTd('tpc_skip m_skip', e.visitorPosition1+','+e.visitorPosition2+','+e.visitorPosition3));
+                    tr.append(module.makeTd('tpc_skip m_skip', e.visitorPosition1+(e.visitorPosition2=="선택"?'':','+e.visitorPosition2)+(e.visitorPosition3=="선택"?'':','+e.visitorPosition3)));
                     tr.append(module.makeTd('', e.planFromDateTime));
                     tr.append(module.makeTd('tpc_skip m_skip', e.planToDateTime));
                     tr.append(module.makeTd('tpc_skip m_skip', e.carNo));
@@ -332,7 +382,8 @@
                     msubtr1.append(module.makeTd('nv_bold', "방문목적"));
                     msubtr1.append(module.makeTd('', e.visitPurpose));
                     msubtr2.append(module.makeTd('nv_bold', "방문위치"));
-                    msubtr2.append(module.makeTd('', e.visitorPosition1+','+e.visitorPosition2+','+e.visitorPosition3));
+                    //msubtr2.append(module.makeTd('', e.visitorPosition1+','+e.visitorPosition2+','+e.visitorPosition3));
+                    msubtr2.append(module.makeTd('', e.visitorPosition1+(e.visitorPosition2=="선택"?'':','+e.visitorPosition2)+(e.visitorPosition3=="선택"?'':','+e.visitorPosition3)));
                     msubtr2.append(module.makeTd('nv_bold', "차량번호"));
                     msubtr2.append(module.makeTd('', e.carNo));
                     msubtr2.append(module.makeTd('nv_bold', "접견인"));
@@ -439,10 +490,11 @@
                             tmpHtml += module.getFloorCheckBox('', e.floor);
                         }
                         $('#buildingInfo #floorBox').html(tmpHtml);
+                        $("input:checkbox[id='1F']").prop("checked", true)
                     });
                     ul.append(li);
                 });
-                $('#accessBox').append(ul);
+                $('#accessBox').append(ul);                
             });
         } else if (target.val()==='approve2') {
             callApi.setFormData('/visitor-approval/'+targetId, {}, function(result) {

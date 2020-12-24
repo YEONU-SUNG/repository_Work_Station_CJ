@@ -73,7 +73,8 @@ public class VisitorApplication {
         Map<String, Object> map = new HashMap<>();
         map.put("pagenation", pagenation);
         map.put("host", loginService.getUserSessionInfo(request));
-        List<VisitorBlackList> visitorBlackListfindAll = visitorBlackListservice.findAll();
+        //List<VisitorBlackList> visitorBlackListfindAll = visitorBlackListservice.findAll();
+        List<VisitorBlackList> visitorBlackListfindAll = visitorBlackListservice.findSearch(map);
 
         for(int i = 0, len = visitorBlackListfindAll.size(); i < len; i++){
             String visitorName = visitorBlackListfindAll.get(i).getVisitor().getVisitorName().toString();
@@ -117,13 +118,15 @@ public class VisitorApplication {
             }
         }
         pagenationResponse.setResponse(findByPlanDateTimeList);
-        //pagenationResponse.setPagenation(pagenation.makePagenation(visitorService.countByDeleteFlag(map), PagenationType.VISITOR_APPROVE));
-        pagenationResponse.setPagenation(pagenation.makePagenation(findByPlanDateTimeList.size(), PagenationType.VISITOR_APPROVE));
+        pagenationResponse.setPagenation(pagenation.makePagenation(visitorService.countByDeleteFlag(map), PagenationType.VISITOR_APPROVE));
+        //pagenationResponse.setPagenation(pagenation.makePagenation(findByPlanDateTimeList.size(), PagenationType.VISITOR_APPROVE));
         return pagenationResponse;
     }
 
     public PagenationResponse<VisitorHistory> confirm(HttpServletRequest request, Pagenation pagenation, String searchFromDateTime, String searchToDateTime) {
         PagenationResponse<VisitorHistory> pagenationResponse = new PagenationResponse<>();
+        if(searchFromDateTime.equals("")) searchFromDateTime = LocalDate.now().toString();
+        if(searchToDateTime.equals("")) searchToDateTime = LocalDate.now().toString();
         Map<String, Object> map = new HashMap<>();
         map.put("pagenation", pagenation);
         map.put("searchFromDateTime", searchFromDateTime);

@@ -21,7 +21,7 @@
 
     <sql id="insaInfo">
         select 
-        D2.DeptName As SiteName,A.* 
+        D2.DeptName As SiteName,A.* ,D2.DeptName As Company
         from (SELECT 
 
             D.RootOrgUnitID As SiteCode
@@ -36,7 +36,7 @@
             ,ISNULL(G.HRCodeName, '') AS GradeName
             ,ISNULL(P.HRCodeName, '') AS PositionName
             ,I.StartDate AS InsertDate
-            ,C.HRCodeName AS Company
+            <!-- ,C.HRCodeName AS Company -->
         FROM [ADMasterDB].[dbo].[ViewGHRISUserMaster2] I
         left outer join [ADMasterDB].[dbo].[ViewGHRISDeptMaster2] D ON I.OrgUnitID = D.OrgUnitID
         left outer join (SELECT * FROM ViewGHRISHRCodeMaster where Separator = 'CallingTitle' AND Language = 'KO') G ON I.CallingTitleCode = G.HRCode
@@ -49,7 +49,7 @@
 
     <sql id="insaInfoPartner">
         select 
-        D2.DeptName As SiteName,A.* 
+        D2.DeptName As SiteName,A.* ,D2.DeptName As Company
         from (SELECT 
 
             D.RootOrgUnitID As SiteCode
@@ -64,7 +64,7 @@
             ,ISNULL(G.HRCodeName, '') AS GradeName
             ,ISNULL(P.HRCodeName, '') AS PositionName
             ,I.StartDate AS InsertDate
-            ,C.HRCodeName AS Company
+            <!-- ,C.HRCodeName AS Company -->
         FROM [ADMasterDB].[dbo].[ViewGHRISUserMaster2] I
         left outer join [ADMasterDB].[dbo].[ViewGHRISDeptMaster2] D ON I.OrgUnitID = D.OrgUnitID
         left outer join (SELECT * FROM ViewGHRISHRCodeMaster where Separator = 'CallingTitle' AND Language = 'KO') G ON I.CallingTitleCode = G.HRCode

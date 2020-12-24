@@ -47,7 +47,8 @@
                                     '<td class="tpc_skip m_skip">' + oData.visitorHistory.visitDate.toString().substring(0, 10) + '</td>' + 
                                     '<td class="tpc_skip m_skip">' + oData.visitorHistory.cardID + '</td>' + 
                                     '<td class="tpc_skip m_skip">' + oData.visitorHistory.visitPurpose + '</td>' + 
-                                    '<td class="tpc_skip m_skip">' + oData.visitorHistory.visitorPosition1 + ', ' + oData.visitorHistory.visitorPosition2 + ', ' + oData.visitorHistory.visitorPosition3 + '</td>' + 
+                                    //'<td class="tpc_skip m_skip">' + oData.visitorHistory.visitorPosition1 + ', ' + oData.visitorHistory.visitorPosition2 + ', ' + oData.visitorHistory.visitorPosition3 + '</td>' + 
+                                    '<td class="tpc_skip m_skip">' + oData.visitorHistory.visitorPosition1 + (oData.visitorHistory.visitorPosition2=="선택"?'':','+oData.visitorHistory.visitorPosition2) + (oData.visitorHistory.visitorPosition3=="선택"?'':','+oData.visitorHistory.visitorPosition3) + '</td>' + 
                                     '<td class="tpc_skip m_skip">' + oData.visitorHistory.planFromDateTime + '~' + oData.visitorHistory.planToDateTime + '</td>' + 
                                     '<td class="tpc_skip m_skip">' + oData.visitFromDateTime.toString().substring(10) + '</td>' + 
                                     '<td class="tpc_skip m_skip">' + oData.visitToDateTime.toString().substring(10) + '</td>' + 
@@ -74,7 +75,8 @@
                                                     '<td class="nv_bold">방문목적</td>' +
                                                     '<td>' +oData.visitorHistory.visitPurpose+ '</td>' +
                                                     '<td class="nv_bold">방문위치</td>' +
-                                                    '<td>' +oData.visitorHistory.visitorPosition1 + ', ' + oData.visitorHistory.visitorPosition2 + ', ' + oData.visitorHistory.visitorPosition3+ '</td>' +
+                                                    //'<td>' +oData.visitorHistory.visitorPosition1 + ', ' + oData.visitorHistory.visitorPosition2 + ', ' + oData.visitorHistory.visitorPosition3+ '</td>' +
+                                                    '<td>' +oData.visitorHistory.visitorPosition1 + (oData.visitorHistory.visitorPosition2=="선택"?'':','+oData.visitorHistory.visitorPosition2) + (oData.visitorHistory.visitorPosition3=="선택"?'':','+oData.visitorHistory.visitorPosition3)+ '</td>' +
                                                 '</tr>' +
                                                 '<tr>' +
                                                     '<td class="nv_bold">방문일자</td>' +

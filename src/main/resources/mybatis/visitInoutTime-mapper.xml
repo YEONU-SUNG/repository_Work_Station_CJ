@@ -156,7 +156,8 @@
 
         AND V.DeleteFlag = 'N'
         <if test='host.host.auth == "2"'>
-            AND V.VisitorPosition1 = #{host.siteCode}
+            <!-- AND V.VisitorPosition1 = #{host.siteCode} -->
+            AND V.VisitorPosition1 = '분당두산센터'
         </if>
         <if test='host.host.auth == "3"'>
             AND V.HostID = #{host.host.hostID}
@@ -258,7 +259,8 @@
 
         AND V.DeleteFlag = 'N'
         <if test='host.host.auth == "2"'>
-            AND V.VisitorPosition1 = #{host.siteCode}
+            <!-- AND V.VisitorPosition1 = #{host.siteCode} -->
+            AND V.VisitorPosition1 = '분당두산센터'
         </if>
         <if test='host.host.auth == "3"'>
             AND V.HostID = #{host.host.hostID}
@@ -357,7 +359,8 @@
 
         AND V.DeleteFlag = 'N'
         <if test='host.host.auth == "2"'>
-            AND V.VisitorPosition1 = #{host.siteCode}
+            <!-- AND V.VisitorPosition1 = #{host.siteCode} -->
+            AND V.VisitorPosition1 = '분당두산센터'
         </if>
         <if test='host.host.auth == "3"'>
             AND V.HostID = #{host.host.hostID}

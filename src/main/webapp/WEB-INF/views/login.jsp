@@ -37,9 +37,9 @@
             </div> --%>
             <input type="button" onclick="ssologin();" class="nv_login_button" value="LOGIN"/>
 
-            <li class="m_skip" style="margin-top: 20px;"><a href="javascript:void(0);" onclick="javascript:location.href='/upload/sample/방문예약시스템 사용자가이드-임직원.pdf'" style="margin-bottom: 15px; font-size: 15px;padding-right: 10px; color: coral; float: right;">운영가이드(상세) 다운로드</a></li>
+            <%-- <li class="m_skip" style="margin-top: 20px;"><a href="javascript:void(0);" onclick="javascript:location.href='/upload/sample/방문예약시스템 사용자가이드-임직원.pdf'" style="margin-bottom: 15px; font-size: 15px;padding-right: 10px; color: coral; float: right;">운영가이드(상세) 다운로드</a></li>
             <li class="m_skip" style=" float: right; padding-left: 10px; padding-right: 10px; font-size: 14px;">|</li>
-			<li class="m_skip" ><a href="javascript:void(0);" onclick="javascript:location.href='/upload/sample/방문예약시스템-임직원가이드(간략본).pdf'" style="margin-bottom: 15px; font-size: 15px;padding-left: 10px; color: coral; float: right;">운영가이드(간략) 다운로드</a></li>
+			<li class="m_skip" ><a href="javascript:void(0);" onclick="javascript:location.href='/upload/sample/방문예약시스템-임직원가이드(간략본).pdf'" style="margin-bottom: 15px; font-size: 15px;padding-left: 10px; color: coral; float: right;">운영가이드(간략) 다운로드</a></li> --%>
             <%-- <p style="position: fixed;bottom: 3%;" >(주)DOOSAN 방문관리시스템</p> --%>
         </div>
     </div>

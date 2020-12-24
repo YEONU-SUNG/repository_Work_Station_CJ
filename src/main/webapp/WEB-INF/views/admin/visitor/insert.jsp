@@ -188,6 +188,7 @@
                                 '<input type="text" class="nv_input" id="guest_name'+visitInfo.id+'" name="guest_name" style="float:left; width:90%;" placeholder="검색 할 방문자 입력"/>' +
                                 '<button type="button" class="nv_blue_button find_modal">찾기</button>' +
                                 '<input type="hidden" id="guest_id'+visitInfo.id+'" name="guest_id" value="'+visitInfo.visitor.id+'">' +
+                                '<input type="hidden" name="guest_type" value="'+visitInfo.visitorType+'">' +
                             '</td>' +
                             '<td style="display: none;">'+(module_html.tbody.component.carray(visitInfo.carray))+'</td>'+
                             '<td><button type="button" class="nv_red_button" onclick="removeThisRow(this);">삭제</button></td>' +
@@ -196,6 +197,7 @@
                     // 외부인인경우
                     return '<tr id="group'+visitInfo.id+'">' +
                             '<input type="hidden" id="guest_id'+visitInfo.id+'" name="guest_id" value="'+visitInfo.visitor.id+'">' +
+                            '<input type="hidden" name="guest_type" value="'+visitInfo.visitorType+'">' +
                             '<td><input type="text" class="nv_input" name="guest_name" placeholder="이름을 입력해주세요." value="'+visitInfo.visitor.name+'" /></td>' +
                             '<td><input type="text" placeholder="생년월일을 입력해주세요." class="nv_input birth" name="guest_birth" value="'+visitInfo.visitor.birth+'" /></td>' +
                             '<td>' +
@@ -554,7 +556,12 @@
             function removeSiteNameOverlap(element) {
                 var _siteName = '';
                 element.find('li').each(function(i,e) {
-                    if(_siteName==e.innerHTML) this.remove();
+                    if(_siteName==e.innerHTML) 
+                    {
+                        //this.remove();
+                        var reMov = this;
+                        reMov.parentNode.removeChild(reMov);
+                    }
                     _siteName = e.innerHTML;
                 });
             }
@@ -608,7 +615,8 @@
         var target = $(this);
         var targetId = target.next();
         var targetName = target.prev();
-        var _targetName = targetName.val().split(']').length==3 ? targetName.val().split(']')[2] : targetName.val();
+        //var _targetName = targetName.val().split(']').length==3 ? targetName.val().split(']')[2] : targetName.val();
+        var _targetName = targetName.val().split('[').length==4 ? targetName.val().split('[')[0].trim() : targetName.val();
         callApi.getData('/host-list?hostName=' + _targetName, function (result) {
             if(result.length == 0 ) {
                 alert('이름을 정확히 입력해주세요.');
@@ -621,7 +629,8 @@
                 var _tr = $('<tr>');
                 _tr.on('click', function() {
                     targetId.val(e.hostID);
-                    targetName.val('['+e.company+']['+e.deptCD+']'+e.hostName);
+                    //targetName.val('['+e.company+']['+e.deptCD+']'+e.hostName);
+                    targetName.val(e.hostName+' ['+e.gradeName+"]["+e.company+']['+e.deptCD+']');
                     $('.nv_modal1').removeClass('on');
                 });
                 _tr.append('<td>'+e.company+'</td>');
@@ -681,10 +690,18 @@
         var visitorCar = $('input[name="guest_carNo"]').val();
         var visitPurposeDetail = $('#vistorPurposeDetail').val();
 
-        if(visitPosition1 == "선택" || visitPosition2 == "선택" || visitPosition3 == "선택") {
+        if(hostId == "")
+        {
+            alert('접견인정보가 잘못 되었습니다.\r\n접견인 재 검색 후 신청해주시기 바랍니다.');
+            return;
+        }
+
+        //if(visitPosition1 == "선택" || visitPosition2 == "선택" || visitPosition3 == "선택") {
+        if(visitPosition1 == "선택") {
             alert('방문 위치를 선택해 주세요.');
             return;
-        }    
+        }
+        
         var visitorForm = new FormData();
         visitorForm.append('hostId', hostId);
         // visitorForm.append('hostName', hostName);
@@ -698,31 +715,112 @@
         visitorForm.append('visitPosition2', visitPosition2);
         visitorForm.append('visitPosition3', visitPosition3);
 
-        var visitorId = $('input[name="guest_id"]');
-        var visitorName = $('input[name="guest_name"]');
-        var visitorBirth = $('input[name="guest_birth"]');
-        var visitorPhone = $('input[name="guest_phone"]');
-        var visitorWare =  $('input[name="guest_ware"]');
-        var visitorSerial = $('input[name="guest_serial"]');
-        var visitorPurpose = $('input[name="guest_purpose"]');
-        var visitorUsed = $('input[name="guest_used"]');
-        var visitorCompany = $('input[name="guest_company"]');
+        // var visitorId = $('input[name="guest_id"]');
+        // var visitorName = $('input[name="guest_name"]');
+        // var visitorBirth = $('input[name="guest_birth"]');
+        // var visitorPhone = $('input[name="guest_phone"]');
+        // var visitorWare =  $('input[name="guest_ware"]');
+        // var visitorSerial = $('input[name="guest_serial"]');
+        // var visitorPurpose = $('input[name="guest_purpose"]');
+        // var visitorUsed = $('input[name="guest_used"]');
+        // var visitorCompany = $('input[name="guest_company"]');
+
+        if($('#visitorTbody > tr').size() <= 0)
+        {
+            alert('방문객을 추가해주세요.');
+            return;
+        }
         
         //var visitorCarType = $('input[name="guest_car_type"]');
         //var visitorCar = $('input[name="guest_car"]');
-     
+
+        var flag = true;
         $('#visitorTbody > tr').each(function(i, item) {
-            visitorForm.append('visitorId', visitorId[i]!=undefined ? visitorId[i].value : '');
-            visitorForm.append('visitorName', visitorName[i]!=undefined ? visitorName[i].value : '');
+
+            var visitorId = $(this).find('input[name="guest_id"]').val();
+            var visitorName = $(this).find('input[name="guest_name"]').val();$('input[name="guest_name"]');
+            var visitorBirth = $(this).find('input[name="guest_birth"]').val();$('input[name="guest_birth"]');
+            var visitorPhone = $(this).find('input[name="guest_phone"]').val();$('input[name="guest_phone"]');
+            var visitorWare =  $(this).find('input[name="guest_ware"]').val();$('input[name="guest_ware"]');
+            var visitorSerial = $(this).find('input[name="guest_serial"]').val();$('input[name="guest_serial"]');
+            var visitorPurpose = $(this).find('input[name="guest_purpose"]').val();$('input[name="guest_purpose"]');
+            var visitorUsed = $(this).find('input[name="guest_used"]').val();$('input[name="guest_used"]');
+            var visitorCompany = $(this).find('input[name="guest_company"]').val();$('input[name="guest_company"]');
+
+            if($(this).find('input[name="guest_type"]').val() == "1")
+            {
+                if(visitorName == undefined || visitorName == "")
+                {
+                    alert('방문자정보가 잘못 되었습니다.\r\n방문자 재 검색 후 신청해주시기 바랍니다.');
+                    flag = false;
+                    return false;
+                }
+            }
+            if($(this).find('input[name="guest_type"]').val() == "2")
+            {
+                if(visitorName == undefined || visitorName == "")
+                {
+                    alert('이름을 입력해 주세요.');
+                    flag = false;
+                    return false;
+                }
+                if(visitorBirth == undefined || visitorBirth == "")
+                {
+                    alert('생년월일을 입력해 주세요.');
+                    flag = false;
+                    return false;
+                }
+                if(visitorPhone == undefined || visitorPhone == "")
+                {
+                    alert('연락처를 입력해 주세요.');
+                    flag = false;
+                    return false;
+                }
+                if(visitorCompany == undefined || visitorCompany == "")
+                {
+                    alert('회사명을 입력해 주세요.');
+                    flag = false;
+                    return false;
+                }
+
+                if($('#guest_gender'+i).text() == "성별을 선택해주세요.")
+                {
+                    alert('성별을 선택해주세요.');
+                    flag = false;
+                    return false;
+                }
+
+                if($('#guest_location'+i).text() == "국적을 선택해주세요.")
+                {
+                    alert('국적을 선택해주세요.');
+                    flag = false;
+                    return false;
+                }
+            }
+
+            visitorForm.append('visitorId', visitorId!=undefined ? visitorId : '');
+            visitorForm.append('visitorName', visitorName!=undefined ? visitorName : '');
             visitorForm.append('visitorGender', $('#guest_gender'+i).text());
             visitorForm.append('visitorLocation', $('#guest_location'+i).text());
-            visitorForm.append('visitorBirth', visitorBirth[i]!=undefined ? visitorBirth[i].value : '');
-            visitorForm.append('visitorPhone', visitorPhone[i]!=undefined ? visitorPhone[i].value : '');
-            visitorForm.append('visitorCompany', visitorCompany[i]!=undefined ? visitorCompany[i].value : '');
-            visitorForm.append('visitorWare', visitorWare[i].value);
-            visitorForm.append('visitorSerial', visitorSerial[i].value);
-            visitorForm.append('visitorPurpose', visitorPurpose[i].value);
-            visitorForm.append('visitorUsed', visitorUsed[i].value);
+            visitorForm.append('visitorBirth', visitorBirth!=undefined ? visitorBirth : '');
+            visitorForm.append('visitorPhone', visitorPhone!=undefined ? visitorPhone : '');
+            visitorForm.append('visitorCompany', visitorCompany!=undefined ? visitorCompany : '');
+            visitorForm.append('visitorWare', visitorWare);
+            visitorForm.append('visitorSerial', visitorSerial);
+            visitorForm.append('visitorPurpose', visitorPurpose);
+            visitorForm.append('visitorUsed', visitorUsed);
+
+            // visitorForm.append('visitorId', visitorId[i]!=undefined ? visitorId[i].value : '');
+            // visitorForm.append('visitorName', visitorName[i]!=undefined ? visitorName[i].value : '');
+            // visitorForm.append('visitorGender', $('#guest_gender'+i).text());
+            // visitorForm.append('visitorLocation', $('#guest_location'+i).text());
+            // visitorForm.append('visitorBirth', visitorBirth[i]!=undefined ? visitorBirth[i].value : '');
+            // visitorForm.append('visitorPhone', visitorPhone[i]!=undefined ? visitorPhone[i].value : '');
+            // visitorForm.append('visitorCompany', visitorCompany[i]!=undefined ? visitorCompany[i].value : '');
+            // visitorForm.append('visitorWare', visitorWare[i].value);
+            // visitorForm.append('visitorSerial', visitorSerial[i].value);
+            // visitorForm.append('visitorPurpose', visitorPurpose[i].value);
+            // visitorForm.append('visitorUsed', visitorUsed[i].value);
             
             // if(visitPurpose=='납품/반출') {
             //     visitorForm.append('visitorCarType', visitorCarType[i].value);
@@ -733,6 +831,9 @@
             //     visitorForm.append('visitorUsed', visitorUsed[i].value);
             // }
         });
+
+        if (!flag) return;
+		
         callApi.setFormData('/visitor', visitorForm, function(result) {
             alert('정상적으로 등록되었습니다.');
             location.reload();

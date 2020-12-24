@@ -45,6 +45,22 @@
         JOIN Visitor v ON vbl.VisitorID = v.VisitorID
     </select>
 
+    <select id="findSearch" parameterType="java.util.HashMap" resultMap="VisitorBlackList">
+        SELECT * FROM VisitorBlackList vbl
+        JOIN Visitor v ON vbl.VisitorID = v.VisitorID
+        WHERE 1=1
+        <choose>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorName"'>
+                <!-- AND V.VisitorName LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND VisitorName LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorCompany"'>
+                <!-- AND V.VisitorCompany LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
+                AND VisitorCompany LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+        </choose>
+    </select>
+
     <select id="findByVisitorIdAndDate" parameterType="java.util.HashMap" resultMap="VisitorBlackList">
         SELECT * FROM VisitorBlackList vbl
         JOIN Visitor v ON vbl.VisitorID = v.VisitorID
