@@ -192,9 +192,9 @@
 			<%-- <p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
 			<div class="nv_date_box">
 				<span class="icon_date">달력 아이콘</span>
-                <input type="text" class="nv_input" id="datepicker" name="visitorFromDateTime">
+                <input type="text" class="nv_input" id="datepicker" name="visitorFromDateTime" title="datapicker">
                 <span>~</span>
-                <input type="text" class="nv_input" id="datepicker2" name="visitorToDateTime">
+                <input type="text" class="nv_input" id="datepicker2" name="visitorToDateTime" title="datapicker">
 			</div> --%>
 			<p class="m_tit nv_bold pc_skip tpc_skip">검색 설정</p>
 			<div class="nv_select_box">
@@ -209,18 +209,19 @@
 				</ul>
 			</div>
 			<div class="nv_search_box">
-				<input type="text" class="nv_input" id="conditionValue">
-                <input type="submit" class="nv_search_icon tpc_skip m_skip" onclick="javascript:search();">
+				<input type="text" class="nv_input" id="conditionValue" title="conditionValue">
+                <input type="submit" class="nv_search_icon tpc_skip m_skip" onclick="javascript:search();" title="Search">
 			</div>
             <div class="nv_search_box pc_skip tpc_skip" style="width: 32px;">
-				<input type="submit" class="nv_search_icon" onclick="javascript:search();">
+				<input type="submit" class="nv_search_icon" onclick="javascript:search();" title="Search" >
 			</div>
 		</div>
 		<div class="nv_table_box">
             <div class="nv_m_btn_area nv_bord_btn_area">
                 <button type="button" class="nv_blue_button add_icon_btn right" onclick="javascript:location.href='add-blacklist'" style="margin-right: 30px;">방문 제한자 추가</button>
             </div>
-			<table class="nv_table textcenter" id="historyTable">
+			<table class="nv_table textcenter" id="historyTable" summary="blacklist">
+                <caption>blacklist</caption>
 				<thead>
 					<tr>
                         <th>성명</th>
@@ -235,7 +236,8 @@
 				</thead>
 				<tbody>
 					
-				</tbody>
+                </tbody>
+                <tfoot></tfoot>
 			</table>
 			<div class="nv_table_pagenum" id="pagenation"></div>
 		</div>
@@ -261,9 +263,9 @@
             </div>
             <div>
                 <h4 class="textarea_name">제한기간</h4>
-                <input type="text" class="nv_input max_200 birth" id="plan_from_date" name="plan_from_date" />
+                <input type="text" class="nv_input max_200 birth" id="plan_from_date" name="plan_from_date" title="Plan" />
                 <span>~</span>
-                <input type="text" class="nv_input max_200 birth" id="plan_to_date" name="plan_to_date" />
+                <input type="text" class="nv_input max_200 birth" id="plan_to_date" name="plan_to_date"  title="Plan" />
             </div>
             <div>
                 <!-- <h4 class="textarea_name">제한상태

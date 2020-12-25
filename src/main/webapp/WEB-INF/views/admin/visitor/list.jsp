@@ -468,9 +468,9 @@ var approveProcessStatus = {
 			<p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
 			<div class="nv_date_box">
                 <span class="icon_date">달력 아이콘</span> 
-                <input type="text" class="nv_input" name="searchFromDateTime" id="searchFromDateTime"> 
+                <input type="text" class="nv_input" name="searchFromDateTime" id="searchFromDateTime" title="datepicker"> 
                 <span>~</span> 
-                <input type="text" class="nv_input" name="searchToDateTime" id="searchToDateTime">
+                <input type="text" class="nv_input" name="searchToDateTime" id="searchToDateTime" title="datepicker"> 
 			</div>
 			<p class="m_tit nv_bold pc_skip tpc_skip">검색 조건</p>
 			<div class="nv_select_box">
@@ -482,15 +482,16 @@ var approveProcessStatus = {
                 </ul>
             </div>
 			<div class="nv_search_box">
-				<input type="text" class="nv_input" id="conditionValue">
-                <input type="submit" class="nv_search_icon tpc_skip m_skip" onclick="javascript:module.search();">
+				<input type="text" class="nv_input" id="conditionValue" title="conditionValue">
+                <input type="submit" class="nv_search_icon tpc_skip m_skip" onclick="javascript:module.search();" title="search save">
 			</div>
             <div class="nv_search_box pc_skip tpc_skip" style="width: 32px;">
-				<input type="submit" class="nv_search_icon" onclick="javascript:module.search();">
+				<input type="submit" class="nv_search_icon" onclick="javascript:module.search();" title="search save" >
 			</div>
 		</div>
 		<div class="nv_table_box">
-			<table class="nv_table textcenter" id="approveTable">
+			<table class="nv_table textcenter" id="approveTable" summary="방문승인관리">
+                <caption>방문승인관리</caption>
 				<thead>
 					<tr>
 						<th>방문자</th>
@@ -508,14 +509,15 @@ var approveProcessStatus = {
 					</tr>
 				</thead>
 				<tbody>
-				</tbody>
+                </tbody>
+                <tfoot></tfoot>
 			</table>
 			<div class="nv_table_pagenum" id="pagenation"></div>
 		</div>
 	</div>
 </div>
 <form id="visitRejectForm">
-    <input type="hidden" id="visitRejectFormId"/>
+    <input type="hidden" id="visitRejectFormId" title="Visit"/>
     <div class="nv_modal nv_modal5">
         <div class="nv_modal_container">
             <div class="nv_modal_header">
@@ -546,7 +548,7 @@ var approveProcessStatus = {
     </div>
 </form>
 <form id="buildingSiteMapping" method="POST">
-    <input type="hidden" name="targetId" value="" />
+    <input type="hidden" name="targetId" value="" title="key" />
     <div class="nv_modal nv_modal4">
         <div class="nv_modal_container">
             <div class="nv_modal_header">

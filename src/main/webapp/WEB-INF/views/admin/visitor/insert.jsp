@@ -853,9 +853,9 @@
             <dl class="nv_dl_table">
                 <dt>접견인</dt>
                 <dd class="nv_dd_full">
-                    <input type="text" class="nv_input max_200" id="host_name" name="host_name" placeholder="검색 할 접견인 입력">
+                    <input type="text" class="nv_input max_200" id="host_name" name="host_name" placeholder="검색 할 접견인 입력" title="host">
                     <button type="button" class="nv_blue_button find_modal">찾기</button>
-                    <input type="hidden" id="find_id" name="host_id" />
+                    <input type="hidden" id="find_id" name="host_id" title="Hostkey" />
                 </dd>
             </dl>
         </div>
@@ -868,14 +868,14 @@
                 <%--
                 <dt>회사명</dt>
                 <dd class="nv_dd_full">
-                    <input type="text" class="nv_input max_200" id="guest_company" name="guest_company" placeholder="사업자등록증상 회사명"/>
+                    <input type="text" class="nv_input max_200" id="guest_company" name="guest_company" placeholder="사업자등록증상 회사명" title="company"/>
                 </dd>
                 --%>
                 <dt>방문기간</dt>
                 <dd class="nv_dd_full nv_date">
-                    <input type="text" class="nv_input max_200 birth" id="plan_from_date" name="plan_from_date" />
+                    <input type="text" class="nv_input max_200 birth" id="plan_from_date" name="plan_from_date" title="datepicker" />
                     <span>~</span>
-                    <input type="text" class="nv_input max_200 birth" id="plan_to_date" name="plan_to_date" />
+                    <input type="text" class="nv_input max_200 birth" id="plan_to_date" name="plan_to_date" title="datepicker" />
                 </dd>
                 <dt>방문목적</dt>
                 <dd class="nv_dd_full">
@@ -894,7 +894,7 @@
                 </dd>
                 <dt>방문차량</dt>
                 <dd class="nv_dd_full">
-                    <input type="text" class="nv_input max_200" id="guest_carNo" name="guest_carNo" placeholder="방문 차량번호"/>
+                    <input type="text" class="nv_input max_200" id="guest_carNo" name="guest_carNo" placeholder="방문 차량번호" title="car"/>
                 </dd>
                 <dt>방문위치</dt>
                 <dd class="nv_dd_full nv_date nv_double_select">
@@ -918,9 +918,11 @@
         </div>
         <div class="nv_table_box">
             <%-- <table class="nv_table textcenter tpc_skip m_skip"> --%>
-            <table class="nv_table textcenter">
+            <table class="nv_table textcenter" summary="visitor">
+                <caption>visitor</caption>
                 <thead id="visitorThead"></thead>
                 <tbody id="visitorTbody"></tbody>
+                <tfoot></tfoot>
             </table>
             <div class="btn_area nv_page_bottomarea">
                 <button type="button" id="visitorInfoSave" class="nv_blue_button m_full_btn">입력 완료</button>
@@ -944,7 +946,8 @@
             </div> -->
             --%>
             <%-- <table class="nv_table textcenter tpc_skip m_skip"> --%>
-            <table class="nv_table textcenter">
+            <table class="nv_table textcenter"summary="visitor">
+                <caption>visitor</caption>
 				<thead>
 					<tr>
                         <th>회사</th>
@@ -952,7 +955,8 @@
                         <th>이름</th>
 					</tr>
 				</thead>
-				<tbody id="host_table_tbody"></tbody>
+                <tbody id="host_table_tbody"></tbody>
+                <tfoot></tfoot>
 			</table>
         </div>
     </div>

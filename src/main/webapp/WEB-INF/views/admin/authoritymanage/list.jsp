@@ -210,7 +210,8 @@
             <button type="button" class="nv_blue_button add_icon_btn right" style="margin-right: 30px;" onclick="javascript:$('.nv_modal2').addClass('on')">관리자 추가</button>
         </div>
 		<div class="nv_table_box">
-			<table class="nv_table textcenter" id="authTable">
+			<table class="nv_table textcenter" id="authTable" summary="auth table">
+                <caption>auth table</caption>
 				<thead>
 					<tr>
 						<th>성명</th>
@@ -220,7 +221,8 @@
 						<th>관리</th>
 					</tr>
 				</thead>
-				<tbody></tbody>
+                <tbody></tbody>
+                <tfoot></tfoot>
 			</table>
 			<div class="nv_table_pagenum" id="pagenation"></div>
 		</div>
@@ -237,9 +239,9 @@
                 <dl class="nv_dl_table">
                     <dt>성명</dt>
                     <dd class="nv_dd_full">
-                        <input type="text" class="nv_input" style="width: 80%;" id="host_name" name="host_name" placeholder="임직원 검색">
+                        <input type="text" class="nv_input" style="width: 80%;" id="host_name" name="host_name" placeholder="임직원 검색" title="host">
                         <button type="button" class="nv_blue_button find_modal">찾기</button>
-                        <input type="hidden" id="find_id" name="host_id" />
+                        <input type="hidden" id="find_id" name="host_id" title="HostKey" />
                     </dd>
                     <dt>권한</dt>
                     <dd class="nv_dd_full">
@@ -269,7 +271,8 @@
         </div>
         <div class="nv_modal_contents">
             
-            <table class="nv_table textcenter">
+            <table class="nv_table textcenter" summary="host">
+                <caption>hostTable</caption>
 				<thead>
 					<tr>
 						<th>이름</th>
@@ -277,7 +280,8 @@
 						<th>부서</th>
 					</tr>
 				</thead>
-				<tbody id="host_table_tbody"></tbody>
+                <tbody id="host_table_tbody"></tbody>
+                <tfoot></tfoot>
 			</table>
         </div>
     </div>

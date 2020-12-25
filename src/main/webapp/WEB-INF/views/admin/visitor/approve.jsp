@@ -554,9 +554,9 @@
         <p class="m_tit nv_bold pc_skip tpc_skip">기간 설정</p>
             <div class="nv_date_box">
                 <span class="icon_date">달력 아이콘</span>
-                <input type="text" class="nv_input" id="datepicker" name="searchFromDateTime">
+                <input type="text" class="nv_input" id="datepicker" name="searchFromDateTime" title="datapicker">
                 <span>~</span>
-                <input type="text" class="nv_input" id="datepicker2" name="searchToDateTime">
+                <input type="text" class="nv_input" id="datepicker2" name="searchToDateTime" title="datapicker">
             </div>
         <p class="m_tit nv_bold pc_skip tpc_skip">검색 설정</p>
         <div class="nv_select_box">
@@ -593,15 +593,16 @@
             </ul>
         </div>
         <div class="nv_search_box">
-            <input type="text" class="nv_input" id="conditionValue">
-            <input type="submit" class="nv_search_icon tpc_skip m_skip" onclick="javascript:module.search();">
+            <input type="text" class="nv_input" id="conditionValue" title="Search">
+            <input type="submit" class="nv_search_icon tpc_skip m_skip" onclick="javascript:module.search();" title="save search">
         </div>
         <div class="nv_search_box pc_skip tpc_skip" style="width: 32px;">
-				<input type="submit" class="nv_search_icon" onclick="javascript:module.search();">
+				<input type="submit" class="nv_search_icon" onclick="javascript:module.search();" title="save search">
 		</div>
     </div>
     <div class="nv_table_box">
-        <table class="nv_table textcenter" id="approveTable">
+        <table class="nv_table textcenter" id="approveTable" summary=".">
+            <caption>.</caption>
             <thead>
                 <tr>
                     <th>방문자</th>
@@ -626,6 +627,7 @@
                 </tr>
             </thead>
             <tbody></tbody>
+            <tfoot></tfoot>
         </table>
         <div class="btn_right">
             <p class="m_tit nv_bold pc_skip tpc_skip m_skip" onclick="javascript:excel();">엑셀 다운로드</p>
@@ -636,7 +638,7 @@
 </div>
 
 <form id="visitRejectForm">
-    <input type="hidden" id="visitRejectFormId"/>
+    <input type="hidden" id="visitRejectFormId" title="key"/>
     <div class="nv_modal nv_modal5">
         <div class="nv_modal_container">
             <div class="nv_modal_header">
@@ -667,7 +669,7 @@
     </div>
 </form>
 <form id="buildingSiteMapping" method="POST">
-    <input type="hidden" name="targetId" value="" />
+    <input type="hidden" name="targetId" value="" title="key" />
     <div class="nv_modal nv_modal4">
         <div class="nv_modal_container">
             <div class="nv_modal_header">
