@@ -92,16 +92,20 @@ public class VisitorApplication {
         return pagenationResponse;
     }
 
-    public PagenationResponse<VisitorHistory> dashboard(HttpServletRequest request, Pagenation pagenation, LocalDateTime localDateTime) {
+    public PagenationResponse<VisitorHistory> dashboard(HttpServletRequest request, Pagenation pagenation,  String searchFromDateTime, String searchToDateTime) {
 
         AdminUser adminUser = loginService.getUserSessionInfo(request);
         if(adminUser==null) throw new IllegalArgumentException("세션연결이 해제되었습니다. 다시 로그인해주세요.");
+
+        pagenation.PagenationExpansionDate(searchFromDateTime.equals("") ? LocalDate.now().toString() : searchFromDateTime
+                                            , searchToDateTime.equals("") ? LocalDate.now().toString() : searchToDateTime);
 
         PagenationResponse<VisitorHistory> pagenationResponse = new PagenationResponse<>();
         Map<String, Object> map = new HashMap<>();
         map.put("host", adminUser);
         map.put("pagenation", pagenation);
-        map.put("date", localDateTime.toString());        
+        map.put("searchFromDateTime", pagenation.getVisitFromDateTime());
+        map.put("searchToDateTime", pagenation.getVisitToDateTime());  
 
         // pagenationResponse.setResponse(visitorService.findByPlanDateTime(map));
         // pagenationResponse.setPagenation(pagenation.makePagenation(visitorService.countByDeleteFlag(map), PagenationType.VISITOR_APPROVE));
