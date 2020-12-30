@@ -170,7 +170,7 @@ var approveProcessStatus = {
             var searchToDateTime = $('input[name="searchToDateTime"]').val();
             var conditionKey = $('#conditionKey').html();
             var conditionValue = $('#conditionValue').val();
-            init('/visitor/approve-list?page=1&size=10&conditionKey='+conditionKey+"&conditionValue="+conditionValue+"&searchFromDateTime"+searchFromDateTime+"&searchToDateTime"+searchToDateTime);
+            init('/visitor/approve-list?page=1&size=10&conditionKey='+conditionKey+"&conditionValue="+conditionValue+"&visitorFromDateTime"+searchFromDateTime+"&visitorToDateTime"+searchToDateTime);
         },
         makeTd : function(className, innerHTML) {
             return $('<td class="'+className+'">'+innerHTML+'</td>');

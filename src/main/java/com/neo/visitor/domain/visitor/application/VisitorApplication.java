@@ -125,12 +125,12 @@ public class VisitorApplication {
 
     public PagenationResponse<VisitorHistory> confirm(HttpServletRequest request, Pagenation pagenation, String searchFromDateTime, String searchToDateTime) {
         PagenationResponse<VisitorHistory> pagenationResponse = new PagenationResponse<>();
-        if(searchFromDateTime.equals("")) searchFromDateTime = LocalDate.now().toString();
-        if(searchToDateTime.equals("")) searchToDateTime = LocalDate.now().toString();
+        pagenation.PagenationExpansionDate(searchFromDateTime.equals("") ? LocalDate.now().toString() : searchFromDateTime
+                                            , searchToDateTime.equals("") ? LocalDate.now().toString() : searchToDateTime);
         Map<String, Object> map = new HashMap<>();
         map.put("pagenation", pagenation);
-        map.put("searchFromDateTime", searchFromDateTime);
-        map.put("searchToDateTime", searchToDateTime);
+        map.put("searchFromDateTime", pagenation.getVisitFromDateTime());
+        map.put("searchToDateTime", pagenation.getVisitToDateTime());
         map.put("host", loginService.getUserSessionInfo(request));
 
         List<VisitorHistory> findByConfirmList = visitorService.findByConfirm(map);

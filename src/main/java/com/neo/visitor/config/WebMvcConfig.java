@@ -1,5 +1,8 @@
 package com.neo.visitor.config;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.neo.visitor.config.intercepter.UserInfoIntercepter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +24,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-         registry.addInterceptor(interceptor)
-                .addPathPatterns("/admin/**", "/admin/login")
-		 		.excludePathPatterns("/admin/static/css/**", "/admin/static/js/**", "/admin/static/imgaes/**", "/admin/login", "/admin/upload/**", "/admin/mailsend", "/admin/smssend");
+        List<String> excludePathPatterns =
+            Arrays.asList("/static/css/**", "/static/js/**", "/static/imgaes/**", "/login", "/upload/**", "/mailsend", "/smssend", "/host-list");
+        registry.addInterceptor(interceptor)
+                .addPathPatterns("/**")
+		 		.excludePathPatterns(excludePathPatterns);
     }
     
     // 파일업로드 시 저장 될 경로 설정

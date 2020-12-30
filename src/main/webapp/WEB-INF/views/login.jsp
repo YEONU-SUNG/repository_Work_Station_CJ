@@ -10,10 +10,10 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/> -->
     <%-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> --%>
     <script src="/admin/static/js/jquery.min.js"></script>
-    <script src="/admin/static/js/jquery.ajax-cross-origin.min"></script>
+    <!-- <script src="/admin/static/js/jquery.ajax-cross-origin.min"></script> -->
     <%-- <script src="https://code.jquery.com/jquery-1.12.4.js"
   integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
-  crossorigin="anonymous"></script> --%>
+  crossorigin="anonymous"></script> --%>`
 <%-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> --%>
 
     <!---<script src="js/jquery.mCustomScrollbar.js"></script>--->
