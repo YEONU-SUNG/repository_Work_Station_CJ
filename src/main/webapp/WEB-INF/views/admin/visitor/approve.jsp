@@ -21,7 +21,12 @@
         $("#datepicker2").datepicker();
         
         $('#datepicker').datepicker('setDate', 'today');
-        $('#datepicker2').datepicker('setDate', 'today');
+        d = $("#datepicker").datepicker("getDate");
+        $("#datepicker2").datepicker("setDate", new Date(d.getFullYear(),d.getMonth(),d.getDate()+10));
+        //$('#datepicker2').datepicker('setDate', 'today');
+
+        jQuery("#datepicker").datepicker("option", "minDate", new Date(d.getFullYear(),d.getMonth(),d.getDate()));
+        jQuery("#datepicker2").datepicker("option", "minDate", new Date(d.getFullYear(),d.getMonth(),d.getDate()));
     });
 
     const date = {
@@ -289,6 +294,7 @@
             module.tableData = result.response;
             var auth = '${sessionScope.login.host.auth}';
             $('#pagenation').html(page.makePagenation(module.pagenation));
+            module.makeTable($('#pagenation'));
             $.each(result.response, function(i, e) {
                 var tr = $('<tr class="nv_view_nexttable" id="'+e.visitorHistorySeq+'">');
                     tr.append(module.makeTd('', e.visitorName));
@@ -560,32 +566,32 @@
             </div>
         <p class="m_tit nv_bold pc_skip tpc_skip">검색 설정</p>
         <div class="nv_select_box">
-            <p id="conditionKey">성명</p>
+            <p id="conditionKey">방문자</p>
             <ul>
                 <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1'}">
-                <li>성명</li>
+                <li>방문자</li>
+                <li>업체명</li>
                 <li>연락처</li>
-                <li>회사</li>
                 <li>차량번호</li>
                 <li>임직원</li>
                 <li>방문목적</li>
                 <li>방문증번호</li>
                 </c:if>
 
-                <c:if test="${sessionScope.login.host.auth eq '2'}">
-                <li>성명</li>
+                <c:if test="${sessionScope.login.host.auth eq '2' or sessionScope.login.host.auth eq '4'}">
+                <li>방문자</li>
                 <li>방문증번호</li>
                 <li>차량번호</li>
+                <li>업체명</li>
                 <li>연락처</li>
-                <li>회사</li>
                 <li>임직원</li>
                 <li>방문목적</li>
                 </c:if>
 
-                <c:if test="${sessionScope.login.host.auth eq '3' or sessionScope.login.host.auth eq '4'}">
-                <li>성명</li>
+                <c:if test="${sessionScope.login.host.auth eq '3'}">
+                <li>방문자</li>
+                <li>업체명</li>
                 <li>연락처</li>
-                <li>회사</li>
                 <li>차량번호</li>
                 <li>임직원</li>
                 <li>방문목적</li>
