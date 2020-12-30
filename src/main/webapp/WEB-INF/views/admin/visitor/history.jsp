@@ -192,7 +192,7 @@
 		</div>
 		<div class="nv_table_box">
 			<table class="nv_table textcenter" id="historyTable" summary="history table">
-                <caption>history table</caption>
+                <caption style="display: none;">history table</caption>
 				<thead>
 					<tr>
                         <th>방문자</th>

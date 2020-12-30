@@ -211,7 +211,7 @@
         </div>
 		<div class="nv_table_box">
 			<table class="nv_table textcenter" id="authTable" summary="auth table">
-                <caption>auth table</caption>
+                <caption style="display: none;">auth table</caption>
 				<thead>
 					<tr>
 						<th>성명</th>
@@ -272,7 +272,7 @@
         <div class="nv_modal_contents">
             
             <table class="nv_table textcenter" summary="host">
-                <caption>hostTable</caption>
+                <caption style="display: none;">hostTable</caption>
 				<thead>
 					<tr>
 						<th>이름</th>

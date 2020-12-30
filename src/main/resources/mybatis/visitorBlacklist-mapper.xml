@@ -56,7 +56,7 @@
             </when>
             <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorCompany"'>
                 <!-- AND V.VisitorCompany LIKE CONCAT('%', #{pagenation.conditionValue}, '%') -->
-                AND VisitorCompany LIKE ('%' + #{pagenation.conditionValue} + '%')
+                AND Company LIKE ('%' + #{pagenation.conditionValue} + '%')
             </when>
         </choose>
     </select>

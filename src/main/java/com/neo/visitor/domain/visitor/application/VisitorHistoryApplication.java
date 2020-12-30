@@ -251,6 +251,9 @@ public class VisitorHistoryApplication {
             visitorDashBoardService.updateVisitApplicationCount(visitorHistory);
             visitorDashBoardService.updateApprovalStandbyCount(visitorHistory);
         }
+
+        //String strHostSendText = "방문예약이 요청되었습니다.";
+        //strHostSendText +=  "\r\n- 성명 : " + visiters.get(0).
     }
 
     private void overlapVisitorIsVaild(VisitorHistory visitorHistory) {

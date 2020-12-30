@@ -49,6 +49,7 @@
         callApi.getData(url, function (result) {
             module.pagenation = result.pagenation;
             module.tableData = result.response;
+            var auth = '${sessionScope.login.host.auth}';
             $('#historyTable > tbody').html(module.makeTable($('#pagenation')));
             $.each(result.response, function(i, e) {
                 var tr = $('<tr class="nv_view_nexttable">');
@@ -60,6 +61,8 @@
                 tr.append('<td class="tpc_skip m_skip">'+e.planToDate+'</td>');
                 tr.append('<td>'+e.blacklistState+'</td>');
                 tr.append('<td>'+e.blacklistReason+'</td>');
+                if(auth!='4')
+                {
                 var btn = $('<td><button class="nv_blue_button nv_modal2_open">편집</button></td>');
                 
                 btn.on('click', function() {
@@ -78,6 +81,7 @@
                     $('#blacklistReasonComment').val(e.comment);
                 })
                 tr.append(btn);
+                }
                 $('#historyTable > tbody:eq(0)').append(tr);
 
                 //모바일 상세
@@ -182,7 +186,12 @@
 <div class="nv_contents_wrap">
 	<div class="nv_contents">
 		<div class="nv_contents_main_header">
+            <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2' or sessionScope.login.host.auth eq '3'}">
 			<h4>방문 제한자 관리</h4>
+            </c:if>
+            <c:if test="${sessionScope.login.host.auth eq '4'}">
+			<h4>방문 제한자 리스트</h4>
+            </c:if>
 		</div>
 		<div class="btn_left">
 			<p class="m_tit nv_bold pc_skip tpc_skip m_skip" onclick="javascript:excel();">엑셀 다운로드</p>
@@ -217,11 +226,13 @@
 			</div>
 		</div>
 		<div class="nv_table_box">
+            <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2' or sessionScope.login.host.auth eq '3'}">
             <div class="nv_m_btn_area nv_bord_btn_area">
                 <button type="button" class="nv_blue_button add_icon_btn right" onclick="javascript:location.href='add-blacklist'" style="margin-right: 30px;">방문 제한자 추가</button>
             </div>
+            </c:if>
 			<table class="nv_table textcenter" id="historyTable" summary="blacklist">
-                <caption>blacklist</caption>
+                <caption style="display: none;">blacklist</caption>
 				<thead>
 					<tr>
                         <th>성명</th>
@@ -231,7 +242,9 @@
                         <th class="tpc_skip m_skip">종료일</th>
                         <th>상태</th>
                         <th>제한사유</th>
+                        <c:if test="${sessionScope.login.host.auth eq '0' or sessionScope.login.host.auth eq '1' or sessionScope.login.host.auth eq '2' or sessionScope.login.host.auth eq '3'}">
                         <th>제한 관리</th>
+                        </c:if>
 					</tr>
 				</thead>
 				<tbody>

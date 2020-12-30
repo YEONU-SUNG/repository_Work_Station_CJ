@@ -214,8 +214,8 @@
                             '<td>' +
                                 '<div class="nv_select_box">' +
                                     ((visitInfo.visitor.location == '') 
-                                    ? '<p id="guest_location'+visitInfo.id+'">국적을 선택해주세요.</p>' 
-                                    : '<p id="guest_location'+visitInfo.id+'">'+visitInfo.visitor.gender+'</p>')+
+                                    ? '<p id="guest_location'+visitInfo.id+'">Korea South</p>' 
+                                    : '<p id="guest_location'+visitInfo.id+'">'+visitInfo.visitor.location+'</p>')+
                                     '<ul>' +
                                         '<li>Korea South</li>'+
                                         '<li>USA </li>'+
@@ -790,12 +790,12 @@
                     return false;
                 }
 
-                if($('#guest_location'+i).text() == "국적을 선택해주세요.")
-                {
-                    alert('국적을 선택해주세요.');
-                    flag = false;
-                    return false;
-                }
+                // if($('#guest_location'+i).text() == "국적을 선택해주세요.")
+                // {
+                //     alert('국적을 선택해주세요.');
+                //     flag = false;
+                //     return false;
+                // }
             }
 
             visitorForm.append('visitorId', visitorId!=undefined ? visitorId : '');
@@ -919,7 +919,7 @@
         <div class="nv_table_box">
             <%-- <table class="nv_table textcenter tpc_skip m_skip"> --%>
             <table class="nv_table textcenter" summary="visitor">
-                <caption>visitor</caption>
+                <caption style="display: none;">visitor</caption>
                 <thead id="visitorThead"></thead>
                 <tbody id="visitorTbody"></tbody>
                 <tfoot></tfoot>
@@ -947,7 +947,7 @@
             --%>
             <%-- <table class="nv_table textcenter tpc_skip m_skip"> --%>
             <table class="nv_table textcenter"summary="visitor">
-                <caption>visitor</caption>
+                <caption style="display: none;">visitor</caption>
 				<thead>
 					<tr>
                         <th>회사</th>

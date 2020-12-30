@@ -483,15 +483,15 @@ var approveProcessStatus = {
             </div>
 			<div class="nv_search_box">
 				<input type="text" class="nv_input" id="conditionValue" title="conditionValue">
-                <input type="submit" class="nv_search_icon tpc_skip m_skip" onclick="javascript:module.search();" title="search save">
+                <input type="submit" class="nv_search_icon tpc_skip m_skip" onclick="javascript:module.search();" title="search">
 			</div>
             <div class="nv_search_box pc_skip tpc_skip" style="width: 32px;">
-				<input type="submit" class="nv_search_icon" onclick="javascript:module.search();" title="search save" >
+				<input type="submit" class="nv_search_icon" onclick="javascript:module.search();" title="search" >
 			</div>
 		</div>
 		<div class="nv_table_box">
 			<table class="nv_table textcenter" id="approveTable" summary="방문승인관리">
-                <caption>방문승인관리</caption>
+                <caption style="display: none;">방문승인관리</caption>
 				<thead>
 					<tr>
 						<th>방문자</th>
