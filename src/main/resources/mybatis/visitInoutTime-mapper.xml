@@ -102,40 +102,7 @@
     </update>
 
     <select id="findAllHistoryCount" parameterType="com.neo.visitor.domain.Pagenation" resultType="java.lang.Integer">
-        SELECT
-         COUNT(*)
-         FROM visitinouttime vit
-            JOIN visitorhistory V ON vit.VisitorHistorySeq = V.VisitorHistorySeq
-        WHERE 1=1
-        
-        <!-- <![CDATA[
-            AND CONVERT(vit.VisitFromDateTime, DATE) >= CONVERT(#{visitFromDateTime}, DATE)
-            AND CONVERT(vit.VisitToDateTime, DATE) <= CONVERT(#{visitToDateTime}, DATE)
-        ]]> -->
-        <![CDATA[
-            AND CONVERT(varchar(50), vit.VisitFromDateTime, 23) >= CONVERT(varchar(50), #{visitFromDateTime}, 23)
-            AND CONVERT(varchar(50), vit.VisitToDateTime, 23) <= CONVERT(varchar(50), #{visitToDateTime}, 23)
-        ]]>
-
-        AND V.DeleteFlag = 'N'
-        <choose>
-            <when test='conditionKey!="" and conditionKey=="VisitorHistorySeq"'>
-                AND V.VisitorHistorySeq = #{conditionValue}
-            </when>
-            <when test='conditionKey!="" and conditionKey=="VisitorReservationNumber"'>
-                <!-- AND V.VisitorReservationNumber LIKE CONCAT('%', #{conditionValue}, '%') -->
-                AND V.VisitorReservationNumber LIKE ('%' + #{conditionValue} + '%')
-            </when>
-            <when test='conditionKey!="" and conditionKey=="VisitorName"'>
-                <!-- AND V.VisitorName LIKE CONCAT('%', #{conditionValue}, '%') -->
-                AND V.VisitorName LIKE ('%' + #{conditionValue} + '%')
-            </when>
-            <when test='conditionKey!="" and conditionKey=="CardID"'>
-                <!-- AND V.CardID LIKE CONCAT('%', #{conditionValue}, '%') -->
-                <!-- AND vit.CardID LIKE CONCAT('%', #{conditionValue}, '%') -->
-                AND vit.CardID LIKE ('%' + #{conditionValue} + '%')
-            </when>
-        </choose>
+        SELECT COUNT(*) FROM (<include refid="allHistoryType"/>) A
     </select>
 
     <select id="findAllHistoryCountType" parameterType="java.util.HashMap" resultType="java.lang.Integer">
@@ -235,7 +202,7 @@
         offset #{startPage} rows fetch next #{size} rows only
     </select>
 
-    <select id="findAllHistoryType" parameterType="java.util.HashMap" resultMap="VisitorInoutTime2">
+    <sql id="allHistoryType">
         SELECT
         vseq, V.visitorhistoryseq, visitfromdatetime, visittodatetime, visitorreservationnumber, visitorid, visitorname, visitorbirth, visitormobile, visitorcompany, visitorposition1, visitorposition2, visitorposition3, visitapprovalyn, visitapprovalcomment
         <!-- , CONVERT(visitdate,char(10)) AS visitdate, agreefirst, agreesecond, vit.cardid, carno, hostid, hostname, hostmobile, hosttel, hostdept, hostcompany, hostgradename, hostpositionname
@@ -295,6 +262,10 @@
                 AND V.VisitPurpose LIKE ('%' + #{pagenation.conditionValue} + '%')
             </when>
         </choose>
+    </sql>
+
+    <select id="findAllHistoryType" parameterType="java.util.HashMap" resultMap="VisitorInoutTime2">
+        <include refid="allHistoryType"/>
         ORDER BY
             V.VisitorHistorySeq DESC
         <!-- LIMIT

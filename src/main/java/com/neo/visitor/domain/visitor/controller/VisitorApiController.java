@@ -50,7 +50,9 @@ public class VisitorApiController {
 	public PagenationResponse<VisitorHistory> getApproveList(HttpServletRequest request
     , @RequestParam int page, @RequestParam int size
     , @RequestParam(defaultValue = "") String conditionKey
-    , @RequestParam(defaultValue = "") String conditionValue) {
+    , @RequestParam(defaultValue = "") String conditionValue
+    , @RequestParam(defaultValue = "") String visitorFromDateTime
+    , @RequestParam(defaultValue = "") String visitorToDateTime) {
         switch (conditionKey) {
             //case "예약번호" : conditionKey = "VisitorHistorySeq"; break;
             case "예약번호" : conditionKey = "VisitorReservationNumber"; break;
@@ -62,7 +64,7 @@ public class VisitorApiController {
             case "방문목적" : conditionKey = "VisitPurpose"; break;
             case "방문증번호" : conditionKey = "CardID"; break;
         }
-        return visitorApplication.dashboard(request, new Pagenation(page, size, conditionKey, conditionValue), LocalDateTime.now());
+        return visitorApplication.dashboard(request, new Pagenation(page, size, conditionKey, conditionValue), visitorFromDateTime, visitorToDateTime);
     }
 
     @GetMapping(path = "visitor/confirm-list")

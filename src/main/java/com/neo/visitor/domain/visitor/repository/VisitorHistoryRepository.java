@@ -7,9 +7,6 @@ import com.neo.visitor.config.PrimaryMapperScan;
 import com.neo.visitor.domain.visitor.entity.VisitorDashboard;
 import com.neo.visitor.domain.visitor.entity.VisitorHistory;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
-
 @PrimaryMapperScan
 public interface VisitorHistoryRepository {
 
@@ -20,7 +17,7 @@ public interface VisitorHistoryRepository {
 
     VisitorHistory findById(int visitorHistorySeq);
 
-    // 금일방문객 조회
+    // 금일방문객 조회 -> 방문 신청 현황
     List<VisitorHistory> findByPlanDateTime(Map<String, Object> params);
 
     // 방문 승인 관리 조회 리스트 카운트
