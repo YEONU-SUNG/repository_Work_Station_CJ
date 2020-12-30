@@ -59,6 +59,22 @@
                 AND Company LIKE ('%' + #{pagenation.conditionValue} + '%')
             </when>
         </choose>
+        order by InsertDate desc
+        offset #{pagenation.startPage} rows fetch next #{pagenation.size} rows only
+    </select>
+
+    <select id="findSearchCount" parameterType="java.util.HashMap" resultMap="VisitorBlackList">
+        SELECT * FROM VisitorBlackList vbl
+        JOIN Visitor v ON vbl.VisitorID = v.VisitorID
+        WHERE 1=1
+        <choose>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorName"'>
+                AND VisitorName LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+            <when test='pagenation.conditionKey!="" and pagenation.conditionKey=="VisitorCompany"'>
+                AND Company LIKE ('%' + #{pagenation.conditionValue} + '%')
+            </when>
+        </choose>
     </select>
 
     <select id="findByVisitorIdAndDate" parameterType="java.util.HashMap" resultMap="VisitorBlackList">

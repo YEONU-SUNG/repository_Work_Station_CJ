@@ -23,7 +23,12 @@
         $("#searchToDateTime").datepicker();
         
         $('#searchFromDateTime').datepicker('setDate', 'today');
-        $('#searchToDateTime').datepicker('setDate', '+1D');
+        //$('#searchToDateTime').datepicker('setDate', '+1D');
+        d = $("#searchFromDateTime").datepicker("getDate");
+        $("#searchToDateTime").datepicker("setDate", new Date(d.getFullYear(),d.getMonth(),d.getDate()+10));
+
+        jQuery("#searchFromDateTime").datepicker("option", "minDate", new Date(d.getFullYear(),d.getMonth(),d.getDate()));
+        jQuery("#searchToDateTime").datepicker("option", "minDate", new Date(d.getFullYear(),d.getMonth(),d.getDate()));
     });
     </script>
     <script>
@@ -276,6 +281,7 @@ var approveProcessStatus = {
             module.tableData = result.response;
             var auth = '${sessionScope.login.host.auth}';
             $('#pagenation').html(page.makePagenation(module.pagenation));
+            module.makeTable($('#pagenation'));
             $.each(result.response, function(i, e) {
                 var tr = $('<tr class="nv_view_nexttable" id="'+e.visitorHistorySeq+'">');
                     tr.append(module.makeTd('', e.visitorName));
@@ -477,8 +483,8 @@ var approveProcessStatus = {
                 <p id="conditionKey">방문자</p>
                 <ul>
                     <li>방문자</li>
-                    <li>연락처</li>
                     <li>업체명</li>
+                    <li>연락처</li>
                 </ul>
             </div>
 			<div class="nv_search_box">

@@ -14,4 +14,5 @@ public interface VisitorBlackListRepository {
     VisitorBlackList findByVisitorIdAndDate(Map<String, Object> map);
     List<VisitorBlackList> findAll();
     List<VisitorBlackList> findSearch(Map<String, Object> map);
+    List<VisitorBlackList> findSearchCount(Map<String, Object> map);
 }

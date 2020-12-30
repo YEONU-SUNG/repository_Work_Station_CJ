@@ -15,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class AES256Util {
     private static final String PRIVATE_KEY = "SSYKeyForSportsCenter";
+    //private static final String PRIVATE_KEY = "VisitDS";
     
     private static String keyLimit() {
         return PRIVATE_KEY.substring(0, 16);

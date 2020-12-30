@@ -208,11 +208,11 @@
 			<p class="m_tit nv_bold pc_skip tpc_skip">검색 설정</p>
 			<div class="nv_select_box">
 				<%-- <p id="conditionKey">선택</p> --%>
-                <p id="conditionKey">이름</p>
+                <p id="conditionKey">방문자</p>
 				<ul>
 					<%-- <li>예약번호</li> --%>
-                    <li>이름</li>
-                    <li>회사명</li>
+                    <li>방문자</li>
+                    <li>업체명</li>
                     <%-- <li>방문목적</li>
                     <li>방문증번호</li> --%>
 				</ul>
@@ -235,7 +235,7 @@
                 <caption style="display: none;">blacklist</caption>
 				<thead>
 					<tr>
-                        <th>성명</th>
+                        <th>방문자</th>
                         <th class="tpc_skip m_skip">업체명</th>
 						<th class="tpc_skip m_skip">연락처</th>
 						<th class="tpc_skip m_skip">시작일</th>
@@ -266,7 +266,7 @@
         <div class="nv_modal_contents">
             <h4 class="textarea_name" id="visitorId" style="display: none;" ></h4>
             <div>
-                <h4 class="textarea_name" id="name">성명</h4>
+                <h4 class="textarea_name" id="name">방문자</h4>
             </div>
             <div>
                 <h4 class="textarea_name" id="company">업체명</h4>

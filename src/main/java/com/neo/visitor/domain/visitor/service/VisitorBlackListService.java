@@ -41,6 +41,9 @@ public class VisitorBlackListService {
     public List<VisitorBlackList> findSearch(Map<String, Object> map) {
         return visitorBlackListRepository.findSearch(map); 
     }
+    public List<VisitorBlackList> findSearchCount(Map<String, Object> map) {
+        return visitorBlackListRepository.findSearchCount(map); 
+    }
 
 
     /**

@@ -88,7 +88,8 @@ public class VisitorApplication {
         }
         
         pagenationResponse.setResponse(visitorBlackListfindAll);
-        pagenationResponse.setPagenation(pagenation.makePagenation(visitorBlackListfindAll.size(), PagenationType.VISITOR_BLACKLIST));
+        //pagenationResponse.setPagenation(pagenation.makePagenation(visitorBlackListfindAll.size(), PagenationType.VISITOR_BLACKLIST));
+        pagenationResponse.setPagenation(pagenation.makePagenation(visitorBlackListservice.findSearchCount(map).size(), PagenationType.VISITOR_BLACKLIST));
         return pagenationResponse;
     }
 
