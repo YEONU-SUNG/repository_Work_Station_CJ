@@ -17,14 +17,14 @@ public class UserInfoIntercepter extends HandlerInterceptorAdapter {
         // 요청이 controller 로 들어오기전에 세션 체크
         HttpSession session = request.getSession();
         if(session.getAttribute("login")==null) {
-            if(request.getHeader("custom")!=null && request.getHeader("custom").equals("1")) {
-                //response.sendRedirect("/login");
-                throw new IllegalArgumentException("재 로그인 후 다시 이용해주세요.");
-            } else {
-                response.sendRedirect("/admin/login");
-            }
+            if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) 
+                // ajax 요청일때
+                throw new IllegalArgumentException("세션이 해제되었습니다. 재 로그인 후 다시 이용해주세요.");
+            
+            response.sendRedirect("/admin/login");
             return false;
         }
+        
    		return true;
 	}
 }

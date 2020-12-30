@@ -238,7 +238,7 @@ var approveProcessStatus = {
             var searchToDateTime = $('input[name="searchToDateTime"]').val();
             var conditionKey = $('#conditionKey').html();
             var conditionValue = $('#conditionValue').val();
-            init('/visitor/confirm-list?page=1&size=10&conditionKey='+conditionKey+"&conditionValue="+conditionValue+"&searchFromDateTime="+searchFromDateTime+"&searchToDateTime="+searchToDateTime);
+            init('/visitor/confirm-list?page=1&size=10&conditionKey='+conditionKey+"&conditionValue="+conditionValue+"&visitorFromDateTime="+searchFromDateTime+"&visitorToDateTime="+searchToDateTime);
         },
         makeTd : function(className, innerHTML) {
             return $('<td class="'+className+'">'+innerHTML+'</td>');
@@ -362,7 +362,7 @@ var approveProcessStatus = {
     $(document).ready(function() {
         var searchFromDateTime = $('input[name="searchFromDateTime"]').val();
         var searchToDateTime = $('input[name="searchToDateTime"]').val();
-        init('/visitor/confirm-list?page=1&size=10&searchFromDateTime='+searchFromDateTime+'&searchToDateTime='+searchToDateTime);
+        init('/visitor/confirm-list?page=1&size=10&visitorFromDateTime='+searchFromDateTime+'&visitorToDateTime='+searchToDateTime);
         $("#conditionValue").focus();
         $('#conditionValue').keydown(function(event) {
 			if (event.keyCode == 13) module.search();

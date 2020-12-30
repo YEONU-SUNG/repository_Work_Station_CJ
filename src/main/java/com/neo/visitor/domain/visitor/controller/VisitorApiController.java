@@ -70,14 +70,14 @@ public class VisitorApiController {
     , @RequestParam int page, @RequestParam int size
     , @RequestParam(defaultValue = "") String conditionKey
     , @RequestParam(defaultValue = "") String conditionValue
-    , @RequestParam(defaultValue = "") String searchFromDateTime
-    , @RequestParam(defaultValue = "") String searchToDateTime ){
+    , @RequestParam(defaultValue = "") String visitorFromDateTime
+    , @RequestParam(defaultValue = "") String visitorToDateTime ){
         switch (conditionKey) {
             case "방문자" : conditionKey = "VisitorName"; break;
             case "연락처" : conditionKey = "VisitorMobile"; break;
             case "업체명" : conditionKey = "VisitorCompany"; break;
         }
-        return visitorApplication.confirm(request, new Pagenation(page, size, conditionKey, conditionValue), searchFromDateTime, searchToDateTime);
+        return visitorApplication.confirm(request, new Pagenation(page, size, conditionKey, conditionValue), visitorFromDateTime, visitorToDateTime);
     }
 
     @PostMapping(path = "visitor/card-no")
