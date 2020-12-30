@@ -50,8 +50,8 @@
                                     //'<td class="tpc_skip m_skip">' + oData.visitorHistory.visitorPosition1 + ', ' + oData.visitorHistory.visitorPosition2 + ', ' + oData.visitorHistory.visitorPosition3 + '</td>' + 
                                     '<td class="tpc_skip m_skip">' + oData.visitorHistory.visitorPosition1 + (oData.visitorHistory.visitorPosition2=="선택"?'':','+oData.visitorHistory.visitorPosition2) + (oData.visitorHistory.visitorPosition3=="선택"?'':','+oData.visitorHistory.visitorPosition3) + '</td>' + 
                                     '<td class="tpc_skip m_skip">' + oData.visitorHistory.planFromDateTime + '~' + oData.visitorHistory.planToDateTime + '</td>' + 
-                                    '<td class="tpc_skip m_skip">' + oData.visitFromDateTime.toString().substring(10) + '</td>' + 
-                                    '<td class="tpc_skip m_skip">' + oData.visitToDateTime.toString().substring(10) + '</td>' + 
+                                    '<td class="tpc_skip m_skip">' + oData.visitFromDateTime + '</td>' + 
+                                    '<td class="tpc_skip m_skip">' + oData.visitToDateTime+ '</td>' + 
                                     '<td class="tpc_skip m_skip">' + oData.visitorHistory.hostName + '</td>' + 
                                     '<td class="tpc_skip m_skip">' + oData.visitorHistory.hostCompany + '</td>' + 
                                     '<td class="tpc_skip m_skip">' + oData.visitorHistory.hostDept + '</td>' + 
@@ -82,9 +82,9 @@
                                                     '<td class="nv_bold">방문일자</td>' +
                                                     '<td>'+oData.visitorHistory.planFromDateTime + '~' + oData.visitorHistory.planToDateTime+'</td>' +
                                                     '<td class="nv_bold">방문일시</td>' +
-                                                    '<td>' +oData.visitFromDateTime.toString().substring(10)+ '</td>' +
+                                                    '<td>' +oData.visitFromDateTime+ '</td>' +
                                                     '<td class="nv_bold">퇴실일시</td>' +
-                                                    '<td>' +oData.visitToDateTime.toString().substring(10)+ '</td>' +
+                                                    '<td>' +oData.visitToDateTime+ '</td>' +
                                                 '</tr>' +
                                                 '<tr>' +
                                                     '<td class="nv_bold">접견인</td>' +

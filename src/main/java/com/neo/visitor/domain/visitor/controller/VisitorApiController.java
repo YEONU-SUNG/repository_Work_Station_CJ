@@ -56,9 +56,9 @@ public class VisitorApiController {
         switch (conditionKey) {
             //case "예약번호" : conditionKey = "VisitorHistorySeq"; break;
             case "예약번호" : conditionKey = "VisitorReservationNumber"; break;
-            case "성명" : conditionKey = "VisitorName"; break;
+            case "방문자" : conditionKey = "VisitorName"; break;
             case "연락처" : conditionKey = "VisitorMobile"; break;
-            case "회사" : conditionKey = "VisitorCompany"; break;
+            case "업체명" : conditionKey = "VisitorCompany"; break;
             case "차량번호" : conditionKey = "CarNo"; break;
             case "임직원" : conditionKey = "HostName"; break;
             case "방문목적" : conditionKey = "VisitPurpose"; break;

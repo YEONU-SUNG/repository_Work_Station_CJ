@@ -416,7 +416,9 @@
         <if test='host.host.auth == "4"'>
             V.VisitApprovalYN ASC, V.EduCompleteDateTime DESC, V.VisitorHistorySeq DESC
         </if>
-        offset #{pagenation.startPage} rows fetch next #{pagenation.size} rows only
+        <if test="excel == null">
+            offset #{pagenation.startPage} rows fetch next #{pagenation.size} rows only
+        </if>
     </select>
 
     <select id="countByDeleteFlag" parameterType="java.util.HashMap" resultType="java.lang.Integer">
