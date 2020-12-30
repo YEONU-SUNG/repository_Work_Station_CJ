@@ -430,13 +430,14 @@
     });
 
     function excel() {
+        console.log(module.pagenation.excelParams);
         location.href = convertEncoding(module.pagenation.excelParams);
     }
 
     $(document).ready(function() {
         var searchFromDateTime = $('input[name="searchFromDateTime"]').val();
         var searchToDateTime = $('input[name="searchToDateTime"]').val();
-        init('/visitor/approve-list?page=1&size=10');
+        init('/visitor/approve-list?page=1&size=10&visitorFromDateTime='+searchFromDateTime+'&visitorToDateTime='+searchToDateTime);
         $("#conditionValue").focus();
         $('#conditionValue').keydown(function(event) {
 			if (event.keyCode == 13) module.search();

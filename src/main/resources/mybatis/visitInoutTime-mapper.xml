@@ -268,9 +268,9 @@
         <include refid="allHistoryType"/>
         ORDER BY
             V.VisitorHistorySeq DESC
-        <!-- LIMIT
-            #{pagenation.startPage}, #{pagenation.size} -->
-        offset #{pagenation.startPage} rows fetch next #{pagenation.size} rows only
+        <if test="excel == null">
+            offset #{pagenation.startPage} rows fetch next #{pagenation.size} rows only
+        </if>
     </select>
 
     <select id="findAllHistoryNotLimit" parameterType="com.neo.visitor.domain.Pagenation" resultMap="VisitorInoutTime2">
